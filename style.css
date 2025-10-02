@@ -1,0 +1,234 @@
+/* ---------- GLOBAL ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0e0e0e;
+  color: #f5f5f5;
+  line-height: 1.7;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 8%;
+  background: rgba(15, 15, 15, 0.9);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .logo img {
+  height: 40px;
+}
+
+.navbar nav a {
+  color: #ddd;
+  margin-left: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.navbar nav a:hover {
+  color: #16a34a;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  height: 100vh;
+  background: linear-gradient(135deg, #0e0e0e, #111, #0a1f0a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content {
+  max-width: 700px;
+  animation: fadeInUp 1.5s ease;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: #ccc;
+  margin-bottom: 25px;
+}
+
+.cta-btn {
+  background: #16a34a;
+  color: white;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.cta-btn:hover {
+  background: #1ed760;
+  transform: translateY(-3px);
+}
+
+/* ---------- SECTIONS ---------- */
+section {
+  padding: 100px 8%;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+}
+
+/* ---------- SERVICES ---------- */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px 30px;
+  border-radius: 20px;
+  transition: transform 0.4s, background 0.4s;
+}
+
+.service-card i {
+  font-size: 3rem;
+  color: #16a34a;
+  margin-bottom: 20px;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.service-card p {
+  color: #aaa;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  background: rgba(22, 163, 74, 0.1);
+}
+
+/* ---------- PARTNER LOGOS ---------- */
+.partners {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.partners h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.logo-slider {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 30px;
+  align-items: center;
+  justify-items: center;
+}
+
+.partners img {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.8;
+  transition: filter 0.3s, opacity 0.3s, transform 0.3s;
+}
+
+.partners img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ---------- WHY US ---------- */
+.why-us ul {
+  list-style: none;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.why-us li {
+  padding: 15px;
+  font-size: 1.2rem;
+  border-bottom: none;
+}
+
+/* ---------- CONTACT ---------- */
+.contact p {
+  font-size: 1.1rem;
+  margin: 8px 0;
+}
+
+.contact a {
+  color: #16a34a;
+  text-decoration: none;
+}
+
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: #0a0a0a;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+[data-animate].active {
+  opacity: 1;
+  transform: translateY(0);
+}
