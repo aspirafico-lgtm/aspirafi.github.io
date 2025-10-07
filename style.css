@@ -160,19 +160,22 @@ a {
   margin-bottom: 50px;
 }
 
+/* Flex layout for logos */
 .logo-slider {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 40px;
+  justify-content: center;
   align-items: center;
-  justify-items: center;
 }
 
 .logo-slider img {
   height: 60px;
+  width: auto;
   filter: grayscale(100%);
   opacity: 0.7;
   transition: filter 0.3s, opacity 0.3s, transform 0.3s;
+  cursor: pointer;
 }
 
 .logo-slider img:hover {
@@ -239,4 +242,45 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 20px 40px;
+  }
+
+  .services-section,
+  .partners,
+  .why-us,
+  .contact {
+    padding: 60px 20px;
+  }
+
+  .hero h1 {
+    font-size: 2.4rem;
+  }
+
+  .cta-btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+
+  .logo-slider {
+    gap: 20px;
+  }
+
+  .logo-slider img {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .service-card {
+    padding: 30px 20px;
+  }
 }
