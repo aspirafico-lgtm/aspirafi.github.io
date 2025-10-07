@@ -160,25 +160,33 @@ a {
   margin-bottom: 50px;
 }
 
-/* Flex layout for logos */
+/* Flex layout with uniform containers */
 .logo-slider {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 40px;
+}
+
+.logo-item {
+  width: 150px;            /* Standard width */
+  height: 80px;            /* Standard height */
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.logo-slider img {
-  height: 60px;
-  width: auto;
+.logo-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   filter: grayscale(100%);
   opacity: 0.7;
   transition: filter 0.3s, opacity 0.3s, transform 0.3s;
   cursor: pointer;
 }
 
-.logo-slider img:hover {
+.logo-item img:hover {
   filter: grayscale(0%);
   opacity: 1;
   transform: scale(1.1);
@@ -266,12 +274,9 @@ footer p {
     font-size: 1rem;
   }
 
-  .logo-slider {
-    gap: 20px;
-  }
-
-  .logo-slider img {
-    height: 50px;
+  .logo-item {
+    width: 120px;
+    height: 60px;
   }
 }
 
@@ -282,5 +287,10 @@ footer p {
 
   .service-card {
     padding: 30px 20px;
+  }
+
+  .logo-item {
+    width: 100px;
+    height: 50px;
   }
 }
