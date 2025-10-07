@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aspirafi – Empower Your Study Abroad Dreams</title>
 
-  <!-- ✅ CSS -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- ✅ Remix Icons (for service icons) -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-
-  <!-- ✅ Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- ✅ JS -->
-  <script src="script.js" defer></script>
+  <!-- Remix Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
+
+  <!-- Navbar -->
   <header class="navbar">
-    <div class="logo">
-      <span>Aspirafi</span>
-    </div>
+    <div class="logo">Aspirafi</div>
     <nav>
       <a href="#services">Services</a>
       <a href="#why">Why Us</a>
@@ -31,45 +26,27 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- Hero -->
   <section class="hero">
-    <div class="hero-content" data-animate>
+    <div>
       <h1>Empowering Your Study Abroad Dreams</h1>
-      <p>
-        Aspirafi is created to empower students who aspire to study with the support of education loans. 
-        As a former international student, I understand firsthand the challenges involved in securing funding — 
-        and Aspirafi exists to make that journey simpler, smoother, and stress-free.
-      </p>
-      <!-- Buttons -->
-<div class="hero-buttons">
-  <button id="loanBtn" class="cta-btn">Need Loan? ₹5000</a></button>
-  <button id="referralBtn" class="cta-btn referral-btn">Refer a Friend ₹2500</button>
-</div>
-
-
-  <!-- SERVICES -->
-  <section id="services" class="services-section">
-    <h2 data-animate>Our Services</h2>
-    <div class="service-grid">
-      <div class="service-card" data-animate>
-        <i class="ri-bank-line"></i>
-        <h3>Education Loans</h3>
-        <p>Better rates, 3-day assured sanction, and ₹2500 referral bonus. Includes accommodation, US bank account & credit card help.</p>
-      </div>
-      <div class="service-card" data-animate>
-        <i class="ri-passport-line"></i>
-        <h3>Study Abroad Guidance</h3>
-        <p>From personalized counselling and university support to visa documentation and pre-departure checklists — we’re with you every step.</p>
-      </div>
-      <div class="service-card" data-animate>
-        <i class="ri-hand-coin-line"></i>
-        <h3>Personal Loan Solutions</h3>
-        <p>We partner with Fi to provide fast personal loans for all your financial needs beyond education.</p>
-      </div>
+      <p>Aspirafi helps students with education loans, counselling, and visa support to make studying abroad simple.</p>
+      <a href="#" class="cta-btn" id="openLoanBtn">Need Loan? ₹5000</a>
+      <a href="#" class="cta-btn referral-btn" id="openReferralBtn">Refer a Friend ₹2500</a>
     </div>
   </section>
 
-  <!-- PARTNER LOGOS -->
+  <!-- Services -->
+  <section id="services" class="services-section">
+    <h2>Our Services</h2>
+    <div class="service-grid">
+      <div class="service-card"><i class="ri-bank-line"></i><h3>Education Loans</h3><p>3-day sanction, ₹5000 bonus, US bank account & credit card help.</p></div>
+      <div class="service-card"><i class="ri-passport-line"></i><h3>Study Abroad Guidance</h3><p>University support, visa documentation, pre-departure checklist.</p></div>
+      <div class="service-card"><i class="ri-hand-coin-line"></i><h3>Personal Loans</h3><p>Partnered with Fi for fast personal loans beyond education.</p></div>
+    </div>
+  </section>
+
+   <!-- PARTNER LOGOS -->
   <section class="partners">
     <h2 data-animate>Our Trusted Partners</h2>
     <div class="logo-slider" data-animate>
@@ -87,13 +64,12 @@
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner12.png?raw=true">
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner13.png?raw=true">
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner14.png?raw=true">
-
     </div>
   </section>
 
-  <!-- WHY CHOOSE US -->
+  <!-- Why Us -->
   <section id="why" class="why-us">
-    <h2 data-animate>Why Choose Aspirafi?</h2>
+    <h2>Why Choose Aspirafi?</h2>
     <ul>
       <li>Partnerships with 15+ top financial institutions</li>
       <li>Transparent, student-friendly loan guidance</li>
@@ -102,16 +78,54 @@
     </ul>
   </section>
 
-  <!-- CONTACT -->
+  <!-- Contact -->
   <section id="contact" class="contact">
-    <h2 data-animate>Get Started</h2>
+    <h2>Get Started</h2>
     <p>📍 Visit: <a href="https://aspirafi.site">www.aspirafi.site</a></p>
     <p>📧 Email: <a href="mailto:contact@aspirafi.site">contact@aspirafi.site</a></p>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer>
     <p>© 2025 Aspirafi. All Rights Reserved.</p>
   </footer>
+
+  <!-- Loan Modal -->
+  <div id="loanFormModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeLoanBtn">&times;</span>
+      <h2>Get Your ₹5000 Loan Bonus!</h2>
+      <form id="loanForm">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone" required>
+        <input type="text" name="country" placeholder="Country" required>
+        <input type="text" name="intake" placeholder="Intake (e.g., Fall 2025)" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Referral Modal -->
+  <div id="referralFormModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeReferralBtn">&times;</span>
+      <h2>Refer a Friend & Earn ₹2500!</h2>
+      <form id="referralForm">
+        <input type="text" name="yourName" placeholder="Your Full Name" required>
+        <input type="email" name="yourEmail" placeholder="Your Email" required>
+        <input type="tel" name="yourPhone" placeholder="Your Phone" required>
+        <input type="text" name="friendName" placeholder="Friend’s Full Name" required>
+        <input type="email" name="friendEmail" placeholder="Friend’s Email" required><input type="tel" name="friendPhone" placeholder="Friend’s Phone" required>
+
+        <input type="text" name="country" placeholder="Country" required>
+        <input type="text" name="intake" placeholder="Intake (e.g., Fall 2025)" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
 </body>
 </html>
