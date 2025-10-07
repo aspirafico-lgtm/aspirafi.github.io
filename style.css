@@ -1,152 +1,41 @@
-/* ---------- Global Styles ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Global */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins', sans-serif; background:#0c0c0c; color:#f5f5f5; line-height:1.6; scroll-behavior:smooth; }
+h1,h2,h3 { font-weight:600; }
+a { text-decoration:none; color:inherit; }
 
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #0c0c0c;
-  color: #f5f5f5;
-  line-height: 1.6;
-  scroll-behavior: smooth;
-}
+/* Navbar */
+.navbar { width:100%; padding:20px 80px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); position:sticky; top:0; z-index:1000; }
+.navbar .logo { font-size:1.8rem; font-weight:700; color:#16a34a; }
+.navbar nav a { margin-left:30px; font-size:1.1rem; opacity:0.8; transition:opacity 0.3s,color 0.3s; }
+.navbar nav a:hover { opacity:1; color:#16a34a; }
 
-h1, h2, h3 {
-  font-weight: 600;
-}
+/* Hero */
+.hero { min-height:90vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 20px; background:linear-gradient(180deg,#0c0c0c 0%,#121212 100%); }
+.hero h1 { font-size:3.2rem; margin-bottom:20px; color:#fff; }
+.hero p { max-width:700px; margin:0 auto 30px; font-size:1.2rem; color:#bdbdbd; }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+/* CTA Buttons */
+.cta-btn { padding:15px 40px; border-radius:50px; font-size:1.1rem; transition: transform 0.3s, box-shadow 0.3s; display:inline-block; margin:10px; cursor:pointer; color:#fff; text-align:center; }
+.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,0,0,0.3); }
 
-/* ---------- Navbar ---------- */
-.navbar {
-  width: 100%;
-  padding: 20px 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+/* Green Loan Button */
+#openLoanBtn { background:linear-gradient(90deg,#16a34a,#10b981); }
+#openLoanBtn:hover { box-shadow:0 8px 25px rgba(22,163,74,0.4); }
 
-.navbar .logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+/* Blue Referral Button */
+.referral-btn { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
+.referral-btn:hover { box-shadow:0 8px 25px rgba(59,130,246,0.4); }
 
-.navbar .logo img {
-  height: 40px;
-}
-
-.navbar .logo span {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #16a34a;
-}
-
-.navbar nav a {
-  margin-left: 30px;
-  font-size: 1.1rem;
-  opacity: 0.8;
-  transition: opacity 0.3s, color 0.3s;
-}
-
-.navbar nav a:hover {
-  opacity: 1;
-  color: #16a34a;
-}
-
-/* ---------- Hero Section ---------- */
-.hero {
-  min-height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 20px;
-  background: linear-gradient(180deg, #0c0c0c 0%, #121212 100%);
-}
-
-.hero h1 {
-  font-size: 3.2rem;
-  margin-bottom: 20px;
-  color: #fff;
-}
-
-.hero p {
-  max-width: 700px;
-  margin: 0 auto 30px;
-  font-size: 1.2rem;
-  color: #bdbdbd;
-}
-
-.cta-btn {
-  background: #16a34a;
-  color: #fff;
-  padding: 15px 40px;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(22, 163, 74, 0.4);
-}
-
-/* ---------- Services ---------- */
-.services-section {
-  padding: 100px 60px;
-  text-align: center;
-}
-
-.services-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 50px;
-}
-
-.service-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-}
-
-.service-card {
-  background: #1a1a1a;
-  padding: 40px 30px;
-  border-radius: 20px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.service-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-}
-
-.service-card i {
-  font-size: 3rem;
-  color: #16a34a;
-  margin-bottom: 20px;
-}
-
-.service-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-}
-
-.service-card p {
-  font-size: 1rem;
-  color: #bdbdbd;
-}
+/* Services */
+.services-section { padding:100px 60px; text-align:center; }
+.services-section h2 { font-size:2.5rem; margin-bottom:50px; }
+.service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
+.service-card { background:#1a1a1a; padding:40px 30px; border-radius:20px; text-align:center; transition:transform 0.3s, box-shadow 0.3s; }
+.service-card:hover { transform:translateY(-8px); box-shadow:0 15px 40px rgba(0,0,0,0.4); }
+.service-card i { font-size:3rem; color:#16a34a; margin-bottom:20px; }
+.service-card h3 { font-size:1.5rem; margin-bottom:15px; }
+.service-card p { font-size:1rem; color:#bdbdbd; }
 
 /* ---------- Partners ---------- */
 .partners {
@@ -184,103 +73,25 @@ a {
   transform: scale(1.1);
 }
 
-/* ---------- Why Us ---------- */
-.why-us {
-  padding: 100px 60px;
-  text-align: center;
-}
+/* Why Us */
+.why-us { padding:100px 60px; text-align:center; }
+.why-us h2 { font-size:2.5rem; margin-bottom:40px; }
+.why-us ul { list-style:none; max-width:700px; margin:0 auto; text-align:left; font-size:1.2rem; }
+.why-us li { padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
 
-.why-us h2 {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-}
+/* Contact */
+.contact { padding:100px 60px; text-align:center; background:#0f0f0f; }
+.contact h2 { font-size:2.5rem; margin-bottom:30px; }
+.contact p { font-size:1.2rem; margin-bottom:10px; }
+.contact a { color:#16a34a; font-weight:600; }
 
-.why-us ul {
-  list-style: none;
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: left;
-  font-size: 1.2rem;
-}
+/* Footer */
+footer { background:#000; text-align:center; padding:25px; font-size:0.95rem; color:#777; border-top:1px solid rgba(255,255,255,0.1); }
 
-.why-us li {
-  padding: 15px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ---------- Contact ---------- */
-.contact {
-  padding: 100px 60px;
-  text-align: center;
-  background: #0f0f0f;
-}
-
-.contact h2 {
-  font-size: 2.5rem;
-  margin-bottom: 30px;
-}
-
-.contact p {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.contact a {
-  color: #16a34a;
-  font-weight: 600;
-}
-
-/* ---------- Footer ---------- */
-footer {
-  background: #000;
-  text-align: center;
-  padding: 25px;
-  font-size: 0.95rem;
-  color: #777;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-footer p {
-  margin: 0;
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 20px 40px;
-  }
-
-  .services-section,
-  .partners,
-  .why-us,
-  .contact {
-    padding: 60px 20px;
-  }
-
-  .hero h1 {
-    font-size: 2.4rem;
-  }
-
-  .cta-btn {
-    padding: 12px 30px;
-    font-size: 1rem;
-  }
-
-  .logo-slider {
-    gap: 20px;
-  }
-
-  .logo-slider img {
-    height: 50px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-
-  .service-card {
-    padding: 30px 20px;
-  }
-}
+/* Modals */
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:10000; }
+.modal-content { background:#1a1a1a; padding:30px; border-radius:15px; width:90%; max-width:400px; text-align:center; position:relative; }
+.modal-content h2 { margin-bottom:20px; }
+.modal-content input { width:100%; padding:12px 15px; margin:8px 0; border-radius:8px; border:none; outline:none; }
+.modal-content button { width:100%; padding:12px; border:none; border-radius:50px; color:#fff; cursor:pointer; font-size:1.1rem; }
+.close-btn { position:absolute; top:15px; right:15px; font-size:1.5rem; cursor:pointer; color:#fff; }
