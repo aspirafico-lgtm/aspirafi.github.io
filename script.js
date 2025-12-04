@@ -6,7 +6,7 @@
    Replace the placeholder below with your deployed Web App exec URL.
    Example: const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx.../exec";
 ================================================================= */
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwnmUkrEjnj0SDNTRGBxToTdQEDx1EwjnRSImf_tIT5mYLkm242K2ZpzgPioLqxNl2T/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwfUdsRL8efvu7NoyLpCJenkKzECsTIwEhx_cQzOvin7QFm4ZZwz3rwsy4A5fU1Noaa/exec";
 
 /* ---------- NAVBAR SCROLL EFFECT ---------- */
 (function navbarScroll() {
