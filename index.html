@@ -2,54 +2,245 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aspirafi – Empower Your Study Abroad Dreams</title>
-
-  <!-- Google Fonts -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aspirafi - Student Loans & Financial Services</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Remix Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- Navbar -->
-  <header class="navbar">
+  <nav class="navbar">
     <div class="logo">Aspirafi</div>
     <nav>
       <a href="#services">Services</a>
-      <a href="#why">Why Us</a>
+      <a href="#partners">Partners</a>
       <a href="#contact">Contact</a>
     </nav>
-  </header>
+  </nav>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="hero">
     <div>
-      <h1>Empowering Your Study Abroad Dreams</h1>
-      <p>Aspirafi helps students with education loans, counselling, and visa support to make studying abroad simple.</p>
-      <a href="#" class="cta-btn" id="openLoanBtn">Need Loan? ₹5000</a>
-      <a href="#" class="cta-btn referral-btn" id="openReferralBtn">Refer a Friend ₹2500</a>
+      <h1>Aspirafi - Your Financial Gateway</h1>
+      <p>Get instant loans, education financing, and financial support tailored for you. Fast approvals, transparent terms, and expert guidance.</p>
+
+      <div class="hero-buttons">
+        <!-- 1st: Education Loan (green) -->
+        <button class="cta-btn" id="openLoanBtn">Education Loan</button>
+
+        <!-- 2nd: Balance Transfer (blue) -->
+        <button class="cta-btn" id="openEducationLoanBtn">Balance Transfer</button>
+
+        <!-- 3rd: Refer A Friend (purple) -->
+        <button class="cta-btn" id="openBalanceTransferBtn">Refer A Friend</button>
+
+        <!-- 4th: Community (orange) -->
+        <button class="cta-btn referral-btn" id="openReferralBtn">Community</button>
+      </div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services" class="services-section">
+  <!-- === Education Loan Modal (1st) === -->
+  <div id="educationLoanFormModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="eduTitle">
+      <button class="close-btn" id="closeEducationLoanBtn" aria-label="Close">&times;</button>
+
+      <h2 id="eduTitle">🎓 Education Loan</h2>
+
+      <!-- Form header - green (matches Education Loan button) -->
+      <div class="form-header edu-header" id="eduFormHeader">
+        <h3 class="form-title">Apply for Education Loan</h3>
+        <p class="form-sub">Provide your details and preferred intake — our counselor will contact you.</p>
+      </div>
+
+      <form id="educationLoanForm" aria-labelledby="eduFormHeader">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="country" placeholder="Country" required>
+        <input type="text" name="intake" placeholder="Intake (e.g. Sep 2026)" required>
+
+        <!-- ADDED: inline feedback (education) -->
+        <div class="form-feedback" id="educationFeedback" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <button type="submit" class="cta-btn submit-btn">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- === Balance Transfer Modal (2nd) === -->
+  <div id="balanceTransferFormModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="btTitle">
+      <button class="close-btn" id="closeBalanceTransferBtn" aria-label="Close">&times;</button>
+
+      <h2 id="btTitle">💸 Balance Transfer</h2>
+
+      <!-- Form header - blue (matches Balance Transfer button) -->
+      <div class="form-header bt-header" id="btFormHeader">
+        <h3 class="form-title">Request Balance Transfer Quote</h3>
+        <p class="form-sub">Share details and intake — we'll find the best transfer options for you.</p>
+      </div>
+
+      <form id="balanceTransferForm" aria-labelledby="btFormHeader">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number" required>
+        <input type="text" name="country" placeholder="Country" required>
+        <input type="text" name="intake" placeholder="Intake (e.g. Sep 2026)" required>
+
+        <!-- ADDED: inline feedback (balance) -->
+        <div class="form-feedback" id="balanceFeedback" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <button type="submit" class="cta-btn submit-btn">Get Balance Transfer Quote</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- === Referral Modal (3rd) === -->
+  <div id="referralFormModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="refTitle">
+      <button class="close-btn" id="closeReferralBtn" aria-label="Close">&times;</button>
+
+      <h2 id="refTitle">🤝 Refer & Earn ₹2500</h2>
+
+      <!-- Form header - purple (matches Refer A Friend button style) -->
+      <div class="form-header ref-header" id="refFormHeader">
+        <h3 class="form-title">Refer a Friend</h3>
+        <p class="form-sub">Submit your and your friend's details to earn rewards on approval.</p>
+      </div>
+
+      <form id="referralForm" aria-labelledby="refFormHeader">
+        <input type="text" name="yourName" placeholder="Your Name" required>
+        <input type="email" name="yourEmail" placeholder="Your Email" required>
+        <input type="tel" name="yourPhone" placeholder="Your Phone" required>
+
+        <input type="text" name="friendName" placeholder="Friend's Name" required>
+        <input type="email" name="friendEmail" placeholder="Friend's Email" required>
+        <input type="tel" name="friendPhone" placeholder="Friend's Phone" required>
+
+        <input type="text" name="country" placeholder="Country" required>
+        <input type="text" name="intake" placeholder="Intake (e.g. Sep 2026)" required>
+
+        <!-- ADDED: inline feedback (referral) -->
+        <div class="form-feedback" id="referralFeedback" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <button type="submit" class="cta-btn referral-btn">Submit Referral</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- === Community Modal (4th) — blank placeholder === -->
+  <div id="communityModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="communityTitle">
+      <button class="close-btn" id="closeCommunityBtn" aria-label="Close">&times;</button>
+
+      <h2 id="communityTitle">Community</h2>
+
+      <!-- Form header - orange (matches Community/referral-btn color) -->
+      <div class="form-header community-header" id="communityFormHeader">
+        <h3 class="form-title">Community</h3>
+        <p class="form-sub">Coming soon — join our community for news and events.</p>
+      </div>
+
+      <!-- Blank placeholder content -->
+      <p class="text-muted center mt-10">Content coming soon.</p>
+    </div>
+  </div>
+
+  <!-- Main Loan Calculator Section (unchanged) -->
+  <section class="calculator-section" id="calculator">
+    <h2>Loan Calculator</h2>
+
+    <div class="calculator-card">
+      <p class="calc-desc">Calculate EMI for your loan type.</p>
+
+      <div class="calc-tabs">
+        <button class="calc-tab active" onclick="switchTab(event, 'education')">Education Loan</button>
+        <button class="calc-tab" onclick="switchTab(event, 'balance')">Balance Transfer</button>
+      </div>
+
+      <!-- Education Tab -->
+      <div id="education" class="calc-content active">
+        <label>Loan amount (₹)</label>
+        <input id="calcLoanAmount" class="input" type="number" value="2000000">
+
+        <div class="calc-row">
+          <div class="calc-col">
+            <label>Tenure (yrs)</label>
+            <input id="calcTenure" class="input" type="number" value="5">
+          </div>
+          <div class="calc-col">
+            <label>Interest rate (% p.a.)</label>
+            <input id="calcRate" class="input" type="number" step="0.01" value="11.5">
+          </div>
+        </div>
+      </div>
+
+      <!-- Balance Transfer Tab -->
+      <div id="balance" class="calc-content">
+        <label>Current loan balance (₹)</label>
+        <input id="calcBtAmount" class="input" type="number" value="1500000">
+
+        <div class="calc-row">
+          <div class="calc-col">
+            <label>Remaining tenure (yrs)</label>
+            <input id="calcBtTenure" class="input" type="number" value="3">
+          </div>
+          <div class="calc-col">
+            <label>New interest rate (% p.a.)</label>
+            <input id="calcBtRate" class="input" type="number" step="0.01" value="9.5">
+          </div>
+        </div>
+      </div>
+
+      <button class="cta-btn calc-btn" onclick="calcLoan()">Calculate EMI</button>
+      <button class="cta-btn reset-btn" onclick="resetCalculator()">Reset</button>
+
+      <div id="calcResult"></div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section" id="services">
     <h2>Our Services</h2>
+
     <div class="service-grid">
-      <div class="service-card"><i class="ri-bank-line"></i><h3>Education Loans</h3><p>3-day sanction, ₹5000 bonus, US bank account & credit card help.</p></div>
-      <div class="service-card"><i class="ri-passport-line"></i><h3>Study Abroad Guidance</h3><p>University support, visa documentation, pre-departure checklist.</p></div>
-      <div class="service-card"><i class="ri-hand-coin-line"></i><h3>Personal Loans</h3><p>Partnered with Fi for fast personal loans beyond education.</p></div>
+
+      <div class="service-card">
+        <i class="fas fa-bolt"></i>
+        <h3>Lightning Fast Approvals</h3>
+        <p>Get loan approval in just 3 days with our streamlined process.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-graduation-cap"></i>
+        <h3>Education Support</h3>
+        <p>Special education loan schemes for students worldwide.</p>
+      </div>
+
+      <div class="service-card">
+        <i class="fas fa-handshake"></i>
+        <h3>Expert Guidance</h3>
+        <p>Dedicated counselors to guide you through every step.</p>
+      </div>
+
+      <div class="service-card" onclick="document.getElementById('balanceTransferFormModal').style.display='flex'">
+        <i class="fas fa-exchange-alt"></i>
+        <h3>Balance Transfer</h3>
+        <p>Switch to lower interest rates and reduce your EMI with zero paperwork assistance.</p>
+      </div>
+
     </div>
   </section>
 
-   <!-- PARTNER LOGOS -->
+  <!-- Partners -->
   <section class="partners">
     <h2 data-animate>Our Trusted Partners</h2>
     <div class="logo-slider" data-animate>
+      <!-- partner images -->
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner1.png?raw=true">
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner2.png?raw=true">
       <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner3.png?raw=true">
@@ -67,65 +258,24 @@
     </div>
   </section>
 
-  <!-- Why Us -->
-  <section id="why" class="why-us">
-    <h2>Why Choose Aspirafi?</h2>
-    <ul>
-      <li>Partnerships with 15+ top financial institutions</li>
-      <li>Transparent, student-friendly loan guidance</li>
-      <li>Expert counselling and visa support</li>
-      <li>One-stop platform for all your financial needs</li>
-    </ul>
-  </section>
-
   <!-- Contact -->
-  <section id="contact" class="contact">
-    <h2>Get Started</h2>
-    <p>📍 Visit: <a href="https://aspirafi.site">www.aspirafi.site</a></p>
+  <section class="contact" id="contact">
+    <h2>Get in Touch</h2>
+    <p>📍 Visit: <a href="https://www.aspirafi.site">www.aspirafi.site</a></p>
     <p>📧 Email: <a href="mailto:contact@aspirafi.site">contact@aspirafi.site</a></p>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 Aspirafi. All Rights Reserved.</p>
+    <p>&copy; 2025 Aspirafi. All rights reserved. | Empowering Financial Dreams</p>
   </footer>
 
-  <!-- Loan Modal -->
-  <div id="loanFormModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeLoanBtn">&times;</span>
-      <h2>Get Your ₹5000 Loan Bonus!</h2>
-      <form id="loanForm">
-        <input type="text" name="name" placeholder="Full Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="tel" name="phone" placeholder="Phone" required>
-        <input type="text" name="country" placeholder="Country" required>
-        <input type="text" name="intake" placeholder="Intake (e.g., Fall 2025)" required>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
+  <!-- ADDED: global toast container -->
+  <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Referral Modal -->
-  <div id="referralFormModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeReferralBtn">&times;</span>
-      <h2>Refer a Friend & Earn ₹2500!</h2>
-      <form id="referralForm">
-        <input type="text" name="yourName" placeholder="Your Full Name" required>
-        <input type="email" name="yourEmail" placeholder="Your Email" required>
-        <input type="tel" name="yourPhone" placeholder="Your Phone" required>
-        <input type="text" name="friendName" placeholder="Friend’s Full Name" required>
-        <input type="email" name="friendEmail" placeholder="Friend’s Email" required><input type="tel" name="friendPhone" placeholder="Friend’s Phone" required>
-
-        <input type="text" name="country" placeholder="Country" required>
-        <input type="text" name="intake" placeholder="Intake (e.g., Fall 2025)" required>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
+
+
+
