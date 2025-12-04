@@ -1,97 +1,385 @@
-/* Global */
+/* ========================
+   GLOBAL & LAYOUT
+   ======================== */
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Poppins', sans-serif; background:#0c0c0c; color:#f5f5f5; line-height:1.6; scroll-behavior:smooth; }
-h1,h2,h3 { font-weight:600; }
-a { text-decoration:none; color:inherit; }
-
-/* Navbar */
-.navbar { width:100%; padding:20px 80px; display:flex; justify-content:space-between; align-items:center; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); position:sticky; top:0; z-index:1000; }
-.navbar .logo { font-size:1.8rem; font-weight:700; color:#16a34a; }
-.navbar nav a { margin-left:30px; font-size:1.1rem; opacity:0.8; transition:opacity 0.3s,color 0.3s; }
-.navbar nav a:hover { opacity:1; color:#16a34a; }
-
-/* Hero */
-.hero { min-height:90vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 20px; background:linear-gradient(180deg,#0c0c0c 0%,#121212 100%); }
-.hero h1 { font-size:3.2rem; margin-bottom:20px; color:#fff; }
-.hero p { max-width:700px; margin:0 auto 30px; font-size:1.2rem; color:#bdbdbd; }
-
-/* CTA Buttons */
-.cta-btn { padding:15px 40px; border-radius:50px; font-size:1.1rem; transition: transform 0.3s, box-shadow 0.3s; display:inline-block; margin:10px; cursor:pointer; color:#fff; text-align:center; }
-.cta-btn:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(0,0,0,0.3); }
-
-/* Green Loan Button */
-#openLoanBtn { background:linear-gradient(90deg,#16a34a,#10b981); }
-#openLoanBtn:hover { box-shadow:0 8px 25px rgba(22,163,74,0.4); }
-
-/* Blue Referral Button */
-.referral-btn { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
-.referral-btn:hover { box-shadow:0 8px 25px rgba(59,130,246,0.4); }
-
-/* Services */
-.services-section { padding:100px 60px; text-align:center; }
-.services-section h2 { font-size:2.5rem; margin-bottom:50px; }
-.service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
-.service-card { background:#1a1a1a; padding:40px 30px; border-radius:20px; text-align:center; transition:transform 0.3s, box-shadow 0.3s; }
-.service-card:hover { transform:translateY(-8px); box-shadow:0 15px 40px rgba(0,0,0,0.4); }
-.service-card i { font-size:3rem; color:#16a34a; margin-bottom:20px; }
-.service-card h3 { font-size:1.5rem; margin-bottom:15px; }
-.service-card p { font-size:1rem; color:#bdbdbd; }
-
-/* ---------- Partners ---------- */
-.partners {
-  padding: 100px 60px;
-  text-align: center;
-  background: #0f0f0f;
+:root{
+  --bg:#ffffff;
+  --text:#0f1724;
+  --muted:#475569;
+  --brand-green-1:#16a34a;
+  --brand-green-2:#10b981;
+  --glass: rgba(255,255,255,0.9);
+}
+html,body { height:100%; }
+body {
+  font-family:'Poppins', sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;
 }
 
-.partners h2 {
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+/* ========================
+   NAVBAR
+   ======================== */
+.navbar {
+  width:100%;
+  padding:20px 80px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--glass);
+  backdrop-filter:blur(6px);
+  position:sticky;
+  top:0;
+  z-index:1000;
+  transition: box-shadow .28s ease, background .28s ease, padding .2s ease;
+  box-shadow:0 6px 18px rgba(15,23,36,0.03);
+}
+.navbar.scrolled {
+  padding:12px 48px;
+  box-shadow:0 18px 50px rgba(2,6,23,0.06);
+  background: rgba(255,255,255,0.95);
+}
+.navbar .logo { font-size:1.8rem; font-weight:700; color:var(--brand-green-1); letter-spacing:0.2px; }
+
+/* nav links */
+.navbar nav a { margin-left:30px; font-size:1.05rem; opacity:0.98; transition:opacity .25s,color .25s; color:var(--text); }
+.navbar nav a:hover { opacity:1; color:var(--brand-green-1); }
+
+/* ========================
+   HERO
+   ======================== */
+.hero {
+  min-height:82vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  background:linear-gradient(180deg,#ffffff 0%,#fbfbfd 100%);
+}
+.hero h1 { font-size:3.2rem; margin-bottom:18px; color:var(--text); line-height:1.05; }
+.hero p { max-width:880px; margin:0 auto 30px; font-size:1.125rem; color:var(--muted); }
+
+/* Buttons container */
+.hero-buttons { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:30px; }
+
+/* ========================
+   CTA BUTTONS
+   ======================== */
+.cta-btn {
+  padding:14px 40px;
+  border-radius:50px;
+  font-size:1.05rem;
+  transition: transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .32s ease;
+  display:inline-block;
+  margin:6px;
+  cursor:pointer;
+  color:#fff;
+  text-align:center;
+  border:none;
+  font-weight:600;
+  box-shadow:0 10px 28px rgba(16,24,40,0.06);
+  will-change: transform;
+}
+.cta-btn:hover { transform: translateY(-4px); box-shadow:0 22px 44px rgba(16,24,40,0.08); }
+
+/* Specific CTA colors */
+#openLoanBtn { background:linear-gradient(90deg,var(--brand-green-1),var(--brand-green-2)); }
+#openEducationLoanBtn { background:linear-gradient(90deg,#3b82f6,#60a5fa); }
+#openBalanceTransferBtn { background:linear-gradient(90deg,#a855f7,#d946ef); }
+.referral-btn { background:linear-gradient(90deg,#f97316,#fb923c); }
+
+/* small variation for full-width buttons used in modals */
+.modal-content .cta-btn { width:100%; padding:12px 16px; border-radius:50px; }
+
+/* ========================
+   SERVICES
+   ======================== */
+.services-section { padding:100px 60px; text-align:center; background:transparent; }
+.services-section h2 { font-size:2.5rem; margin-bottom:42px; color:var(--text); }
+
+/* service grid */
+.service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:28px; }
+.service-card {
+  background:#ffffff;
+  padding:36px 28px;
+  border-radius:16px;
+  text-align:center;
+  transition: transform .38s cubic-bezier(.2,.9,.2,1), box-shadow .38s ease;
+  border:1px solid rgba(15,23,36,0.04);
+  will-change: transform;
+}
+.service-card i { font-size:2.6rem; color:var(--brand-green-1); margin-bottom:18px; }
+.service-card h3 { font-size:1.15rem; margin-bottom:12px; color:var(--text); }
+.service-card p { font-size:1rem; color:var(--muted); }
+
+/* Card floating + subtle tilt */
+.service-card:hover {
+  transform: translateY(-12px) rotateZ(-0.3deg) scale(1.02);
+  box-shadow:0 30px 60px rgba(15,23,36,0.07);
 }
 
-/* Flex layout for logos */
-.logo-slider {
+/* ========================
+   PARTNERS / LOGOS
+   ======================== */
+.partners { padding:80px 60px; text-align:center; }
+.partners h2 { font-size:2.15rem; margin-bottom:30px; color:var(--text); }
+.logo-slider { display:flex; flex-wrap:wrap; gap:28px; justify-content:center; align-items:center; }
+.logo-slider img { height:60px; width:auto; filter:grayscale(0%); opacity:0.95; transition:transform .32s,opacity .3s,filter .3s; cursor:pointer; transform-origin:center; }
+
+/* slight hover pop */
+.logo-slider img:hover { transform: translateY(-6px) scale(1.06); opacity:1; }
+
+/* wave animation (keyframes used by JS with stagger) */
+@keyframes waveFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ========================
+   CALCULATOR
+   ======================== */
+.calculator-section { padding:80px 60px; text-align:center; }
+.calculator-section h2 { font-size:2.25rem; margin-bottom:30px; color:var(--text); }
+.calculator-card {
+  background:#f8fafc;
+  padding:28px;
+  border-radius:14px;
+  max-width:720px;
+  margin:0 auto;
+  text-align:left;
+  border:1px solid rgba(15,23,36,0.04);
+}
+.calc-tabs { display:flex; gap:10px; margin-bottom:18px; }
+.calc-tab {
+  padding:10px 18px;
+  border:none;
+  background:#eef2ff;
+  color:var(--text);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .22s;
+  font-weight:700;
+  flex:1;
+}
+.calc-tab.active { background:linear-gradient(90deg,var(--brand-green-1),var(--brand-green-2)); color:#fff; }
+.calc-content { display:none; }
+.calc-content.active { display:block; }
+.calc-content label { display:block; margin-top:12px; margin-bottom:6px; font-size:0.95rem; color:var(--muted); }
+.calc-content .input { width:100%; padding:12px 15px; background:#ffffff; border:1px solid #e6e8eb; border-radius:10px; color:var(--text); font-size:1rem; }
+.calc-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px; }
+
+/* result */
+.calculator-result { background:#ffffff; padding:16px; border-radius:10px; margin-top:16px; text-align:left; display:none; border:1px solid rgba(15,23,36,0.04); }
+.calculator-result.show { display:block; }
+.result-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(15,23,36,0.04); }
+.result-item:last-child { border-bottom:none; }
+.result-label { color:var(--muted); }
+.result-value { color:var(--brand-green-1); font-weight:800; }
+
+/* ========================
+   MODALS (zoom + fade)
+   ======================== */
+.modal {
+  display:none;
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(2,6,23,0.06);
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+  overflow-y:auto;
+  padding:28px;
+  transition: opacity .18s ease;
+}
+
+/* visible state */
+.modal.show { display:flex; }
+
+/* content animation */
+.modal-content {
+  background:#ffffff;
+  color:var(--text);
+  padding:28px;
+  border-radius:12px;
+  width:92%;
+  max-width:560px;
+  text-align:center;
+  position:relative;
+  margin:30px auto;
+  max-height:90vh;
+  overflow-y:auto;
+  box-shadow:0 20px 60px rgba(15,23,36,0.08);
+  transform: scale(.94) translateY(10px);
+  opacity:0;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .28s ease;
+}
+.modal.show .modal-content {
+  transform: scale(1) translateY(0);
+  opacity:1;
+}
+
+/* form header variants */
+.form-header { text-align:left; padding:12px 14px; border-radius:10px; margin-bottom:14px; color:#fff; }
+.edu-header { background: linear-gradient(90deg,#16a34a,#10b981); }
+.bt-header  { background: linear-gradient(90deg,#3b82f6,#60a5fa); }
+.ref-header { background: linear-gradient(90deg,#a855f7,#d946ef); }
+.community-header { background: linear-gradient(90deg,#f97316,#fb923c); }
+
+/* modal form fields */
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width:100%;
+  padding:12px 15px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #e6e8eb;
+  background:#ffffff;
+  color:var(--text);
+  font-size:1rem;
+}
+.modal-content input::placeholder { color:#9aa4b2; }
+.modal-content input:focus { outline:none; border-color:var(--brand-green-1); box-shadow:0 6px 18px rgba(16,163,74,0.06); }
+
+.close-btn {
+  position:absolute; top:12px; right:12px;
+  font-size:1.4rem; cursor:pointer; color:var(--text); background:transparent; border:none;
+}
+
+/* small helper */
+.text-muted { color:#64748b; }
+.center { text-align:center; }
+.mt-10 { margin-top:10px; }
+
+/* ========================
+   ANIMATION UTILITIES
+   ======================== */
+/* Fade up (primary reveal) */
+.fade-up { opacity:0; transform:translateY(28px); transition: all .7s cubic-bezier(.2,.9,.2,1); }
+.fade-up.show { opacity:1; transform:translateY(0); }
+
+/* Slide left / right helpers */
+.slide-left  { opacity:0; transform:translateX(-36px); transition: all .7s cubic-bezier(.2,.9,.2,1); }
+.slide-right { opacity:0; transform:translateX(36px);  transition: all .7s cubic-bezier(.2,.9,.2,1); }
+.slide-left.show, .slide-right.show { opacity:1; transform:translateX(0); }
+
+/* stagger helper for children */
+[data-stagger] > * { opacity:0; transform:translateY(14px); transition:all .6s cubic-bezier(.2,.9,.2,1); }
+[data-stagger].show > * { opacity:1; transform:translateY(0); }
+[data-stagger].show > * { transition-delay: calc(var(--i,0) * 0.08s); }
+
+/* ========================
+   FORM FEEDBACK + TOAST (APPENDED)
+   ======================== */
+.form-feedback {
+  min-height: 1.6em;
+  margin: 8px 0 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+  line-height: 1.2;
+}
+.form-feedback.success {
+  display: block;
+  color: #064e3b;
+  background: rgba(16,163,74,0.06);
+  border: 1px solid rgba(16,163,74,0.10);
+}
+.form-feedback.error {
+  display: block;
+  color: #7f1d1d;
+  background: rgba(220,38,38,0.06);
+  border: 1px solid rgba(220,38,38,0.10);
+}
+
+/* global toast container */
+#toastContainer {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 28px;
+  z-index: 13000;
   display: flex;
-  flex-wrap: wrap;
-  gap: 40px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  background: rgba(2,6,23,0.92);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.2);
+  transition: opacity .28s ease, transform .28s ease;
+}
+.toast.hide { opacity: 0; transform: translateY(8px); }
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media(max-width:1024px) {
+  .navbar { padding:18px 30px; }
+  .hero h1 { font-size:2.6rem; }
+}
+@media(max-width:768px) {
+  .navbar { padding:15px 18px; }
+  .navbar nav a { margin-left:12px; font-size:0.95rem; }
+  .hero { padding:28px 18px; }
+  .hero h1 { font-size:2rem; }
+  .hero p { font-size:1rem; }
+  .hero-buttons { flex-direction:column; align-items:center; }
+  .cta-btn { width:100%; max-width:320px; }
+  .services-section, .contact, .calculator-section, .partners { padding:60px 20px; }
+  .calculator-card { padding:18px; }
+  .calc-row { grid-template-columns:1fr; }
+  .logo-slider img { height:50px; }
 }
 
-.logo-slider img {
-  height: 60px;
-  width: auto;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: filter 0.3s, opacity 0.3s, transform 0.3s;
-  cursor: pointer;
+/* ========================
+   ACCESSIBILITY: Reduce Motion
+   ======================== */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .slide-left, .slide-right, .service-card, .modal-content, .logo-slider img {
+    transition:none !important;
+    transform:none !important;
+    opacity:1 !important;
+    animation:none !important;
+  }
+}
+/* ============================
+   CALCULATOR BUTTON COLORS
+   ============================ */
+
+/* Calculate EMI button — Blue gradient */
+.calc-btn {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25) !important;
 }
 
-.logo-slider img:hover {
-  filter: grayscale(0%);
-  opacity: 1;
-  transform: scale(1.1);
+/* Reset button — Red/Pink gradient */
+.reset-btn {
+  background: linear-gradient(90deg, #ef4444, #fb7185) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.25) !important;
 }
 
-/* Why Us */
-.why-us { padding:100px 60px; text-align:center; }
-.why-us h2 { font-size:2.5rem; margin-bottom:40px; }
-.why-us ul { list-style:none; max-width:700px; margin:0 auto; text-align:left; font-size:1.2rem; }
-.why-us li { padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.1); }
+/* Optional — stronger hover animation */
+.calc-btn:hover,
+.reset-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
 
-/* Contact */
-.contact { padding:100px 60px; text-align:center; background:#0f0f0f; }
-.contact h2 { font-size:2.5rem; margin-bottom:30px; }
-.contact p { font-size:1.2rem; margin-bottom:10px; }
-.contact a { color:#16a34a; font-weight:600; }
 
-/* Footer */
-footer { background:#000; text-align:center; padding:25px; font-size:0.95rem; color:#777; border-top:1px solid rgba(255,255,255,0.1); }
 
-/* Modals */
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:10000; }
-.modal-content { background:#1a1a1a; padding:30px; border-radius:15px; width:90%; max-width:400px; text-align:center; position:relative; }
-.modal-content h2 { margin-bottom:20px; }
-.modal-content input { width:100%; padding:12px 15px; margin:8px 0; border-radius:8px; border:none; outline:none; }
-.modal-content button { width:100%; padding:12px; border:none; border-radius:50px; color:#fff; cursor:pointer; font-size:1.1rem; }
-.close-btn { position:absolute; top:15px; right:15px; font-size:1.5rem; cursor:pointer; color:#fff; }
