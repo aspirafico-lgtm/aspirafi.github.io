@@ -57,6 +57,8 @@
       </div>
 
       <form id="educationLoanForm" aria-labelledby="eduFormHeader">
+        <!-- ADDED: formType -->
+        <input type="hidden" name="formType" value="educationLoan">
         <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="tel" name="phone" placeholder="Phone Number" required>
@@ -85,6 +87,8 @@
       </div>
 
       <form id="balanceTransferForm" aria-labelledby="btFormHeader">
+        <!-- ADDED: formType -->
+        <input type="hidden" name="formType" value="balanceTransfer">
         <input type="text" name="name" placeholder="Full Name" required>
         <input type="email" name="email" placeholder="Email" required>
         <input type="tel" name="phone" placeholder="Phone Number" required>
@@ -113,6 +117,8 @@
       </div>
 
       <form id="referralForm" aria-labelledby="refFormHeader">
+        <!-- ADDED: formType -->
+        <input type="hidden" name="formType" value="referral">
         <input type="text" name="yourName" placeholder="Your Name" required>
         <input type="email" name="yourEmail" placeholder="Your Email" required>
         <input type="tel" name="yourPhone" placeholder="Your Phone" required>
@@ -259,23 +265,34 @@
   </section>
 
   <!-- Contact -->
-  <section class="contact" id="contact">
-    <h2>Get in Touch</h2>
-    <p>📍 Visit: <a href="https://www.aspirafi.site">www.aspirafi.site</a></p>
-    <p>📧 Email: <a href="mailto:contact@aspirafi.site">contact@aspirafi.site</a></p>
-  </section>
+<section class="contact" id="contact">
+  <h2>Get in Touch</h2>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Aspirafi. All rights reserved. | Empowering Financial Dreams</p>
-  </footer>
+  <p>
+    <i class="fas fa-globe"></i>
+    <a href="https://www.aspirafi.site" target="_blank" rel="noopener">
+      www.aspirafi.site
+    </a>
+  </p>
 
-  <!-- ADDED: global toast container -->
-  <div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+  <p>
+    <i class="fas fa-envelope"></i>
+    <a href="mailto:contact@aspirafi.site">
+      contact@aspirafi.site
+    </a>
+  </p>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <p>
+    <i class="fas fa-phone"></i>
+    <a href="tel:+917676148787">
+      +91 76761 48787
+    </a>
+  </p>
 
-
-
+  <p>
+    <i class="fab fa-whatsapp"></i>
+    <a href="https://wa.me/917676148787" target="_blank" rel="noopener">
+      WhatsApp: 76761 48787
+    </a>
+  </p>
+</section>
