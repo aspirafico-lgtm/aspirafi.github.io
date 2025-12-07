@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 /* ==========================================================
    script.js — Animations, Modals, Calculator, & Logo Stagger
    ========================================================== */
@@ -259,3 +260,4 @@ const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUcE9TtLAbqtsRQqoa
   });
 
 })();
+});
