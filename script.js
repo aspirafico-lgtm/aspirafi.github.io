@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
    ========================================================== */
 
 /* ========== CONFIG: set your Apps Script Web App URL ========== */
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUcE9TtLAbqtsRQqoaRw4j1USPM6HvjVBoED7q-L_pfuK1FbFes7UDsQJ-iXrTGLH9/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxqLlMPl_2DVDu-IeRbnB3tqGvhbUT7c-cOkWALv5pMoXAH8cYYsVtc-Es6qKi6QLlK/exec";
 
 /* ---------- NAVBAR SCROLL EFFECT ---------- */
 (function navbarScroll() {
