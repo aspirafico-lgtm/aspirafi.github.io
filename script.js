@@ -1,263 +1,222 @@
 document.addEventListener("DOMContentLoaded", function () {
-/* ==========================================================
-   script.js — Animations, Modals, Calculator, & Logo Stagger
-   ========================================================== */
 
-/* ========== CONFIG: set your Apps Script Web App URL ========== */
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxqLlMPl_2DVDu-IeRbnB3tqGvhbUT7c-cOkWALv5pMoXAH8cYYsVtc-Es6qKi6QLlK/exec";
+  /* ==========================================================
+     CONFIG — Google Apps Script Web App URL
+     ========================================================== */
+  const WEB_APP_URL =
+    "https://script.google.com/macros/s/AKfycbwk4W0_DLjtj1CLqev_c3Dc2z7mGFnmKHkA2KYmKOPKvXFqj4kstFHMVLH0dhlgOU5M/exec";
 
-/* ---------- NAVBAR SCROLL EFFECT ---------- */
-(function navbarScroll() {
-  const navbar = document.querySelector(".navbar");
-  if (!navbar) return;
-  const onScroll = () => {
-    if (window.scrollY > 50) navbar.classList.add("scrolled");
-    else navbar.classList.remove("scrolled");
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-})();
+  /* ==========================================================
+     NAVBAR SCROLL EFFECT
+     ========================================================== */
+  (function navbarScroll() {
+    const navbar = document.querySelector(".navbar");
+    if (!navbar) return;
 
-/* ---------- INTERSECTION OBSERVER: REVEALS ---------- */
-(function setupObserver() {
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) {
-    document.querySelectorAll('[data-animate], .fade-up, .slide-left, .slide-right').forEach(el => el.classList.add('show'));
-    return;
-  }
+    function onScroll() {
+      if (window.scrollY > 50) navbar.classList.add("scrolled");
+      else navbar.classList.remove("scrolled");
+    }
 
-  const io = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      el.classList.add('show');
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  })();
 
-      if (el.hasAttribute('data-stagger')) {
-        Array.from(el.children).forEach((child, i) => {
-          child.style.setProperty('--i', i);
-          child.classList.add('show');
-        });
-      }
+  /* ==========================================================
+     MODAL HANDLING
+     ========================================================== */
+  (function modals() {
 
-      obs.unobserve(el);
-    });
-  }, { threshold: 0.12 });
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.style.display = "flex";
+      requestAnimationFrame(() => modal.classList.add("show"));
+      document.documentElement.style.overflow = "hidden";
+    }
 
-  document.querySelectorAll('[data-animate], .fade-up, .slide-left, .slide-right, [data-stagger]').forEach(el => io.observe(el));
-})();
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove("show");
+      setTimeout(() => {
+        modal.style.display = "none";
+        document.documentElement.style.overflow = "";
+      }, 300);
+    }
 
-/* ---------- MODAL HANDLING (openModal/closeModal) ---------- */
-(function modals() {
-  function openModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.style.display = 'flex';
-    requestAnimationFrame(() => modal.classList.add('show'));
-    document.documentElement.style.overflow = 'hidden';
-  }
+    window.openModal = openModal;
+    window.closeModal = closeModal;
 
-  function closeModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    modal.classList.remove('show');
-    setTimeout(() => {
-      modal.style.display = 'none';
-      if (!document.querySelector('.modal.show')) {
-        document.documentElement.style.overflow = '';
-      }
-    }, 300);
-  }
-
-  window.openModal = openModal;
-  window.closeModal = closeModal;
-
-  try {
-    const map = [
-      ['openLoanBtn', 'educationLoanFormModal'],
-      ['openEducationLoanBtn', 'balanceTransferFormModal'],
-      ['openBalanceTransferBtn', 'referralFormModal'],
-      ['openReferralBtn', 'communityModal']
+    const modalMap = [
+      ["openLoanBtn", "educationLoanFormModal"],
+      ["openEducationLoanBtn", "balanceTransferFormModal"],
+      ["openBalanceTransferBtn", "referralFormModal"],
+      ["openReferralBtn", "communityModal"]
     ];
-    map.forEach(([btnId, modalId])=>{
+
+    modalMap.forEach(([btnId, modalId]) => {
       const btn = document.getElementById(btnId);
-      if (!btn) return;
-      btn.addEventListener('click', ()=> openModal(modalId));
+      if (btn) btn.addEventListener("click", () => openModal(modalId));
     });
 
-    document.querySelectorAll('.modal .close-btn').forEach(btn=>{
-      btn.addEventListener('click', ()=> {
-        const modal = btn.closest('.modal');
-        if (modal && modal.id) closeModal(modal.id);
+    document.querySelectorAll(".modal .close-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const modal = btn.closest(".modal");
+        if (modal) closeModal(modal.id);
       });
     });
 
-    window.addEventListener('click', (e)=>{
-      document.querySelectorAll('.modal.show').forEach(modal=>{
+    window.addEventListener("click", e => {
+      document.querySelectorAll(".modal.show").forEach(modal => {
         if (e.target === modal) closeModal(modal.id);
       });
     });
 
-    window.addEventListener('keydown', (e)=>{
-      if (e.key === 'Escape') {
-        document.querySelectorAll('.modal.show').forEach(m => closeModal(m.id));
+    window.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        document.querySelectorAll(".modal.show").forEach(modal =>
+          closeModal(modal.id)
+        );
       }
     });
-  } catch (err) {
-    console.warn('Modal wiring issue', err);
-  }
-})();
 
-/* ---------- CALCULATOR: EMI + UTIL ---------- */
-(function calculator() {
-  function switchTab(evt, tabName) {
-    document.querySelectorAll(".calc-tab").forEach(tab => tab.classList.remove("active"));
-    document.querySelectorAll(".calc-content").forEach(content => content.classList.remove("active"));
-    if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
-    const el = document.getElementById(tabName);
-    if (el) el.classList.add("active");
-  }
+  })();
 
-  function calcLoan() {
-    const isEducation = document.getElementById("education")?.classList.contains("active");
-    let principal = isEducation
-      ? Number(document.getElementById("calcLoanAmount").value || 0)
-      : Number(document.getElementById("calcBtAmount").value || 0);
+  /* ==========================================================
+     FORM SUBMIT → GOOGLE SHEETS
+     ========================================================== */
+  (function formSubmit() {
 
-    let tenure = isEducation
-      ? Number(document.getElementById("calcTenure").value || 0)
-      : Number(document.getElementById("calcBtTenure").value || 0);
-
-    let rate = isEducation
-      ? Number(document.getElementById("calcRate").value || 0)
-      : Number(document.getElementById("calcBtRate").value || 0);
-
-    if (!principal || !tenure || !rate) {
-      return flashCalc('Please enter valid inputs.');
+    function showMessage(form, msg, type) {
+      const box = form.querySelector(".form-feedback");
+      if (!box) return;
+      box.textContent = msg;
+      box.className = "form-feedback " + type;
+      box.style.display = "block";
     }
 
-    const monthlyRate = rate / 12 / 100;
-    const months = tenure * 12;
-    const pow = Math.pow(1 + monthlyRate, months);
-    const emi = (principal * monthlyRate * pow) / (pow - 1) || 0;
-    const totalPayment = emi * months;
-    const totalInterest = totalPayment - principal;
+    document.querySelectorAll("form").forEach(form => {
+      form.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!form.checkValidity()) return;
 
-    const result = document.getElementById('calcResult');
-    if (!result) return;
-    result.innerHTML = `
-      <div class="calculator-result show" role="status" aria-live="polite">
-        <div class="result-item">
-          <span class="result-label">Monthly EMI</span>
-          <span class="result-value">₹${Number(emi).toFixed(0)}</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Total Interest</span>
-          <span class="result-value">₹${Number(totalInterest).toFixed(0)}</span>
-        </div>
-        <div class="result-item">
-          <span class="result-label">Total Payment</span>
-          <span class="result-value">₹${Number(totalPayment).toFixed(0)}</span>
-        </div>
-      </div>
-    `;
-  }
-
-  function resetCalculator() {
-    document.getElementById('calcResult').innerHTML = '';
-  }
-
-  function flashCalc(msg) {
-    const result = document.getElementById('calcResult');
-    if (!result) return;
-    result.innerHTML = `<div class="calculator-result show"><div style="padding:10px;color:#7f8c8d">${msg}</div></div>`;
-  }
-
-  window.switchTab = switchTab;
-  window.calcLoan = calcLoan;
-  window.resetCalculator = resetCalculator;
-})();
-
-/* ---------- PARTNER LOGO STAGGER ---------- */
-(function logoWave() {
-  const logos = document.querySelectorAll('.logo-slider img');
-  logos.forEach((logo, i) => {
-    const delay = (i % 6) * 0.08;
-    logo.style.animation = `waveFloat 2.6s ease-in-out ${delay}s infinite`;
-    logo.style.willChange = 'transform';
-  });
-})(); 
-/* ============================
-   FORM SUBMIT → GOOGLE SHEETS
-   ============================ */
-(function formSubmit() {
-
-  function showMessage(form, msg, type = 'success') {
-    const fb = form.querySelector('.form-feedback');
-    if (!fb) return;
-    fb.textContent = msg;
-    fb.className = `form-feedback ${type}`;
-  }
-
-  function setupButton(form) {
-    const btn = form.querySelector('button[type="submit"]');
-    if (!btn) return;
-
-    const requiredFields = form.querySelectorAll('[required]');
-
-    function checkValidity() {
-      if (form.checkValidity()) {
-        btn.disabled = false;
-        btn.classList.remove('btn-disabled');
-        btn.classList.add('btn-ready');
-      } else {
+        const btn = form.querySelector("button[type='submit']");
+        const originalText = btn.innerHTML;
         btn.disabled = true;
-        btn.classList.add('btn-disabled');
-        btn.classList.remove('btn-ready');
-      }
-    }
+        btn.innerHTML = "Submitting...";
 
-    requiredFields.forEach(f => f.addEventListener('input', checkValidity));
-    checkValidity();
-  }
+        try {
+          const formData = new FormData(form);
 
-  document.querySelectorAll('form').forEach(form => {
-    setupButton(form);
+          await fetch(WEB_APP_URL, {
+            method: "POST",
+            body: new URLSearchParams(formData)
+          });
 
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
+          showMessage(form, "✅ Submitted successfully!", "success");
+          form.reset();
 
-      if (!form.checkValidity()) return;
+          const modal = form.closest(".modal");
+          if (modal) setTimeout(() => closeModal(modal.id), 900);
 
-      const btn = form.querySelector('button[type="submit"]');
-      const original = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = 'Submitting...';
-
-      try {
-        const data = new FormData(form);
-
-        await fetch(WEB_APP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: new URLSearchParams(data)
-        });
-
-        showMessage(form, '✅ Your form has been successfully submitted.', 'success');
-        form.reset();
-        setupButton(form);
-
-        const modal = form.closest('.modal');
-        if (modal && window.closeModal) {
-          setTimeout(() => closeModal(modal.id), 800);
+        } catch (err) {
+          showMessage(form, "❌ Submission failed. Try again.", "error");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
         }
-
-      } catch (err) {
-        showMessage(form, '❌ Submission failed. Please try again.', 'error');
-      } finally {
-        btn.innerHTML = original;
-      }
+      });
     });
-  });
 
-})();
+  })();
+
+  /* ==========================================================
+     LOAN CALCULATOR
+     ========================================================== */
+  (function calculator() {
+
+    window.switchTab = function (evt, tabName) {
+      document.querySelectorAll(".calc-tab").forEach(tab =>
+        tab.classList.remove("active")
+      );
+      document.querySelectorAll(".calc-content").forEach(c =>
+        c.classList.remove("active")
+      );
+
+      if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
+      const el = document.getElementById(tabName);
+      if (el) el.classList.add("active");
+    };
+
+    window.calcLoan = function () {
+      const isEducation =
+        document.getElementById("education")?.classList.contains("active");
+
+      const principal = Number(
+        document.getElementById(
+          isEducation ? "calcLoanAmount" : "calcBtAmount"
+        ).value || 0
+      );
+
+      const tenure = Number(
+        document.getElementById(
+          isEducation ? "calcTenure" : "calcBtTenure"
+        ).value || 0
+      );
+
+      const rate = Number(
+        document.getElementById(
+          isEducation ? "calcRate" : "calcBtRate"
+        ).value || 0
+      );
+
+      if (!principal || !tenure || !rate) return;
+
+      const monthlyRate = rate / 12 / 100;
+      const months = tenure * 12;
+      const pow = Math.pow(1 + monthlyRate, months);
+      const emi = (principal * monthlyRate * pow) / (pow - 1);
+
+      const totalPayment = emi * months;
+      const totalInterest = totalPayment - principal;
+
+      document.getElementById("calcResult").innerHTML = `
+        <div class="calculator-result show">
+          <div class="result-item">
+            <span class="result-label">Monthly EMI</span>
+            <span class="result-value">₹${emi.toFixed(0)}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Total Interest</span>
+            <span class="result-value">₹${totalInterest.toFixed(0)}</span>
+          </div>
+          <div class="result-item">
+            <span class="result-label">Total Payment</span>
+            <span class="result-value">₹${totalPayment.toFixed(0)}</span>
+          </div>
+        </div>
+      `;
+    };
+
+    window.resetCalculator = function () {
+      document.getElementById("calcResult").innerHTML = "";
+    };
+
+  })();
+
+  /* ==========================================================
+     AUTO SCROLL TO LOAN CALCULATOR
+     ========================================================== */
+  (function autoScrollCalculator() {
+    if (window.location.hash === "#loan-calculator") {
+      setTimeout(() => {
+        const el = document.getElementById("loan-calculator");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
+    }
+  })();
+
 });
