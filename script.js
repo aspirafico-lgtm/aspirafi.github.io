@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
      CONFIG — Google Apps Script Web App URL
      ========================================================== */
   const WEB_APP_URL =
-    "https://script.google.com/macros/s/AKfycbwk4W0_DLjtj1CLqev_c3Dc2z7mGFnmKHkA2KYmKOPKvXFqj4kstFHMVLH0dhlgOU5M/exec";
+    "https://script.google.com/macros/s/AKfycbx2qR7xkOyDQNp_sRtmZDDjRL2_rnaMEP_xbRF-ibu5TYrwJMtUDmr_-IjE-wV196wO/exec";
 
   /* ==========================================================
      NAVBAR SCROLL EFFECT
