@@ -10,7 +10,6 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Education loans for US/UK/Canada starting 8.9%. 3-day approval. EMI calculator for study abroad.">
     <meta name="keywords" content="education loan, study abroad, student loan, US UK Canada university">
-
     <style>
         :root {
             --brand-lime: #D9FF00;
@@ -25,6 +24,54 @@
             --light-bg: #0A0F1A;
             --dark-bg: #F8FAFC;
             --dark-text: #0F172A;
+        }
+
+        /* 👇 CALCULATOR FIXES - OUTSIDE :root */
+        .calculator-container {
+            margin-top: 1rem !important;
+            max-height: none !important;
+            overflow: visible !important;
+            height: auto !important;
+            min-height: 380px !important;
+        }
+
+        .amount-display,
+        #displayAmount {
+            font-size: 2.5rem !important;
+        }
+
+        .emi-display,
+        #displayEMI {
+            font-size: 2.25rem !important;
+        }
+
+        #btRoiBlock,
+        #savingsBox {
+            max-height: 180px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .calculator-container {
+                padding: 0.75rem !important;
+                margin-top: 0.5rem !important;
+                min-height: 360px !important;
+            }
+
+            .amount-display,
+            #displayAmount {
+                font-size: 2rem !important;
+            }
+
+            .emi-display,
+            #displayEMI {
+                font-size: 1.75rem !important;
+            }
+
+            #btRoiBlock {
+                gap: 0.5rem !important;
+                padding: 0.25rem 0;
+            }
         }
 
         * {
@@ -335,24 +382,31 @@
             }
 
             .calculator-container {
-                margin-top: 2rem;
+                margin-top: 0.5rem !important;
+                /* 👈 CHANGE: 2rem → 0.5rem */
+                padding: 0.75rem !important;
+                /* 👈 ADD THIS */
+                min-height: 360px !important;
+                /* Keep this */
             }
 
-            input[type=range]::-webkit-slider-thumb {
-                height: 32px;
-                width: 32px;
-                border-width: 3px;
-            }
+        }
 
-            .nav-logo i {
-                font-size: 1.5rem !important;
-            }
+        input[type=range]::-webkit-slider-thumb {
+            height: 32px;
+            width: 32px;
+            border-width: 3px;
+        }
 
-            .modal-content {
-                padding: 2rem;
-                margin: 1rem;
-                border-radius: 2rem;
-            }
+        .nav-logo i {
+            font-size: 1.5rem !important;
+        }
+
+        .modal-content {
+            padding: 2rem;
+            margin: 1rem;
+            border-radius: 2rem;
+        }
         }
 
         @media (max-width: 640px) {
@@ -367,7 +421,7 @@
             }
         }
 
-        /* XL screens â€“ reduce empty hero space */
+        /* XL screens Ã¢â‚¬â€œ reduce empty hero space */
         @media (min-width: 1280px) {
             .hero-title {
                 margin-bottom: 2.5rem;
@@ -438,7 +492,7 @@
     </nav>
 
     <!-- HERO -->
-    <section class="relative pt-44 pb-12 px-6 w-screen">
+    <section class="relative pt-32 pb-8 px-4 w-screen">
         <svg class="globe-orbit" viewBox="0 0 100 100">
             <circle cx="50" cy="50" r="45" fill="none" stroke="var(--brand-lime)" stroke-width="1" opacity="0.3" />
             <circle cx="50" cy="50" r="35" fill="none" stroke="var(--brand-green)" stroke-width="1" opacity="0.2" transform="rotate(-60 50 50)" />
@@ -497,7 +551,7 @@
                         </div>
                         <div>
                             <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Loans</p>
-                            <p class="font-bold text-lg">â‚¹500+ Cr</p>
+                            <p class="font-bold text-lg">₹500+ Cr</p>
                         </div>
                     </div>
 
@@ -527,8 +581,8 @@
 
                         <div class="mb-8 md:mb-10 relative">
                             <p class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 tracking-wider">Loan Amount</p>
-                            <p id="displayAmount" class="text-4xl md:text-5xl font-bold text-gray-900">â‚¹40,00,000</p>
-                            <input type="range" id="amountSlider" min="100000" max="20000000" step="50000" value="4000000" class="mt-4 md:mt-6 w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-lime">
+                            <p id="displayAmount" class="text-4xl md:text-5xl font-bold text-gray-900">₹40,00,000</p>
+                            <input type="range" id="amountSlider" min="100000" max="50000000" step="500000" value="4000000" class="mt-2 w-full h-2 bg-slate-200 rounded-lg" class="mt-4 md:mt-6 w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-lime">
                         </div>
 
                         <div id="elRoiBlock" class="grid grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
@@ -546,7 +600,8 @@
                             </div>
                         </div>
 
-                        <div id="btRoiBlock" class="hidden grid grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
+                        <div id="btRoiBlock" class="grid grid-cols-2 gap-2 mb-3 max-h-40 overflow-hidden hidden">
+
                             <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 block tracking-wider">Old ROI</label>
                                 <input id="oldRoi" type="number" step="0.01" value="12.00" class="w-full p-4 md:p-5 rounded-2xl md:rounded-3xl bg-slate-50/80 font-bold text-base md:text-lg border border-slate-200 hover:border-slate-300 transition-all">
@@ -559,12 +614,12 @@
 
                         <div class="bg-[#0F172A] rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 mb-6 md:mb-8 text-white emi-glow">
                             <p class="text-xs md:text-sm opacity-75 uppercase tracking-wider mb-1 md:mb-2">Estimated Monthly EMI</p>
-                            <p id="displayEMI" class="text-4xl md:text-5xl font-bold transition-all duration-200">â‚¹89,160</p>
+                            <p id="displayEMI" class="text-4xl md:text-5xl font-bold transition-all duration-200">₹89,160</p>
                         </div>
 
                         <div id="savingsBox" class="hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl md:rounded-3xl p-6 md:p-8 mb-6 md:mb-10 border border-green-100 shadow-lg">
                             <p class="text-xs uppercase font-bold text-green-700 mb-1 md:mb-2 tracking-wider">Monthly Savings</p>
-                            <p id="savingsAmount" class="text-3xl md:text-4xl font-bold text-green-800">â‚¹0</p>
+                            <p id="savingsAmount" class="text-3xl md:text-4xl font-bold text-green-800">₹0</p>
                         </div>
 
                         <button id="checkEligibilityBtn" class="w-full py-5 md:py-6 rounded-2xl md:rounded-3xl bg-[#D9FF00] text-black font-bold text-lg md:text-xl uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200" onclick="showEligibilityModal()">
@@ -654,7 +709,7 @@
                             </div>
                             <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Loan Amount *</label>
-                                <input id="modalLoanAmount" type="number" placeholder="â‚¹40,00,000" step="50000" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
+                                <input id="modalLoanAmount" type="number" placeholder="₹40,00,000" step="50000" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
                             </div>
                         </div>
                         <div>
@@ -667,11 +722,11 @@
                         <button type="button" onclick="hideEligibilityModal()" class="flex-1 py-4 px-6 rounded-3xl bg-slate-100 text-slate-700 font-bold text-lg hover:bg-slate-200 transition-all">
                             Cancel
                         </button>
-                    <button type="submit" form="eligibilityForm" id="modalSubmitBtn" class="flex-1 py-4 px-6 rounded-3xl bg-[#D9FF00] text-black font-bold text-lg uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200">
-    Get My Options
-</button>
+                        <button type="submit" form="eligibilityForm" id="modalSubmitBtn" class="flex-1 py-4 px-6 rounded-3xl bg-[#D9FF00] text-black font-bold text-lg uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200">
+                            Get My Options
+                        </button>
                     </div>
-                                        <!-- ðŸ‘‡ HIDDEN FIELDS FOR GOOGLE SHEETS ðŸ‘‡ -->
+                    <!-- Ã°Å¸â€˜â€¡ HIDDEN FIELDS FOR GOOGLE SHEETS Ã°Å¸â€˜â€¡ -->
                     <input type="hidden" name="fullName" id="modalUserName" value="">
                     <input type="hidden" name="email" id="modalUserEmail" value="">
                     <input type="hidden" name="phone" id="modalUserPhone" value="">
@@ -680,7 +735,7 @@
                     <input type="hidden" name="LoanAmount" id="sheetLoanAmount">
                     <input type="hidden" name="ROI" id="sheetROI">
                     <input type="hidden" name="Mode" id="sheetMode">
-                    <!-- ðŸ‘† END HIDDEN FIELDS ðŸ‘† -->
+                    <!-- Ã°Å¸â€˜â€  END HIDDEN FIELDS Ã°Å¸â€˜â€  -->
                 </form>
 
             </div>
@@ -693,13 +748,13 @@
                     <i class="fas fa-check text-4xl text-black"></i>
                 </div>
                 <h2 id="successTitle" class="text-3xl font-bold mb-3">
-                    Application Submitted ðŸŽ‰
+                    Application Submitted Ã°Å¸Å½â€°
                 </h2>
 
                 <p id="successMessage" class="text-lg text-slate-600 mb-6">
                     Our team will contact you within <b>24 hours</b>.
                 </p>
-                <p class="font-semibold text-slate-800">Sit back â€” we've got this ðŸš€</p>
+                <p class="font-semibold text-slate-800">Sit back Ã¢â‚¬â€ we've got this Ã°Å¸Å¡â‚¬</p>
                 <button onclick="hideSuccessPopup()" class="mt-8 px-10 py-4 bg-black text-white font-bold rounded-full hover:scale-105 transition-all">
                     Done
                 </button>
@@ -715,7 +770,7 @@
                         <i class="fas fa-gift text-3xl text-black"></i>
                     </div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-2">
-                        Refer & Earn â‚¹5,000
+                        Refer & Earn ₹,000
                     </h2>
                     <p class="text-slate-500 text-lg">
                         Share with friends planning to study abroad
@@ -875,7 +930,7 @@
                             Balance <br>Transfer
                         </h3>
 
-                        <!-- DESCRIPTION (NEW â€“ THIS IS WHAT YOU ASKED) -->
+                        <!-- DESCRIPTION (NEW Ã¢â‚¬â€œ THIS IS WHAT YOU ASKED) -->
                         <p class="text-lg font-medium text-slate-800 max-w-xs mb-auto">
                             Lower your existing loan EMI by switching to better interest rates.
                         </p>
@@ -884,7 +939,7 @@
                         <div class="flex justify-between items-end mt-10">
                             <p class="text-base font-bold text-slate-900 leading-tight">
                                 Save up to <br>
-                                <span class="text-3xl">â‚¹5,000/mo</span>
+                                <span class="text-3xl">₹5,000/mo</span>
                             </p>
 
                             <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-2xl cursor-pointer hover:scale-110 transition-transform" onclick="openBalanceTransferForm()">
@@ -912,8 +967,8 @@
                             <div class="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center mb-12 shadow-2xl">
                                 <i class="fas fa-users text-2xl"></i>
                             </div>
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 leading-tight">Refer & Earn <br><span class="text-4xl">â‚¹5,000</span></h3>
-                            <p class="text-slate-600 text-xl leading-relaxed font-medium mb-8">Get â‚¹5,000 cashback for every friend whose loan is successfully disbursed through Aspirafi.</p>
+                            <h3 class="text-3xl font-bold text-slate-900 mb-4 leading-tight">Refer & Earn <br><span class="text-4xl">₹5,000</span></h3>
+                            <p class="text-slate-600 text-xl leading-relaxed font-medium mb-8">Get ₹5,000 cashback for every friend whose loan is successfully disbursed through Aspirafi.</p>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
@@ -961,7 +1016,7 @@
 
     <footer class="py-16 px-6 bg-gradient-to-r from-slate-50 to-gray-50 max-w-7xl mx-auto border-t-2 border-slate-100">
         <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <p class="text-slate-500 text-lg font-semibold">Â© 2026 Aspirafi Education Finance. Built for global ambitions.</p>
+            <p class="text-slate-500 text-lg font-semibold">© 2026 Aspirafi Education Finance. Built for global ambitions.</p>
             <div class="flex gap-6 items-center">
                 <i class="fab fa-twitter text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
                 <a href="https://www.linkedin.com/company/109628456/" target="_blank" aria-label="Aspirafi on LinkedIn" class="fab fa-linkedin text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></a>
@@ -1019,10 +1074,10 @@
         }
 
         modalSubmitBtn.onclick = function() {
-            console.log('ðŸŸ¢ SUBMIT BUTTON CLICKED');
+            console.log('Ã°Å¸Å¸Â¢ SUBMIT BUTTON CLICKED');
 
             if (!validateForm()) {
-                console.log('âŒ Validation failed');
+                console.log('Ã¢ÂÅ’ Validation failed');
                 return;
             }
 
@@ -1052,16 +1107,16 @@
         function calculate() {
             const P = Number(amountSlider.value);
             const years = Number(tenure.value);
-            displayAmount.innerText = 'â‚¹' + P.toLocaleString('en-IN');
+            displayAmount.innerText = '₹' + P.toLocaleString('en-IN');
 
             if (mode === 'EL') {
                 const emi = emiCalc(P, Number(roiInput.value), years);
-                displayEMI.innerText = 'â‚¹' + Math.round(emi).toLocaleString('en-IN');
+                displayEMI.innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
             } else {
                 const oldEmi = emiCalc(P, Number(oldRoi.value), years);
                 const newEmi = emiCalc(P, Number(newRoi.value), years);
-                displayEMI.innerText = 'â‚¹' + Math.round(newEmi).toLocaleString('en-IN');
-                savingsAmount.innerText = 'â‚¹' + Math.round(oldEmi - newEmi).toLocaleString('en-IN');
+                displayEMI.innerText = '₹' + Math.round(newEmi).toLocaleString('en-IN');
+                savingsAmount.innerText = '₹' + Math.round(oldEmi - newEmi).toLocaleString('en-IN');
             }
         }
 
@@ -1154,7 +1209,7 @@
             } else {
                 modalIcon.innerHTML = '<i class="fas fa-exchange-alt text-3xl text-black"></i>';
                 modalTitle.textContent = 'Balance Transfer Eligibility';
-                modalSubtitle.textContent = 'Switch to better rates and save up to â‚¹5,000/month';
+                modalSubtitle.textContent = 'Switch to better rates and save up to ₹5,000/month';
                 btFields.classList.remove('hidden');
                 document.getElementById('modalLoanAmount').value = amountSlider.value;
                 document.getElementById('modalCurrentROI').value = oldRoi.value;
@@ -1183,15 +1238,15 @@
         }
 
         function showSuccessPopup() {
-            // ðŸ”’ Fully hide other modals
+            // Ã°Å¸â€â€™ Fully hide other modals
             eligibilityModal.classList.remove('show');
             referralModal.classList.remove('show');
 
-            // ðŸ”¥ IMPORTANT: reset pointer blocking
+            // Ã°Å¸â€Â¥ IMPORTANT: reset pointer blocking
             eligibilityModal.style.display = 'none';
             referralModal.style.display = 'none';
 
-            // âœ… Show success popup
+            // Ã¢Å“â€¦ Show success popup
             const popup = document.getElementById('successPopup');
             popup.style.display = 'flex';
             popup.classList.add('show');
@@ -1208,10 +1263,10 @@
 
         eligibilityForm.onsubmit = function(e) {
             e.preventDefault();
-            console.log('ðŸ”¥ FORM CLICKED - Mode:', mode);
+            console.log('Ã°Å¸â€Â¥ FORM CLICKED - Mode:', mode);
 
             if (!validateForm()) {
-                console.log('âŒ Validation failed');
+                console.log('Ã¢ÂÅ’ Validation failed');
                 return false;
             }
 
@@ -1243,14 +1298,14 @@
                 leadData.roi = roiInput.value;
             }
 
-            console.log('âœ… LEAD CAPTURED:', leadData);
+            console.log('Ã¢Å“â€¦ LEAD CAPTURED:', leadData);
             setTimeout(() => {
                 hideEligibilityModal();
                 eligibilityForm.reset();
 
-                // âœ… RESET SUCCESS POPUP FOR ELIGIBILITY
+                // Ã¢Å“â€¦ RESET SUCCESS POPUP FOR ELIGIBILITY
                 document.getElementById('successTitle').innerText =
-                    'Application Submitted ðŸŽ‰';
+                    'Application Submitted Ã°Å¸Å½â€°';
 
                 document.getElementById('successMessage').innerHTML =
                     'Our team will contact you within <b>24 hours</b>.';
@@ -1278,6 +1333,10 @@
             elRoiBlock.classList.add('hidden');
             btRoiBlock.classList.remove('hidden');
             savingsBox.classList.remove('hidden');
+            // 👇 PREVENT CROPPING
+            setTimeout(() => {
+                document.querySelector('.calculator-container').style.height = 'auto';
+            }, 100);
             btBtn.classList.add('bg-black', 'text-white');
             elBtn.classList.remove('bg-black', 'text-white');
             calculate();
@@ -1319,7 +1378,7 @@
         const referralSubmitBtn = document.getElementById('referralSubmitBtn');
 
         function showReferralModal() {
-            referralModal.style.display = 'flex'; // ðŸ”¥ RESET display
+            referralModal.style.display = 'flex'; // Ã°Å¸â€Â¥ RESET display
             referralModal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
@@ -1412,7 +1471,7 @@
                 timestamp: new Date().toISOString()
             };
 
-            console.log('âœ… REFERRAL SUBMITTED:', referralData);
+            console.log('Ã¢Å“â€¦ REFERRAL SUBMITTED:', referralData);
 
             setTimeout(() => {
                 referralForm.reset();
@@ -1420,52 +1479,51 @@
                 referralSubmitBtn.disabled = false;
                 hideReferralModal();
 
-                // ðŸ”¥ REFERRAL SUCCESS MESSAGE
+                // Ã°Å¸â€Â¥ REFERRAL SUCCESS MESSAGE
                 document.getElementById('successTitle').innerText =
-                    'Referral Submitted Successfully ðŸŽ‰';
+                    'Referral Submitted Successfully Ã°Å¸Å½â€°';
 
                 document.getElementById('successMessage').innerText =
                     'Once the loan is successfully disbursed, you will receive an INR 5,000 referral bonus.';
                 showSuccessPopup();
             }, 1200);
         };
-        // ðŸ‘‡ REPLACE WITH YOUR GOOGLE APPS SCRIPT WEB APP URL ðŸ‘‡
-const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxqd_68cNbjb0mnjwANGQmiXFuiZNkvKRlIZIf9nJGnoOm0gsPrrb0P5rvD-XcfPRkV/exec';
+        // Ã°Å¸â€˜â€¡ REPLACE WITH YOUR GOOGLE APPS SCRIPT WEB APP URL Ã°Å¸â€˜â€¡
+        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxqd_68cNbjb0mnjwANGQmiXFuiZNkvKRlIZIf9nJGnoOm0gsPrrb0P5rvD-XcfPRkV/exec';
 
-document.getElementById('eligibilityForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Capture form values
-    document.querySelector('#sheetLoanAmount').value = displayAmount.textContent;
-    document.querySelector('#sheetROI').value = mode === 'EL' ? roiInput.value + '%' : newRoi.value + '%';
-    document.querySelector('#sheetMode').value = mode;
-    
-    // Map form fields to hidden inputs
-    document.querySelector('#modalUserName').value = document.querySelector('#modalUserName').value;
-    document.querySelector('#modalUserEmail').value = document.querySelector('#modalUserEmail').value;
-    document.querySelector('#modalUserPhone').value = document.querySelector('#modalUserPhone').value;
-    document.querySelector('#modalUserCountry').value = document.querySelector('#modalUserCountry').value;
-    document.querySelector('#modalUserIntake').value = document.querySelector('#modalUserIntake').value;
-    
-    const formData = new FormData(e.target);
-    
-    try {
-        const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            body: formData
+        document.getElementById('eligibilityForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Capture form values
+            document.querySelector('#sheetLoanAmount').value = displayAmount.textContent;
+            document.querySelector('#sheetROI').value = mode === 'EL' ? roiInput.value + '%' : newRoi.value + '%';
+            document.querySelector('#sheetMode').value = mode;
+
+            // Map form fields to hidden inputs
+            document.querySelector('#modalUserName').value = document.querySelector('#modalUserName').value;
+            document.querySelector('#modalUserEmail').value = document.querySelector('#modalUserEmail').value;
+            document.querySelector('#modalUserPhone').value = document.querySelector('#modalUserPhone').value;
+            document.querySelector('#modalUserCountry').value = document.querySelector('#modalUserCountry').value;
+            document.querySelector('#modalUserIntake').value = document.querySelector('#modalUserIntake').value;
+
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Ã°Å¸Å½â€° Lead saved to Aspirafi Website Leads!');
+                    hideEligibilityModal();
+                    e.target.reset();
+                }
+            } catch (error) {
+                alert('Ã¢ÂÅ’ Please try again.');
+            }
         });
-        
-        if (response.ok) {
-            alert('ðŸŽ‰ Lead saved to Aspirafi Website Leads!');
-            hideEligibilityModal();
-            e.target.reset();
-        }
-    } catch (error) {
-        alert('âŒ Please try again.');
-    }
-});
-
     </script>
 </body>
 
-</html> 
+</html>
