@@ -424,29 +424,46 @@
 <body class="overflow-x-hidden">
 
     <!-- NAV -->
-    <nav class="fixed h-20 z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-black p-3 rounded-xl text-white shadow-lg">
-                    <img src="https://raw.githubusercontent.com/aspirafico-lgtm/aspirafi.github.io/dd375e1ae717165ea5b56fc4dfe87f1410c11fd0/AspiraFI%20V3%20Logo.png" alt="AspiraFi" class="h-8 sm:h-9 w-auto" />
-                </div>
-                <span class="text-2xl font-bold tracking-tight text-gray-900">Aspirafi</span>
+    <nav class="fixed top-0 left-0 right-0 h-20 z-50 glass-nav">
+    <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+
+        <!-- LOGO -->
+        <div class="flex items-center gap-3">
+            <div class="bg-black p-3 rounded-xl text-white shadow-lg">
+                <img
+                    src="https://raw.githubusercontent.com/aspirafico-lgtm/aspirafi.github.io/dd375e1ae717165ea5b56fc4dfe87f1410c11fd0/AspiraFI%20V3%20Logo.png"
+                    alt="AspiraFi"
+                    class="h-8 sm:h-9 w-auto"
+                />
             </div>
-            <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-slate-500">
-                <a href="#" class="hover:text-slate-900 transition-colors" onclick="showEligibilityModal()">Education Loans</a>
-                <a href="#" class="hover:text-slate-900 transition-colors">Balance Transfer</a>
-                <a href="#" class="hover:text-slate-900 transition-colors">Community</a>
-            </div>
-            <div class="flex items-center ml-auto">
-                <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="bg-black text-white font-semibold px-8 py-3 rounded-full text-sm uppercase tracking-wider btn-glow hover:scale-105 transition-all duration-200 shadow-xl" onclick="showEligibilityModal()">
-                    Apply Now
-                </button>
-            </div>
+            <span class="text-2xl font-bold tracking-tight text-gray-900">
+                Aspirafi
+            </span>
         </div>
-    </nav>
+
+        <!-- NAV LINKS -->
+        <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-slate-500">
+            <a href="#" class="hover:text-slate-900 transition-colors" onclick="showEligibilityModal()">Education Loans</a>
+            <a href="#" class="hover:text-slate-900 transition-colors">Balance Transfer</a>
+            <a href="#" class="hover:text-slate-900 transition-colors">Community</a>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex items-center gap-4">
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <button
+                class="bg-black text-white font-semibold px-8 py-3 rounded-full text-sm uppercase tracking-wider btn-glow hover:scale-105 transition-all duration-200 shadow-xl"
+                onclick="showEligibilityModal()"
+            >
+                APPLY NOW
+            </button>
+        </div>
+
+    </div>
+</nav>
 
     <!-- HERO -->
    <section class="relative pt-24 md:pt-28 pb-6 px-4 min-h-[calc(100vh-5rem)] overflow-hidden">
