@@ -4,34 +4,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aspirafi - Education Loans</title>
+    <title>Aspirafi - Smarter Global Education Loans</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<script>
-    // ✅ PERFECT INDIAN RUPEE FORMATTER
-    function formatINR(amount) {
-        return '₹' + parseFloat(amount).toLocaleString('en-IN');
-    }
-
-    // ✅ FIX ALL DISPLAYS ON LOAD
-    document.addEventListener('DOMContentLoaded', function() {
-        const displays = ['displayAmount', 'displayEMI', 'savingsAmount'];
-        displays.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = formatINR(el.textContent.replace(/[₹â‚¹]/g, ''));
-        });
-    });
-
-    // ✅ UPDATE SLIDER
-    document.getElementById('amountSlider')?.addEventListener('input', function() {
-        document.getElementById('displayAmount').textContent = formatINR(this.value);
-        calculateEMI(); // Your existing calculator function
-    });
-</script>
-
-<body>
     <!-- SEO Meta Tags -->
+    <meta name="description" content="Education loans for US/UK/Canada starting 8.9%. 3-day approval. EMI calculator for study abroad.">
+    <meta name="keywords" content="education loan, study abroad, student loan, US UK Canada university">
+
+    <style>
+        :root {
+            --brand-lime: #D9FF00;
+            --brand-dark: #0F172A;
+            --brand-green: #00A669;
+            --light-bg: #F8FAFC;
+            --dark-bg: #0A0F1A;
+            --dark-text: #F1F5F9;
+        }
+
+        [data-theme="dark"] {
+            --light-bg: #0A0F1A;
+            --dark-bg: #F8FAFC;
+            --dark-text: #0F172A;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--light-bg);
+            color: var(--brand-dark);
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        [data-theme="dark"] body {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-heading {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            letter-spacing: -0.02em;
+            font-weight: 700;
+            font-variation-settings: "wght" 800;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            width: 100vw;
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] .glass-nav {
+            background: rgba(10, 15, 26, 0.95);
+            border-bottom-color: rgba(241, 245, 249, 0.2);
+        }
+
+        .hero-title {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            letter-spacing: -0.06em;
+            font-stretch: 110%;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 3rem;
+            padding: 3rem;
+            max-width: 550px;
+            width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.7) translateY(50px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .modal-content {
+            background: rgba(10, 15, 26, 0.95);
+            border-color: rgba(241, 245, 249, 0.2);
+        }
+
+        .modal-overlay.show .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .error-message {
+            background: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1.08);
+            }
+
+            50% {
+                transform: scale(1.12);
+            }
+        }
+
+        .fade-in-up {
+            animation: slideInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .float-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .float-hover:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
+        }
+
+        .globe-orbit {
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            width: 300px;
+            height: 300px;
+            opacity: 0.05;
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        .emi-glow {
+            box-shadow: 0 0 40px rgba(217, 255, 0, 0.4);
+            border: 1px solid rgba(217, 255, 0, 0.2);
+        }
+
+        .emi-glow:hover #displayEMI {
+            text-shadow: 0 0 20px rgba(217, 255, 0, 0.5);
+            transform: scale(1.02);
+        }
+
+        .inner-container-section {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #F1F5F9 100%);
+            padding: 6rem 1.5rem;
+            width: 100vw;
+        }
+
+        [data-theme="dark"] .inner-container-section {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1E293B 100%);
+        }
+
+        .inner-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 4rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        [data-theme="dark"] .inner-container {
+            background: rgba(10, 15, 26, 0.95);
+            border-color: rgba(241, 245, 249, 0.2);
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            height: 8px;
+            border-radius: 10px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background: var(--brand-dark);
+            cursor: pointer;
+            margin-top: -10px;
+            border: 4px solid white;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(217, 255, 0, 0.3);
+        }
+
+        input[type=range]::-webkit-slider-thumb:active {
+            filter: drop-shadow(0 0 10px var(--brand-lime));
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 8px;
+            background: linear-gradient(to right, #E2E8F0 0%, #CBD5E1 100%);
+            border-radius: 10px;
+        }
+
+        .partner-logo {
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -0.05em;
+            opacity: 1 !important;
+            /* FULLY CLEAR */
+            font-size: 2rem;
+            transition: all 0.4s ease;
+        }
+
+        .partner-logo:hover {
+            opacity: 1 !important;
+            /* STAYS CLEAR ON HOVER */
+            transform: scale(1.08);
+            animation: pulse 0.6s ease-out;
+        }
+
+        .stat-box {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+                line-height: 1.08;
+                letter-spacing: -0.04em;
+                font-stretch: 105%;
+            }
+
+            .calculator-container {
+                margin-top: 2rem;
+            }
+
+            input[type=range]::-webkit-slider-thumb {
+                height: 32px;
+                width: 32px;
+                border-width: 3px;
+            }
+
+            .nav-logo i {
+                font-size: 1.5rem !important;
+            }
+
+            .modal-content {
+                padding: 2rem;
+                margin: 1rem;
+                border-radius: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 3rem !important;
+                line-height: 1.1;
+            }
+
+            .calculator-container {
+                margin-top: 3rem;
+                padding: 1.5rem !important;
+            }
+        }
+
+        /* XL screens â€“ reduce empty hero space */
+        @media (min-width: 1280px) {
+            .hero-title {
+                margin-bottom: 2.5rem;
+            }
+        }
+
+        .card-1 {
+            animation-delay: 0.1s;
+        }
+
+        .card-2 {
+            animation-delay: 0.2s;
+        }
+
+        .card-3 {
+            animation-delay: 0.3s;
+        }
+
+        .card-4 {
+            animation-delay: 0.4s;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 2px solid rgba(15, 23, 42, 0.2);
+            color: var(--brand-dark);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--brand-lime);
+            color: var(--brand-lime);
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
 
     <!-- NAV -->
     <nav class="fixed h-20 z-50 glass-nav transition-all duration-300">
@@ -118,7 +497,7 @@
                         </div>
                         <div>
                             <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Loans</p>
-                            <p class="font-bold text-lg">₹500+ Cr</p>
+                            <p class="font-bold text-lg">â‚¹500+ Cr</p>
                         </div>
                     </div>
 
@@ -148,7 +527,7 @@
 
                         <div class="mb-8 md:mb-10 relative">
                             <p class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 tracking-wider">Loan Amount</p>
-                            <p id="displayAmount" class="text-4xl md:text-5xl font-bold text-gray-900">4000000</p>
+                            <p id="displayAmount" class="text-4xl md:text-5xl font-bold text-gray-900">â‚¹40,00,000</p>
                             <input type="range" id="amountSlider" min="100000" max="20000000" step="50000" value="4000000" class="mt-4 md:mt-6 w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-lime">
                         </div>
 
@@ -180,12 +559,12 @@
 
                         <div class="bg-[#0F172A] rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 mb-6 md:mb-8 text-white emi-glow">
                             <p class="text-xs md:text-sm opacity-75 uppercase tracking-wider mb-1 md:mb-2">Estimated Monthly EMI</p>
-                            <p id="displayEMI" class="text-4xl md:text-5xl font-bold transition-all duration-200">89160</p>
+                            <p id="displayEMI" class="text-4xl md:text-5xl font-bold transition-all duration-200">â‚¹89,160</p>
                         </div>
 
                         <div id="savingsBox" class="hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl md:rounded-3xl p-6 md:p-8 mb-6 md:mb-10 border border-green-100 shadow-lg">
                             <p class="text-xs uppercase font-bold text-green-700 mb-1 md:mb-2 tracking-wider">Monthly Savings</p>
-                            <p id="savingsAmount" class="text-3xl md:text-4xl font-bold text-green-800">0</p>
+                            <p id="savingsAmount" class="text-3xl md:text-4xl font-bold text-green-800">â‚¹0</p>
                         </div>
 
                         <button id="checkEligibilityBtn" class="w-full py-5 md:py-6 rounded-2xl md:rounded-3xl bg-[#D9FF00] text-black font-bold text-lg md:text-xl uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200" onclick="showEligibilityModal()">
@@ -275,7 +654,7 @@
                             </div>
                             <div>
                                 <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Loan Amount *</label>
-                                <input id="modalLoanAmount" type="number" placeholder="₹40,00,000" step="50000" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
+                                <input id="modalLoanAmount" type="number" placeholder="â‚¹40,00,000" step="50000" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
                             </div>
                         </div>
                         <div>
@@ -288,11 +667,11 @@
                         <button type="button" onclick="hideEligibilityModal()" class="flex-1 py-4 px-6 rounded-3xl bg-slate-100 text-slate-700 font-bold text-lg hover:bg-slate-200 transition-all">
                             Cancel
                         </button>
-                        <button type="submit" form="eligibilityForm" id="modalSubmitBtn" class="flex-1 py-4 px-6 rounded-3xl bg-[#D9FF00] text-black font-bold text-lg uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200">
-                            Get My Options
-                        </button>
+                    <button type="submit" form="eligibilityForm" id="modalSubmitBtn" class="flex-1 py-4 px-6 rounded-3xl bg-[#D9FF00] text-black font-bold text-lg uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200">
+    Get My Options
+</button>
                     </div>
-                    <!-- ðŸ‘‡ HIDDEN FIELDS FOR GOOGLE SHEETS ðŸ‘‡ -->
+                                        <!-- ðŸ‘‡ HIDDEN FIELDS FOR GOOGLE SHEETS ðŸ‘‡ -->
                     <input type="hidden" name="fullName" id="modalUserName" value="">
                     <input type="hidden" name="email" id="modalUserEmail" value="">
                     <input type="hidden" name="phone" id="modalUserPhone" value="">
@@ -313,13 +692,14 @@
                 <div class="w-20 h-20 bg-green-400 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
                     <i class="fas fa-check text-4xl text-black"></i>
                 </div>
-                <h2 id="successTitle" class="text-3xl font-bold mb-3">Application Submitted 🎉</h2>
-
+                <h2 id="successTitle" class="text-3xl font-bold mb-3">
+                    Application Submitted ðŸŽ‰
+                </h2>
 
                 <p id="successMessage" class="text-lg text-slate-600 mb-6">
                     Our team will contact you within <b>24 hours</b>.
                 </p>
-                <p class="font-semibold text-slate-800">Sit back — we've got this 🚀</p>
+                <p class="font-semibold text-slate-800">Sit back â€” we've got this ðŸš€</p>
                 <button onclick="hideSuccessPopup()" class="mt-8 px-10 py-4 bg-black text-white font-bold rounded-full hover:scale-105 transition-all">
                     Done
                 </button>
@@ -334,7 +714,9 @@
                     <div class="w-20 h-20 bg-gradient-to-br from-[#D9FF00] to-[#BFFF00] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
                         <i class="fas fa-gift text-3xl text-black"></i>
                     </div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">Refer & Earn ₹5,000</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-2">
+                        Refer & Earn â‚¹5,000
+                    </h2>
                     <p class="text-slate-500 text-lg">
                         Share with friends planning to study abroad
                     </p>
@@ -502,11 +884,10 @@
                         <div class="flex justify-between items-end mt-10">
                             <p class="text-base font-bold text-slate-900 leading-tight">
                                 Save up to <br>
-                                <span class="text-3xl">₹5,000/mo</span>
+                                <span class="text-3xl">â‚¹5,000/mo</span>
                             </p>
 
-                            <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-2xl cursor-pointer hover:scale-110 transition-transform" <div class="w-16 h-16 bg-black ... " onclick="showEligibilityModal()">
-
+                            <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-2xl cursor-pointer hover:scale-110 transition-transform" onclick="openBalanceTransferForm()">
                                 <i class="fas fa-arrow-right text-2xl"></i>
                             </div>
                         </div>
@@ -531,10 +912,8 @@
                             <div class="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center mb-12 shadow-2xl">
                                 <i class="fas fa-users text-2xl"></i>
                             </div>
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 leading-tight" Refer & Earn <br><span class="text-4xl">₹5,000</span>
-                            </h3>
-                            <p class="text-slate-600 text-xl leading-relaxed font-medium mb-8">Get ₹5,000 cashback
-                                for every friend whose loan is successfully disbursed through Aspirafi.</p>
+                            <h3 class="text-3xl font-bold text-slate-900 mb-4 leading-tight">Refer & Earn <br><span class="text-4xl">â‚¹5,000</span></h3>
+                            <p class="text-slate-600 text-xl leading-relaxed font-medium mb-8">Get â‚¹5,000 cashback for every friend whose loan is successfully disbursed through Aspirafi.</p>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="text-sm">
@@ -572,30 +951,521 @@
                         <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner14.png?raw=true" alt="Partner 14" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
                     </div>
                 </div>
+
             </div>
-        </section>
 
-        <footer class="py-16 px-6 bg-gradient-to-r from-slate-50 to-gray-50 max-w-7xl mx-auto border-t-2 border-slate-100">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-                <p class="text-slate-500 text-lg font-semibold">© 2026 Aspirafi
-                    Education Finance. Built for global ambitions.</p>
-                <div class="flex gap-6 items-center">
-                    <i class="fab fa-twitter text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
-                    <a href="https://www.linkedin.com/company/109628456/" target="_blank" aria-label="Aspirafi on LinkedIn" class="fab fa-linkedin text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></a>
-                    <i class="fab fa-instagram text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
+    </div>
 
-                    <!-- WhatsApp -->
-                    <a href="https://wa.me/917676148787" target="_blank" aria-label="Chat on WhatsApp" class="fab fa-whatsapp text-2xl text-slate-400 hover:text-brand-green transition-colors cursor-pointer"></a>
 
-                    <!-- Call -->
-                    <a href="tel:+917676148787" class="flex items-center gap-2 text-slate-400 hover:text-brand-lime transition-colors font-semibold">
-                        <i class="fas fa-phone text-xl"></i>
-                        <span class="text-base">7676148787</span>
-                    </a>
-                </div>
+    </section>
+
+    <footer class="py-16 px-6 bg-gradient-to-r from-slate-50 to-gray-50 max-w-7xl mx-auto border-t-2 border-slate-100">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <p class="text-slate-500 text-lg font-semibold">Â© 2026 Aspirafi Education Finance. Built for global ambitions.</p>
+            <div class="flex gap-6 items-center">
+                <i class="fab fa-twitter text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
+                <a href="https://www.linkedin.com/company/109628456/" target="_blank" aria-label="Aspirafi on LinkedIn" class="fab fa-linkedin text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></a>
+                <i class="fab fa-instagram text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/917676148787" target="_blank" aria-label="Chat on WhatsApp" class="fab fa-whatsapp text-2xl text-slate-400 hover:text-brand-green transition-colors cursor-pointer"></a>
+
+                <!-- Call -->
+                <a href="tel:+917676148787" class="flex items-center gap-2 text-slate-400 hover:text-brand-lime transition-colors font-semibold">
+                    <i class="fas fa-phone text-xl"></i>
+                    <span class="text-base">7676148787</span>
+                </a>
             </div>
-        </footer>
+        </div>
+    </footer>
+
+    <script>
+        const amountSlider = document.getElementById('amountSlider');
+        const displayAmount = document.getElementById('displayAmount');
+        const displayEMI = document.getElementById('displayEMI');
+        const tenure = document.getElementById('tenure');
+        const roiInput = document.getElementById('roiInput');
+        const oldRoi = document.getElementById('oldRoi');
+        const newRoi = document.getElementById('newRoi');
+        const elBtn = document.getElementById('elBtn');
+        const btBtn = document.getElementById('btBtn');
+        const elRoiBlock = document.getElementById('elRoiBlock');
+        const btRoiBlock = document.getElementById('btRoiBlock');
+        const savingsBox = document.getElementById('savingsBox');
+        const savingsAmount = document.getElementById('savingsAmount');
+        const eligibilityModal = document.getElementById('eligibilityModal');
+        const eligibilityForm = document.getElementById('eligibilityForm');
+        const btFields = document.getElementById('btFields');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalSubtitle = document.getElementById('modalSubtitle');
+        const formError = document.getElementById('formError');
+        const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+        const referralModal = document.getElementById('referralModal');
+
+        function openCommunityModal() {
+            const modal = document.getElementById('communityModal');
+            modal.style.display = 'flex';
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCommunityModal(event) {
+            if (event) event.stopPropagation();
+            const modal = document.getElementById('communityModal');
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        modalSubmitBtn.onclick = function() {
+            console.log('ðŸŸ¢ SUBMIT BUTTON CLICKED');
+
+            if (!validateForm()) {
+                console.log('âŒ Validation failed');
+                return;
+            }
+
+            const originalText = modalSubmitBtn.innerHTML;
+            modalSubmitBtn.innerHTML =
+                '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+            modalSubmitBtn.disabled = true;
+
+            setTimeout(() => {
+                hideEligibilityModal();
+                showSuccessPopup();
+                eligibilityForm.reset();
+
+                modalSubmitBtn.innerHTML = originalText;
+                modalSubmitBtn.disabled = false;
+            }, 1200);
+        };
+
+        let mode = 'EL';
+
+        function emiCalc(P, rate, years) {
+            const r = rate / 12 / 100;
+            const n = years * 12;
+            return (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        }
+
+        function calculate() {
+            const P = Number(amountSlider.value);
+            const years = Number(tenure.value);
+            displayAmount.innerText = 'â‚¹' + P.toLocaleString('en-IN');
+
+            if (mode === 'EL') {
+                const emi = emiCalc(P, Number(roiInput.value), years);
+                displayEMI.innerText = 'â‚¹' + Math.round(emi).toLocaleString('en-IN');
+            } else {
+                const oldEmi = emiCalc(P, Number(oldRoi.value), years);
+                const newEmi = emiCalc(P, Number(newRoi.value), years);
+                displayEMI.innerText = 'â‚¹' + Math.round(newEmi).toLocaleString('en-IN');
+                savingsAmount.innerText = 'â‚¹' + Math.round(oldEmi - newEmi).toLocaleString('en-IN');
+            }
+        }
+
+        function validateForm() {
+            const requiredCommon = [{
+                    id: 'modalUserName',
+                    name: 'Full Name'
+                },
+                {
+                    id: 'modalUserEmail',
+                    name: 'Email'
+                },
+                {
+                    id: 'modalUserPhone',
+                    name: 'Phone'
+                },
+                {
+                    id: 'modalUserCountry',
+                    name: 'Country'
+                },
+                {
+                    id: 'modalUserIntake',
+                    name: 'Intake'
+                }
+            ];
+
+            for (let field of requiredCommon) {
+                const value = document.getElementById(field.id).value.trim();
+                if (!value) {
+                    showFormError(`${field.name} is required`);
+                    return false;
+                }
+            }
+
+            const email = document.getElementById('modalUserEmail').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showFormError('Please enter a valid email address');
+                return false;
+            }
+
+            if (mode === 'BT' && !btFields.classList.contains('hidden')) {
+                const btRequired = [{
+                        id: 'modalCurrentBank',
+                        name: 'Current Bank'
+                    },
+                    {
+                        id: 'modalLoanAmount',
+                        name: 'Loan Amount'
+                    },
+                    {
+                        id: 'modalCurrentROI',
+                        name: 'Current ROI'
+                    }
+                ];
+
+                for (let field of btRequired) {
+                    const value = document.getElementById(field.id).value.trim();
+                    if (!value) {
+                        showFormError(`${field.name} is required for Balance Transfer`);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        function showFormError(message) {
+            formError.textContent = message;
+            formError.style.display = 'block';
+            formError.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+
+        function hideFormError() {
+            formError.style.display = 'none';
+        }
+
+        function showEligibilityModal() {
+            hideFormError();
+
+            if (mode === 'EL') {
+                modalIcon.innerHTML = '<i class="fas fa-graduation-cap text-2xl"></i>';
+                modalTitle.textContent = 'Check Your Education Loan Eligibility';
+                modalSubtitle.textContent = 'Fill in your details to get personalized loan options';
+                btFields.classList.add('hidden');
+            } else {
+                modalIcon.innerHTML = '<i class="fas fa-exchange-alt text-3xl text-black"></i>';
+                modalTitle.textContent = 'Balance Transfer Eligibility';
+                modalSubtitle.textContent = 'Switch to better rates and save up to â‚¹5,000/month';
+                btFields.classList.remove('hidden');
+                document.getElementById('modalLoanAmount').value = amountSlider.value;
+                document.getElementById('modalCurrentROI').value = oldRoi.value;
+            }
+
+            eligibilityModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openBalanceTransferForm() {
+            mode = 'BT';
+            elRoiBlock.classList.add('hidden');
+            btRoiBlock.classList.remove('hidden');
+            savingsBox.classList.remove('hidden');
+            btBtn.classList.add('bg-black', 'text-white');
+            elBtn.classList.remove('bg-black', 'text-white');
+            calculate();
+            showEligibilityModal();
+        }
+
+        function hideEligibilityModal(event) {
+            if (event) event.stopPropagation();
+            eligibilityModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+            hideFormError();
+        }
+
+        function showSuccessPopup() {
+            // ðŸ”’ Fully hide other modals
+            eligibilityModal.classList.remove('show');
+            referralModal.classList.remove('show');
+
+            // ðŸ”¥ IMPORTANT: reset pointer blocking
+            eligibilityModal.style.display = 'none';
+            referralModal.style.display = 'none';
+
+            // âœ… Show success popup
+            const popup = document.getElementById('successPopup');
+            popup.style.display = 'flex';
+            popup.classList.add('show');
+
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideSuccessPopup() {
+            const popup = document.getElementById('successPopup');
+            popup.classList.remove('show');
+            popup.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        eligibilityForm.onsubmit = function(e) {
+            e.preventDefault();
+            console.log('ðŸ”¥ FORM CLICKED - Mode:', mode);
+
+            if (!validateForm()) {
+                console.log('âŒ Validation failed');
+                return false;
+            }
+
+            const originalText = modalSubmitBtn.innerHTML;
+            modalSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+            modalSubmitBtn.disabled = true;
+
+            const commonData = {
+                name: document.getElementById('modalUserName').value.trim(),
+                email: document.getElementById('modalUserEmail').value.trim(),
+                phone: document.getElementById('modalUserPhone').value.trim(),
+                country: document.getElementById('modalUserCountry').value,
+                intake: document.getElementById('modalUserIntake').value,
+                loanAmount: amountSlider.value,
+                tenure: tenure.value,
+                mode: mode,
+                emi: displayEMI.innerText,
+                timestamp: new Date().toISOString()
+            };
+
+            let leadData = {
+                ...commonData
+            };
+            if (mode === 'BT') {
+                leadData.currentBank = document.getElementById('modalCurrentBank').value;
+                leadData.currentROI = document.getElementById('modalCurrentROI').value;
+                leadData.loanAmount = document.getElementById('modalLoanAmount').value;
+            } else {
+                leadData.roi = roiInput.value;
+            }
+
+            console.log('âœ… LEAD CAPTURED:', leadData);
+            setTimeout(() => {
+                hideEligibilityModal();
+                eligibilityForm.reset();
+
+                // âœ… RESET SUCCESS POPUP FOR ELIGIBILITY
+                document.getElementById('successTitle').innerText =
+                    'Application Submitted ðŸŽ‰';
+
+                document.getElementById('successMessage').innerHTML =
+                    'Our team will contact you within <b>24 hours</b>.';
+
+                showSuccessPopup();
+                modalSubmitBtn.innerHTML = originalText;
+                modalSubmitBtn.disabled = false;
+            }, 1500);
+
+            return false;
+        };
+
+        elBtn.onclick = () => {
+            mode = 'EL';
+            elRoiBlock.classList.remove('hidden');
+            btRoiBlock.classList.add('hidden');
+            savingsBox.classList.add('hidden');
+            elBtn.classList.add('bg-black', 'text-white');
+            btBtn.classList.remove('bg-black', 'text-white');
+            roiInput.value = '10.50';
+            calculate();
+        };
+        btBtn.onclick = () => {
+            mode = 'BT';
+            elRoiBlock.classList.add('hidden');
+            btRoiBlock.classList.remove('hidden');
+            savingsBox.classList.remove('hidden');
+            btBtn.classList.add('bg-black', 'text-white');
+            elBtn.classList.remove('bg-black', 'text-white');
+            calculate();
+        };
+        amountSlider.oninput = calculate;
+        tenure.onchange = calculate;
+        roiInput.oninput = calculate;
+        oldRoi.oninput = calculate;
+        newRoi.oninput = calculate;
+        calculate();
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideEligibilityModal(e);
+                hideReferralModal(e);
+            }
+        });
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        }
+
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.style.animationPlayState = 'running';
+            });
+        });
+        document.querySelectorAll('.fade-in-up, .float-hover').forEach(el => observer.observe(el));
+
+        /* REFERRAL FORM JS */
+        const referralForm = document.getElementById('referralForm');
+        const referralSubmitBtn = document.getElementById('referralSubmitBtn');
+
+        function showReferralModal() {
+            referralModal.style.display = 'flex'; // ðŸ”¥ RESET display
+            referralModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function hideReferralModal(event) {
+            if (event) event.stopPropagation();
+            referralModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function validateReferralForm() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const fields = [{
+                    id: 'refYourName',
+                    name: 'Your Name'
+                },
+                {
+                    id: 'refYourEmail',
+                    name: 'Your Email'
+                },
+                {
+                    id: 'refYourPhone',
+                    name: 'Your Phone'
+                },
+                {
+                    id: 'refFriendName',
+                    name: "Friend's Name"
+                },
+                {
+                    id: 'refFriendEmail',
+                    name: "Friend's Email"
+                },
+                {
+                    id: 'refFriendPhone',
+                    name: "Friend's Phone"
+                },
+                {
+                    id: 'refCountry',
+                    name: 'Country'
+                },
+                {
+                    id: 'refIntake',
+                    name: 'Intake'
+                }
+            ];
+
+            for (let field of fields) {
+                const el = document.getElementById(field.id);
+                if (!el || !el.value.trim()) {
+                    alert(field.name + ' is required');
+                    return false;
+                }
+            }
+
+            const yourEmail = document.getElementById('refYourEmail').value.trim();
+            const friendEmail = document.getElementById('refFriendEmail').value.trim();
+
+            if (!emailRegex.test(yourEmail)) {
+                alert('Please enter a valid email for yourself');
+                return false;
+            }
+
+            if (!emailRegex.test(friendEmail)) {
+                alert('Please enter a valid email for your friend');
+                return false;
+            }
+
+            return true;
+        }
+
+        referralForm.onsubmit = function(e) {
+            e.preventDefault();
+
+            if (!validateReferralForm()) return;
+
+            const originalText = referralSubmitBtn.innerHTML;
+            referralSubmitBtn.innerHTML =
+                '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+            referralSubmitBtn.disabled = true;
+
+            const referralData = {
+                yourName: refYourName.value.trim(),
+                yourEmail: refYourEmail.value.trim(),
+                yourPhone: refYourPhone.value.trim(),
+                friendName: refFriendName.value.trim(),
+                friendEmail: refFriendEmail.value.trim(),
+                friendPhone: refFriendPhone.value.trim(),
+                country: refCountry.value,
+                intake: refIntake.value,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('âœ… REFERRAL SUBMITTED:', referralData);
+
+            setTimeout(() => {
+                referralForm.reset();
+                referralSubmitBtn.innerHTML = originalText;
+                referralSubmitBtn.disabled = false;
+                hideReferralModal();
+
+                // ðŸ”¥ REFERRAL SUCCESS MESSAGE
+                document.getElementById('successTitle').innerText =
+                    'Referral Submitted Successfully ðŸŽ‰';
+
+                document.getElementById('successMessage').innerText =
+                    'Once the loan is successfully disbursed, you will receive an INR 5,000 referral bonus.';
+                showSuccessPopup();
+            }, 1200);
+        };
+        // ðŸ‘‡ REPLACE WITH YOUR GOOGLE APPS SCRIPT WEB APP URL ðŸ‘‡
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxqd_68cNbjb0mnjwANGQmiXFuiZNkvKRlIZIf9nJGnoOm0gsPrrb0P5rvD-XcfPRkV/exec';
+
+document.getElementById('eligibilityForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Capture form values
+    document.querySelector('#sheetLoanAmount').value = displayAmount.textContent;
+    document.querySelector('#sheetROI').value = mode === 'EL' ? roiInput.value + '%' : newRoi.value + '%';
+    document.querySelector('#sheetMode').value = mode;
+    
+    // Map form fields to hidden inputs
+    document.querySelector('#modalUserName').value = document.querySelector('#modalUserName').value;
+    document.querySelector('#modalUserEmail').value = document.querySelector('#modalUserEmail').value;
+    document.querySelector('#modalUserPhone').value = document.querySelector('#modalUserPhone').value;
+    document.querySelector('#modalUserCountry').value = document.querySelector('#modalUserCountry').value;
+    document.querySelector('#modalUserIntake').value = document.querySelector('#modalUserIntake').value;
+    
+    const formData = new FormData(e.target);
+    
+    try {
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (response.ok) {
+            alert('ðŸŽ‰ Lead saved to Aspirafi Website Leads!');
+            hideEligibilityModal();
+            e.target.reset();
+        }
+    } catch (error) {
+        alert('âŒ Please try again.');
+    }
+});
+
+    </script>
 </body>
 
-</html>
-
+</html> 
