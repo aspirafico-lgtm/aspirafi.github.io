@@ -1276,14 +1276,14 @@
                 leadData.roi = roiInput.value;
             }
 
-            console.log('Ã¢Å“â€¦ LEAD CAPTURED:', leadData);
+            console.log('🎉¦ LEAD CAPTURED:', leadData);
             setTimeout(() => {
                 hideEligibilityModal();
                 eligibilityForm.reset();
 
                 // Ã¢Å“â€¦ RESET SUCCESS POPUP FOR ELIGIBILITY
                 document.getElementById('successTitle').innerText =
-                    'Application Submitted Ã°Å¸Å½â€°';
+                    'Application Submitted 🎉';
 
                 document.getElementById('successMessage').innerHTML =
                     'Our team will contact you within <b>24 hours</b>.';
@@ -1449,7 +1449,7 @@
                 timestamp: new Date().toISOString()
             };
 
-            console.log('Ã¢Å“â€¦ REFERRAL SUBMITTED:', referralData);
+            console.log('🎉¦ REFERRAL SUBMITTED:', referralData);
 
             setTimeout(() => {
                 referralForm.reset();
@@ -1459,7 +1459,7 @@
 
                 // Ã°Å¸â€Â¥ REFERRAL SUCCESS MESSAGE
                 document.getElementById('successTitle').innerText =
-                    'Referral Submitted Successfully Ã°Å¸Å½â€°';
+                    'Referral Submitted Successfully 🎉';
 
                 document.getElementById('successMessage').innerText =
                     'Once the loan is successfully disbursed, you will receive an INR 5,000 referral bonus.';
@@ -1493,12 +1493,12 @@
                 });
 
                 if (response.ok) {
-                    alert('Ã°Å¸Å½â€° Lead saved to Aspirafi Website Leads!');
+                    alert('🎉 Lead saved to Aspirafi Website Leads!');
                     hideEligibilityModal();
                     e.target.reset();
                 }
             } catch (error) {
-                alert('Ã¢ÂÅ’ Please try again.');
+                alert( Please try again.');
             }
         });
     </script>
