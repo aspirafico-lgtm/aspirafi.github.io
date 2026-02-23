@@ -28,50 +28,65 @@
 
         /* 👇 CALCULATOR FIXES - OUTSIDE :root */
         .calculator-container {
-            margin-top: 1rem !important;
+            margin-top: 0.75rem !important;
             max-height: none !important;
             overflow: visible !important;
             height: auto !important;
-            min-height: 380px !important;
+            min-height: 280px !important;
+            /* 380px → 280px (25% smaller) */
+            transform: scale(0.85);
+            /* 👈 SHRINKS EVERYTHING 15% */
+            transform-origin: top center;
         }
 
         .amount-display,
         #displayAmount {
-            font-size: 2.5rem !important;
+            font-size: 1.75rem !important;
+            /* 2.5rem → 1.75rem (30% smaller) */
         }
 
         .emi-display,
         #displayEMI {
-            font-size: 2.25rem !important;
+            font-size: 1.5rem !important;
+            /* 2.25rem → 1.5rem (33% smaller) */
         }
 
         #btRoiBlock,
         #savingsBox {
-            max-height: 180px;
+            max-height: 140px !important;
+            /* 180px → 140px (22% smaller) */
             overflow: hidden;
         }
 
         @media (max-width: 768px) {
             .calculator-container {
-                padding: 0.75rem !important;
-                margin-top: 0.5rem !important;
-                min-height: 360px !important;
+                padding: 0.5rem !important;
+                /* 0.75rem → 0.5rem */
+                margin-top: 0.25rem !important;
+                min-height: 260px !important;
+                /* 360px → 260px */
+                transform: scale(0.8);
+                /* 👈 Mobile even smaller */
             }
 
             .amount-display,
             #displayAmount {
-                font-size: 2rem !important;
+                font-size: 1.5rem !important;
+                /* 2rem → 1.5rem */
             }
 
             .emi-display,
             #displayEMI {
-                font-size: 1.75rem !important;
+                font-size: 1.25rem !important;
+                /* ADD THIS */
             }
+        }
 
-            #btRoiBlock {
-                gap: 0.5rem !important;
-                padding: 0.25rem 0;
-            }
+
+        #btRoiBlock {
+            gap: 0.5rem !important;
+            padding: 0.25rem 0;
+        }
         }
 
         * {
@@ -386,7 +401,7 @@
                 /* 👈 CHANGE: 2rem → 0.5rem */
                 padding: 0.75rem !important;
                 /* 👈 ADD THIS */
-                min-height: 360px !important;
+                min-height: 260px !important;
                 /* Keep this */
             }
 
