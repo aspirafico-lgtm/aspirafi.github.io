@@ -418,6 +418,30 @@
             color: var(--brand-lime);
             transform: rotate(180deg);
         }
+        /* FIX ALL UNCLICKABLE BUTTONS */
+.modal-overlay { 
+  pointer-events: none !important; 
+}
+.modal-content, 
+nav button, 
+#checkEligibilityBtn, 
+button[onclick], 
+#elBtn, 
+#btBtn {
+  pointer-events: auto !important; 
+  z-index: 9999 !important; 
+  position: relative !important;
+}
+.loading {
+  pointer-events: auto !important;
+}
+button:disabled {
+  pointer-events: auto !important;
+}
+
+/* Your existing theme-toggle CSS stays below */
+.theme-toggle {
+
     </style>
 </head>
 
@@ -1501,7 +1525,18 @@
                 alert( Please try again.');
             }
         });
+        // MAKE ALL BUTTONS WORK
+setInterval(function() {
+  document.querySelectorAll('button, [onclick]').forEach(function(btn) {
+    btn.disabled = false;
+    btn.style.pointerEvents = 'auto';
+  });
+}, 200);
+setInterval(()=>{document.querySelectorAll('button, [onclick]').forEach(b=>b.disabled=false,b.style.pointerEvents='auto')},100);
+
+        
     </script>
+    
 </body>
 
 </html>
