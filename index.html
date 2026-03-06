@@ -1,1542 +1,1544 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aspirafi - Smarter Global Education Loans</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Education loans for US/UK/Canada starting 8.9%. 3-day approval. EMI calculator for study abroad.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="Education loans for US/UK/Canada starting 8.9%. 3-day approval. Compare 15+ lenders.">
     <meta name="keywords" content="education loan, study abroad, student loan, US UK Canada university">
     <style>
+        * { font-family: 'Inter', sans-serif; }
+
         :root {
             --brand-lime: #D9FF00;
             --brand-dark: #0F172A;
-            --brand-green: #00A669;
+            --brand-navy: #1E293B;
+            --brand-blue: #2563EB;
             --light-bg: #F8FAFC;
-            --dark-bg: #0A0F1A;
-            --dark-text: #F1F5F9;
         }
 
-        [data-theme="dark"] {
-            --light-bg: #0A0F1A;
-            --dark-bg: #F8FAFC;
-            --dark-text: #0F172A;
+        /* ─── SCROLLBAR ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 99px; }
+        html { scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent; }
+
+        /* ─── NAV ─── */
+        .glass-nav {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(15,23,42,0.07);
         }
-
-   /* ✅ CALCULATOR FIXES */
-.calculator-container {
-  margin-top: 0.75rem;
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  min-height: unset;
-  overflow: visible;
-}
-
-/* Desktop text sizing */
-#displayAmount {
-  font-size: 1.75rem !important;
-}
-
-#displayEMI {
-  font-size: 1.5rem !important;
-}
-
-/* Prevent BT blocks from getting too tall (safe cap) */
-#btRoiBlock,
-#savingsBox {
-  max-height: 140px;
-}
-
-/* ✅ MOBILE FIXES — FINAL */
-@media (max-width: 768px) {
-  .calculator-container {
-    padding: 0.5rem;
-    margin-top: 0.25rem;
-    height: auto;
-    min-height: unset;
-    overflow: visible;
-  }
-}
-
-  #displayAmount {
-    font-size: 1.5rem !important;
-  }
-
-  #displayEMI {
-    font-size: 1.25rem !important;
-  }
-
-  #btRoiBlock {
-    gap: 0.5rem !important;
-    padding: 0.25rem 0;
-}
-
         [data-theme="dark"] .glass-nav {
-            background: rgba(10, 15, 26, 0.95);
-            border-bottom-color: rgba(241, 245, 249, 0.2);
+            background: rgba(17,24,39,0.96);
+            border-bottom-color: rgba(255,255,255,0.08);
         }
 
+        /* ─── HERO ─── */
         .hero-title {
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            letter-spacing: -0.06em;
-            font-stretch: 110%;
+            letter-spacing: -0.05em;
+            line-height: 1.05;
         }
+        .hero-gradient { background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%); }
 
+        /* ─── MODALS ─── */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.65);
             backdrop-filter: blur(8px);
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
         }
-
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .modal-overlay.show { opacity:1; visibility:visible; pointer-events:auto; }
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 3rem;
-            padding: 3rem;
-            max-width: 550px;
-            width: 90vw;
-            max-height: 90vh;
-            overflow-y: auto;
-            transform: scale(0.7) translateY(50px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.3);
+            background: #fff;
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            max-width: 480px; width: 92vw;
+            max-height: 92vh; overflow-y: auto;
+            transform: scale(0.85) translateY(30px);
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+            pointer-events: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #D9FF00 transparent;
         }
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent; }
+        .modal-content::-webkit-scrollbar-thumb { background: #D9FF00; border-radius: 99px; }
+        .modal-overlay.show .modal-content { transform: scale(1) translateY(0); }
+        [data-theme="dark"] .modal-content { background: #1E2D45; }
 
-        [data-theme="dark"] .modal-content {
-            background: rgba(10, 15, 26, 0.95);
-            border-color: rgba(241, 245, 249, 0.2);
-        }
-
-        .modal-overlay.show .modal-content {
-            transform: scale(1) translateY(0);
-        }
-
+        /* ─── FORM ERROR ─── */
         .error-message {
-            background: #fee2e2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-            padding: 12px 16px;
-            border-radius: 12px;
-            font-weight: 500;
+            background: #fef2f2; border: 1px solid #fecaca; color: #dc2626;
+            padding: 10px 14px; border-radius: 10px; font-weight: 500; font-size: 0.85rem;
             display: none;
         }
 
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
+        /* ─── ANIMATIONS ─── */
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity:0; transform:translateY(30px); }
+            to   { opacity:1; transform:translateY(0); }
         }
-
+        @keyframes fadeIn {
+            from { opacity:0; } to { opacity:1; }
+        }
+        @keyframes rotate { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+        @keyframes shimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes countUp {
+            from { opacity:0; transform:translateY(10px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
+            0%,100% { transform:translateY(0); }
+            50%      { transform:translateY(-6px); }
+        }
+        @keyframes pulse-ring {
+            0%   { box-shadow: 0 0 0 0 rgba(217,255,0,0.4); }
+            70%  { box-shadow: 0 0 0 12px rgba(217,255,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(217,255,0,0); }
         }
 
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
+        .fade-in-up { animation: slideInUp 0.7s ease-out forwards; opacity:0; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
 
-            to {
-                transform: rotate(360deg);
-            }
+        .float-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .float-card:hover { transform: translateY(-8px); box-shadow: 0 24px 48px rgba(0,0,0,0.1); }
+
+        /* ─── BUTTON ─── */
+        .btn-primary {
+            background: #D9FF00; color: #0F172A;
+            font-weight: 700; letter-spacing: 0.03em;
+            transition: all 0.2s ease;
+            position: relative; overflow: hidden;
         }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1.08);
-            }
-
-            50% {
-                transform: scale(1.12);
-            }
-        }
-
-        .fade-in-up {
-            animation: slideInUp 0.8s ease-out forwards;
-            opacity: 0;
-        }
-
-        .float-hover {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .float-hover:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.08);
-        }
-
-        .globe-orbit {
-            position: absolute;
-            top: 20%;
-            right: 10%;
-            width: 300px;
-            height: 300px;
-            opacity: 0.05;
-            animation: rotate 20s linear infinite;
-            z-index: 1;
-        }
-
-        .btn-glow {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-glow::before {
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(217,255,0,0.35); }
+        .btn-primary::after {
             content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s;
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
         }
-
-        .btn-glow:hover::before {
-            left: 100%;
-        }
-
-        .emi-glow {
-            box-shadow: 0 0 40px rgba(217, 255, 0, 0.4);
-            border: 1px solid rgba(217, 255, 0, 0.2);
-        }
-
-        .emi-glow:hover #displayEMI {
-            text-shadow: 0 0 20px rgba(217, 255, 0, 0.5);
-            transform: scale(1.02);
-        }
-
-        .inner-container-section {
-            background: linear-gradient(135deg, var(--light-bg) 0%, #F1F5F9 100%);
-            padding: 6rem 1.5rem;
-            width: 100vw;
-        }
-
-        [data-theme="dark"] .inner-container-section {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, #1E293B 100%);
-        }
-
-        .inner-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 4rem;
-            max-width: 100%;
-            margin: 0 auto;
-        }
-
-        [data-theme="dark"] .inner-container {
-            background: rgba(10, 15, 26, 0.95);
-            border-color: rgba(241, 245, 249, 0.2);
-        }
-
-        input[type=range] {
-            -webkit-appearance: none;
-            width: 100%;
-            background: transparent;
-            height: 8px;
-            border-radius: 10px;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 28px;
-            width: 28px;
-            border-radius: 50%;
-            background: var(--brand-dark);
-            cursor: pointer;
-            margin-top: -10px;
-            border: 4px solid white;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-dark {
+            background: #0F172A; color: #fff;
+            font-weight: 700; letter-spacing: 0.03em;
             transition: all 0.2s ease;
         }
+        .btn-dark:hover { background: #1E293B; transform: translateY(-1px); }
 
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(217, 255, 0, 0.3);
+        /* ─── CALCULATOR ─── */
+        .calc-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid rgba(15,23,42,0.06);
+        }
+        .emi-display {
+            background: linear-gradient(135deg, #0F172A, #1E3A5F);
+            border-radius: 1rem;
+            box-shadow: 0 0 0 0 rgba(217,255,0,0.4);
+            animation: pulse-ring 2.5s ease infinite;
         }
 
-        input[type=range]::-webkit-slider-thumb:active {
-            filter: drop-shadow(0 0 10px var(--brand-lime));
+        /* ─── RANGE SLIDER ─── */
+        input[type=range] {
+            -webkit-appearance:none; appearance:none;
+            width:100%; height:6px; background:transparent;
+            border-radius:10px; outline:none; cursor:pointer;
         }
-
         input[type=range]::-webkit-slider-runnable-track {
-            height: 8px;
-            background: linear-gradient(to right, #E2E8F0 0%, #CBD5E1 100%);
-            border-radius: 10px;
+            height:6px; background:#E2E8F0; border-radius:10px;
         }
-
-        .partner-logo {
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: -0.05em;
-            opacity: 1 !important;
-            /* FULLY CLEAR */
-            font-size: 2rem;
-            transition: all 0.4s ease;
-        }
-
-        .partner-logo:hover {
-            opacity: 1 !important;
-            /* STAYS CLEAR ON HOVER */
-            transform: scale(1.08);
-            animation: pulse 0.6s ease-out;
-        }
-
-        .stat-box {
-            flex: 1;
-            min-width: 240px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 3.5rem;
-                line-height: 1.08;
-                letter-spacing: -0.04em;
-                font-stretch: 105%;
-            }
-
-            .calculator-container {
-                margin-top: 0.5rem !important;
-                /* 👈 CHANGE: 2rem → 0.5rem */
-                padding: 0.75rem !important;
-                /* 👈 ADD THIS */
-                min-height: 260px !important;
-                /* Keep this */
-            }
-
-        }
-
         input[type=range]::-webkit-slider-thumb {
-            height: 32px;
-            width: 32px;
-            border-width: 3px;
+            -webkit-appearance:none; height:22px; width:22px;
+            border-radius:50%; background:#0F172A;
+            margin-top:-8px; border:3px solid white;
+            box-shadow:0 3px 10px rgba(0,0,0,0.2);
+            transition: transform 0.15s ease;
         }
-
-        .nav-logo i {
-            font-size: 1.5rem !important;
+        input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.2); }
+        input[type=range]::-moz-range-track { height:6px; background:#E2E8F0; border-radius:10px; border:none; }
+        input[type=range]::-moz-range-thumb {
+            height:22px; width:22px; border-radius:50%; background:#0F172A;
+            border:3px solid white; box-shadow:0 3px 10px rgba(0,0,0,0.2);
         }
+        input[type=range]::-moz-range-progress { background:#0F172A; height:6px; border-radius:10px 0 0 10px; }
 
-        .modal-content {
-            padding: 2rem;
-            margin: 1rem;
-            border-radius: 2rem;
+        /* ─── STEP CARDS ─── */
+        .step-line { position:relative; }
+        .step-line::after {
+            content:'';
+            position:absolute; top:28px; left:calc(50% + 28px);
+            width:calc(100% - 56px); height:2px;
+            background:linear-gradient(90deg, #D9FF00, #E2E8F0);
+            z-index:0;
         }
-        
-        @media (max-width: 640px) {
-            .hero-title {
-                font-size: 3rem !important;
-                line-height: 1.1;
-            }
+        .step-line:last-child::after { display:none; }
 
-            .calculator-container {
-                margin-top: 3rem;
-                padding: 1.5rem !important;
-            }
-        }
-
-        /* XL screens Ã¢â‚¬â€œ reduce empty hero space */
-        @media (min-width: 1280px) {
-            .hero-title {
-                margin-bottom: 2.5rem;
-            }
-        }
-
-        .card-1 {
-            animation-delay: 0.1s;
-        }
-
-        .card-2 {
-            animation-delay: 0.2s;
-        }
-
-        .card-3 {
-            animation-delay: 0.3s;
-        }
-
-        .card-4 {
-            animation-delay: 0.4s;
-        }
-
-        .theme-toggle {
-            background: none;
-            border: 2px solid rgba(15, 23, 42, 0.2);
-            color: var(--brand-dark);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
+        /* ─── TESTIMONIAL ─── */
+        .testimonial-card {
+            background:#fff; border-radius:1.25rem;
+            border:1px solid #F1F5F9;
             transition: all 0.3s ease;
         }
+        .testimonial-card:hover { box-shadow:0 16px 40px rgba(0,0,0,0.08); transform:translateY(-4px); }
+        [data-theme="dark"] .testimonial-card { background:#1E2D45; border-color:#334155; }
 
-        .theme-toggle:hover {
-            border-color: var(--brand-lime);
-            color: var(--brand-lime);
-            transform: rotate(180deg);
+        /* ─── FAQ ─── */
+        .faq-item { border-bottom:1px solid #F1F5F9; }
+        [data-theme="dark"] .faq-item { border-bottom-color:#334155; }
+        .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.35s ease, padding 0.35s ease; }
+        .faq-answer.open { max-height:200px; }
+        .faq-icon { transition:transform 0.3s ease; }
+        .faq-item.open .faq-icon { transform:rotate(45deg); }
+
+        /* ─── COMPARISON TABLE ─── */
+        .compare-yes { color:#16A34A; font-weight:700; }
+        .compare-no  { color:#DC2626; }
+        .compare-highlight { background:linear-gradient(135deg,#F0FFF0,#ECFDF5); }
+
+        /* ─── FLOATING WA BUTTON ─── */
+        .wa-float {
+            position:fixed; bottom:1.5rem; right:1.5rem; z-index:997;
+            width:56px; height:56px; border-radius:50%;
+            background:#25D366; color:#fff;
+            display:flex; align-items:center; justify-content:center;
+            font-size:1.5rem; z-index:999;
+            box-shadow:0 8px 24px rgba(37,211,102,0.5);
+            transition:all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
         }
-        /* FIX ALL UNCLICKABLE BUTTONS */
-.modal-overlay { 
-  pointer-events: none !important; 
-}
-.modal-content, 
-nav button, 
-#checkEligibilityBtn, 
-button[onclick], 
-#elBtn, 
-#btBtn {
-  pointer-events: auto !important; 
-  z-index: 9999 !important; 
-  position: relative !important;
-}
-.loading {
-  pointer-events: auto !important;
-}
-button:disabled {
-  pointer-events: auto !important;
-}
+        .wa-float:hover { transform:scale(1.12); box-shadow:0 12px 30px rgba(37,211,102,0.6); }
 
-/* Your existing theme-toggle CSS stays below */
-.theme-toggle {
+        /* ─── DARK MODE ─── */
+        [data-theme="dark"] body { background:#111827; color:#F1F5F9; }
+        [data-theme="dark"] .text-slate-900 { color:#F1F5F9 !important; }
+        [data-theme="dark"] .text-slate-700 { color:#CBD5E1 !important; }
+        [data-theme="dark"] .text-slate-600 { color:#A8BBCF !important; }
+        [data-theme="dark"] .text-slate-500 { color:#7A95AD !important; }
+        [data-theme="dark"] .bg-white        { background:#1E2D45 !important; }
+        [data-theme="dark"] .bg-slate-50     { background:#1A2740 !important; }
+        [data-theme="dark"] .bg-slate-100    { background:#243550 !important; }
+        [data-theme="dark"] .border-slate-100 { border-color:#334155 !important; }
+        [data-theme="dark"] .border-slate-200 { border-color:#334155 !important; }
+        [data-theme="dark"] select, [data-theme="dark"] input { background:#172035 !important; color:#F1F5F9 !important; border-color:#334155 !important; }
+        [data-theme="dark"] .calc-card { background:#1E2D45 !important; border-color:#334155; }
+        [data-theme="dark"] .inner-section { background:#111827 !important; }
+        [data-theme="dark"] .inner-wrap { background:#172035 !important; border-color:#334155 !important; }
+        [data-theme="dark"] .theme-toggle { border-color:rgba(255,255,255,0.2); color:#F1F5F9; }
+        [data-theme="dark"] .faq-question { color:#F1F5F9; }
+        [data-theme="dark"] .compare-highlight { background: rgba(217,255,0,0.08) !important; }
 
+        /* ─── MOBILE ─── */
+        @media (max-width:768px) {
+            .hero-title { font-size:2.5rem !important; }
+            .modal-content { padding:1.25rem; margin:0.75rem; }
+            .step-line::after { display:none; }
+        }
+        @media (max-width:480px) {
+            .hero-title { font-size:2rem !important; }
+        }
+
+        /* ─── UNDER CONSTRUCTION BADGE ─── */
+        .uc-badge {
+            display:inline-flex; align-items:center; gap:6px;
+            background:#FEF3C7; color:#92400E;
+            border:1px solid #FDE68A; border-radius:99px;
+            padding:3px 10px; font-size:0.7rem; font-weight:700;
+            text-transform:uppercase; letter-spacing:0.05em;
+        }
     </style>
 </head>
 
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden bg-white">
 
-    <!-- NAV -->
-    <nav class="fixed top-0 left-0 right-0 h-20 z-50 glass-nav">
-    <div class="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
+<!-- ═══════════════════════════════════════════════════
+     NAV
+════════════════════════════════════════════════════ -->
+<nav class="glass-nav fixed top-0 left-0 right-0 h-16 z-50">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 h-full flex justify-between items-center">
 
-        <!-- LOGO -->
-        <div class="flex items-center gap-3">
-            <div class="bg-black p-3 rounded-xl text-white shadow-lg">
-                <img
-                    src="https://raw.githubusercontent.com/aspirafico-lgtm/aspirafi.github.io/dd375e1ae717165ea5b56fc4dfe87f1410c11fd0/AspiraFI%20V3%20Logo.png"
-                    alt="AspiraFi"
-                    class="h-8 sm:h-9 w-auto"
-                />
+        <div class="flex items-center gap-2.5">
+            <div class="bg-black p-2.5 rounded-xl shadow-md">
+                <img src="https://raw.githubusercontent.com/aspirafico-lgtm/aspirafi.github.io/dd375e1ae717165ea5b56fc4dfe87f1410c11fd0/AspiraFI%20V3%20Logo.png"
+                     alt="Aspirafi" class="h-7 w-auto"/>
             </div>
-            <span class="text-2xl font-bold tracking-tight text-gray-900">
-                Aspirafi
-            </span>
+            <span class="text-xl font-bold tracking-tight text-slate-900">Aspirafi</span>
         </div>
 
-        <!-- NAV LINKS -->
-        <div class="hidden md:flex items-center gap-10 text-sm font-semibold text-slate-500">
-            <a href="#" class="hover:text-slate-900 transition-colors" onclick="showEligibilityModal()">Education Loans</a>
-            <a href="#" class="hover:text-slate-900 transition-colors">Balance Transfer</a>
-            <a href="#" class="hover:text-slate-900 transition-colors">Community</a>
+        <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500">
+            <a href="#how-it-works" class="hover:text-slate-900 transition-colors">How It Works</a>
+            <a href="#calculator" class="hover:text-slate-900 transition-colors">Calculator</a>
+            <a href="#compare" class="hover:text-slate-900 transition-colors">Compare</a>
+            <a href="#" onclick="openCommunityModal();return false;" class="hover:text-slate-900 transition-colors flex items-center gap-1.5">
+                Community <span class="uc-badge">Soon</span>
+            </a>
         </div>
 
-        <!-- ACTIONS -->
-        <div class="flex items-center gap-4">
-            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-                <i class="fas fa-moon"></i>
+        <div class="flex items-center gap-3">
+            <button class="theme-toggle w-9 h-9 rounded-full border-2 border-slate-200 text-slate-600 flex items-center justify-center transition-all hover:border-[#D9FF00]"
+                    onclick="toggleTheme()" id="themeToggleBtn">
+                <i class="fas fa-moon text-sm" id="themeIcon"></i>
             </button>
-
-            <button
-                class="bg-black text-white font-semibold px-8 py-3 rounded-full text-sm uppercase tracking-wider btn-glow hover:scale-105 transition-all duration-200 shadow-xl"
-                onclick="showEligibilityModal()"
-            >
-                APPLY NOW
+            <button class="btn-primary px-5 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide hidden md:block"
+                    onclick="showEligibilityModal()">
+                Apply Now
+            </button>
+            <button class="md:hidden w-9 h-9 rounded-full border-2 border-slate-200 text-slate-600 flex items-center justify-center"
+                    onclick="toggleMobileMenu()" id="hamburgerBtn">
+                <i class="fas fa-bars text-sm" id="hamburgerIcon"></i>
             </button>
         </div>
-
+    </div>
+    <!-- MOBILE MENU -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-100 bg-white px-4 py-4 flex flex-col gap-3">
+        <a href="#how-it-works" onclick="closeMobileMenu()" class="text-sm font-semibold text-slate-600 py-2 border-b border-slate-50">How It Works</a>
+        <a href="#calculator" onclick="closeMobileMenu()" class="text-sm font-semibold text-slate-600 py-2 border-b border-slate-50">Calculator</a>
+        <a href="#compare" onclick="closeMobileMenu()" class="text-sm font-semibold text-slate-600 py-2 border-b border-slate-50">Compare</a>
+        <a href="#" onclick="openCommunityModal();closeMobileMenu();return false;" class="text-sm font-semibold text-slate-600 py-2 border-b border-slate-50 flex items-center gap-2">
+            Community <span class="uc-badge">Soon</span>
+        </a>
+        <button class="btn-primary w-full py-3 rounded-xl text-sm font-bold uppercase tracking-wide mt-1"
+                onclick="showEligibilityModal();closeMobileMenu()">
+            Apply Now, Free
+        </button>
     </div>
 </nav>
 
-    <!-- HERO -->
-   <section class="relative pt-24 md:pt-28 pb-6 px-4 min-h-[calc(100vh-5rem)] overflow-hidden">
-        <svg class="globe-orbit" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="var(--brand-lime)" stroke-width="1" opacity="0.3" />
-            <circle cx="50" cy="50" r="35" fill="none" stroke="var(--brand-green)" stroke-width="1" opacity="0.2" transform="rotate(-60 50 50)" />
+<!-- ═══════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════ -->
+<section class="hero-gradient relative pt-16 overflow-hidden min-h-screen flex items-center">
+
+    <!-- background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div style="position:absolute;top:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(37,99,235,0.15) 0%,transparent 70%);border-radius:50%;"></div>
+        <div style="position:absolute;bottom:-10%;left:-5%;width:400px;height:400px;background:radial-gradient(circle,rgba(217,255,0,0.08) 0%,transparent 70%);border-radius:50%;"></div>
+        <svg style="position:absolute;top:15%;right:8%;width:280px;height:280px;opacity:0.04;animation:rotate 25s linear infinite;" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#D9FF00" stroke-width="1"/>
+            <circle cx="50" cy="50" r="30" fill="none" stroke="#D9FF00" stroke-width="1" transform="rotate(45 50 50)"/>
         </svg>
-        <div class="grid lg:grid-cols-12 gap-12 xl:gap-16 items-center max-w-7xl mx-auto w-full">
-            <div class="lg:col-span-7 fade-in-up">
-                <h1 class="text-5xl lg:text-7xl font-bold leading-[1.08] mb- hero-title">
-                    Smarter Loans for <br class="hidden lg:block">
-                    <span class="block lg:inline bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#06B6D4] bg-clip-text text-transparent">
-                        Global Education.
-                    </span>
-                </h1>
-                <p class="text-xl text-slate-500 mb-12 max-w-xl leading-relaxed">
-                    Compare rates from 15+ top lenders. Get sanctioned in 72 hours.
-                    No hidden charges, just pure transparency.
-                </p>
-                <!-- SPEED / RATES / STATS CARDS -->
-                <div class="flex flex-wrap gap-6 mt-8 justify-center">
-                    <!-- SPEED -->
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 stat-box float-hover min-w-[260px]">
-                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                            <i class="fas fa-bolt text-xl text-yellow-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Speed</p>
-                            <p class="font-bold text-lg">3-Day Approval</p>
-                        </div>
-                    </div>
-
-                    <!-- RATES -->
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 stat-box float-hover min-w-[260px]">
-                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                            <i class="fas fa-percent text-xl text-blue-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Rates</p>
-                            <p class="font-bold text-lg">Starting 8.9%</p>
-                        </div>
-                    </div>
-
-                    <!-- STUDENTS -->
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 stat-box float-hover min-w-[260px]">
-                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                            <i class="fas fa-user-graduate text-xl text-orange-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Students</p>
-                            <p class="font-bold text-lg">1,200+ Supported</p>
-                        </div>
-                    </div>
-
-                    <!-- LOANS -->
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 stat-box float-hover min-w-[260px]">
-                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                            <i class="fas fa-coins text-xl text-purple-500"></i>
-                        </div>
-                        <div>
-                            <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Loans</p>
-                            <p class="font-bold text-lg">₹500+ Cr</p>
-                        </div>
-                    </div>
-
-                    <!-- PARTNERS -->
-                    <div class="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 stat-box float-hover min-w-[260px]">
-                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm">
-                            <i class="fas fa-building-columns text-xl text-blue-600"></i>
-                        </div>
-                        <div>
-                            <p class="text-[13.5px] text-slate-400 uppercase font-extrabold tracking-widest">Partners</p>
-                            <p class="font-bold text-lg">15+ Banks</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- CALCULATOR - COMPACT VERSION -->
-                <div class="lg:col-span-5 fade-in-up calculator-container relative z-10">
-                    <div class="bg-white/90 backdrop-blur-xl rounded-[2rem] 
-            p-6 md:p-8 
-            shadow-2xl border border-slate-100/50 
-            float-hover 
-            max-h-none 
-            overflow-visible">
-
-                        <div class="flex bg-slate-100/80 rounded-full p-1 mb-6 md:mb-8 w-max shadow-inner">
-                            <button id="elBtn" class="px-5 md:px-6 py-2 md:py-3 rounded-full bg-black text-white text-xs md:text-sm font-bold shadow-md">Education Loan</button>
-                            <button id="btBtn" class="px-5 md:px-6 py-2 md:py-3 rounded-full text-xs md:text-sm font-bold text-slate-600 hover:bg-slate-200 transition-colors">Balance Transfer</button>
-                        </div>
-
-                        <div class="mb-5 md:mb-6 relative">
-                            <p class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 tracking-wider">Loan Amount</p>
-                            <p id="displayAmount" class="text-3xl md:text-4xl font-bold text-gray-900">₹40,00,000</p>
-                            <input type="range" id="amountSlider" min="100000" max="50000000" step="500000" value="4000000" class="mt-2 w-full h-2 bg-slate-200 rounded-lg" class="mt-4 md:mt-6 w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-lime">
-                        </div>
-
-                        <div id="elRoiBlock" class="grid grid-cols-2 gap-6 md:gap-8 mb-6 md:mb-8">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 block tracking-wider">Tenure</label>
-                                <select id="tenure" class="w-full p-4 md:p-5 rounded-2xl md:rounded-3xl bg-slate-50/80 font-bold text-base md:text-lg border border-slate-200 hover:border-slate-300 transition-all">
-                                    <option value="5">5 Years</option>
-                                    <option value="7">7 Years</option>
-                                    <option value="10" selected>10 Years</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 block tracking-wider">ROI</label>
-                                <input id="roiInput" type="number" step="0.01" value="10.50" class="w-full p-4 md:p-5 rounded-2xl md:rounded-3xl bg-slate-50/80 font-bold text-base md:text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                            </div>
-                        </div>
-
-                        <div id="btRoiBlock" class="grid grid-cols-2 gap-2 mb-3 max-h-none overflow-hidden hidden">
-
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 block tracking-wider">Old ROI</label>
-                                <input id="oldRoi" type="number" step="0.01" value="12.00" class="w-full p-4 md:p-5 rounded-2xl md:rounded-3xl bg-slate-50/80 font-bold text-base md:text-lg border border-slate-200 hover:border-slate-300 transition-all">
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-2 md:mb-3 block tracking-wider">New ROI</label>
-                                <input id="newRoi" type="number" step="0.01" value="9.25" class="w-full p-4 md:p-5 rounded-2xl md:rounded-3xl bg-slate-50/80 font-bold text-base md:text-lg border border-slate-200 hover:border-slate-300 transition-all">
-                            </div>
-                        </div>
-
-                        <div class="bg-[#0F172A] rounded-[2rem] md:rounded-[2.5rem] p-5 md:p-7 mb-6 md:mb-8 text-white emi-glow">
-                            <p class="text-xs md:text-sm opacity-75 uppercase tracking-wider mb-1 md:mb-2">Estimated Monthly EMI</p>
-                            <p id="displayEMI" class="text-3xl md:text-4xl font-bold transition-all duration-200">₹89,160</p>
-                        </div>
-
-                        <div id="savingsBox" class="hidden bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl md:rounded-3xl p-6 md:p-8 mb-6 md:mb-6 border border-green-100 shadow-lg">
-                            <p class="text-xs uppercase font-bold text-green-700 mb-1 md:mb-2 tracking-wider">Monthly Savings</p>
-                            <p id="savingsAmount" class="text-3xl md:text-4xl font-bold text-green-800">₹0</p>
-                        </div>
-
-                        <button id="checkEligibilityBtn" class="w-full py-5 md:py-6 rounded-2xl md:rounded-3xl bg-[#D9FF00] text-black font-bold text-lg md:text-xl uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200" onclick="showEligibilityModal()">
-                            Check Eligibility
-                        </button>
-                    </div>
-                </div>
-        </div>
-    </section>
-
-    <!-- MODALS CONTAINER -->
-    <div id="modals">
-        <!-- ELIGIBILITY MODAL -->
-        <div id="eligibilityModal" class="modal-overlay" onclick="hideEligibilityModal(event)">
-            <div class="modal-content" onclick="event.stopPropagation()">
-                <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-[#D9FF00] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                        <i class="fas fa-graduation-cap text-3xl text-black" id="modalIcon"></i>
-                    </div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2" id="modalTitle">Check Your Eligibility</h2>
-                    <p class="text-slate-500 text-lg" id="modalSubtitle">Fill in your details to get personalized loan options</p>
-                </div>
-
-                <div id="formError" class="error-message mb-6">
-                    Please fill all required fields correctly.
-                </div>
-
-                <form id="eligibilityForm" class="space-y-6">
-                    <!-- COMMON FIELDS -->
-                    <div>
-                        <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Full Name *</label>
-                        <input id="modalUserName" type="text" placeholder="Enter your full name" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Email *</label>
-                            <input id="modalUserEmail" type="email" placeholder="your@email.com" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Phone *</label>
-                            <input id="modalUserPhone" type="tel" placeholder="+91 12345 67890" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Country *</label>
-                            <select id="modalUserCountry" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                                <option value="">Select Country</option>
-                                <option value="US">United States</option>
-                                <option value="UK">United Kingdom</option>
-                                <option value="CA">Canada</option>
-                                <option value="AU">Australia</option>
-                                <option value="DE">Germany</option>
-                                <option value="FR">France</option>
-                                <option value="IE">Ireland</option>
-                                <option value="NZ">New Zealand</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Intake *</label>
-                            <select id="modalUserIntake" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                                <option value="">Select Intake</option>
-                                <option value="Fall 2026">Fall 2026</option>
-                                <option value="Spring 2027">Spring 2027</option>
-                                <option value="Fall 2027">Fall 2027</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- BALANCE TRANSFER FIELDS -->
-                    <div id="btFields" class="space-y-6 hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Current Bank *</label>
-                                <select id="modalCurrentBank" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                                    <option value="">Select Bank</option>
-                                    <option value="HDFC">HDFC Bank</option>
-                                    <option value="ICICI">ICICI Bank</option>
-                                    <option value="SBI">State Bank of India</option>
-                                    <option value="AXIS">Axis Bank</option>
-                                    <option value="KOTAK">Kotak Mahindra</option>
-                                    <option value="PNB">PNB Bank</option>
-                                    <option value="BOB">Bank of Baroda</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Loan Amount *</label>
-                                <input id="modalLoanAmount" type="number" placeholder="₹40,00,000" step="50000" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">Current ROI * (%)</label>
-                            <input id="modalCurrentROI" type="number" step="0.01" placeholder="12.00" required class="w-full p-5 rounded-3xl bg-slate-50/80 font-bold text-lg border border-slate-200 hover:border-slate-300 focus:border-brand-lime focus:outline-none transition-all">
-                        </div>
-                    </div>
-
-                    <div class="flex gap-4 pt-4">
-                        <button type="button" onclick="hideEligibilityModal()" class="flex-1 py-4 px-6 rounded-3xl bg-slate-100 text-slate-700 font-bold text-lg hover:bg-slate-200 transition-all">
-                            Cancel
-                        </button>
-                        <button type="submit" form="eligibilityForm" id="modalSubmitBtn" class="flex-1 py-4 px-6 rounded-3xl bg-[#D9FF00] text-black font-bold text-lg uppercase tracking-wider btn-glow hover:scale-[1.02] shadow-2xl hover:shadow-brand-lime/40 transition-all duration-200">
-                            Get My Options
-                        </button>
-                    </div>
-                    <!-- Ã°Å¸â€˜â€¡ HIDDEN FIELDS FOR GOOGLE SHEETS Ã°Å¸â€˜â€¡ -->
-                    <input type="hidden" name="fullName" id="modalUserName" value="">
-                    <input type="hidden" name="email" id="modalUserEmail" value="">
-                    <input type="hidden" name="phone" id="modalUserPhone" value="">
-                    <input type="hidden" name="country" id="modalUserCountry" value="">
-                    <input type="hidden" name="intake" id="modalUserIntake" value="">
-                    <input type="hidden" name="LoanAmount" id="sheetLoanAmount">
-                    <input type="hidden" name="ROI" id="sheetROI">
-                    <input type="hidden" name="Mode" id="sheetMode">
-                    <!-- Ã°Å¸â€˜â€  END HIDDEN FIELDS Ã°Å¸â€˜â€  -->
-                </form>
-
-            </div>
-        </div>
-
-        <!-- SUCCESS POPUP -->
-        <div id="successPopup" class="modal-overlay">
-            <div class="modal-content text-center">
-                <div class="w-20 h-20 bg-green-400 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                    <i class="fas fa-check text-4xl text-black"></i>
-                </div>
-                <h2 id="successTitle" class="text-3xl font-bold mb-3">
-                    Application Submitted 🎉
-                </h2>
-
-                <p id="successMessage" class="text-lg text-slate-600 mb-6">
-                    Our team will contact you within <b>24 hours</b>.
-                </p>
-                <p class="font-semibold text-slate-800">Sit back - we've got this 🚀</p>
-                <button onclick="hideSuccessPopup()" class="mt-8 px-10 py-4 bg-black text-white font-bold rounded-full hover:scale-105 transition-all">
-                    Done
-                </button>
-            </div>
-        </div>
-
-        <!-- REFERRAL MODAL -->
-        <div id="referralModal" class="modal-overlay">
-            <div class="modal-content max-w-md" onclick="event.stopPropagation()">
-
-                <div class="text-center mb-8">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[#D9FF00] to-[#BFFF00] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                        <i class="fas fa-gift text-3xl text-black"></i>
-                    </div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-2">
-                        Refer & Earn ₹,000
-                    </h2>
-                    <p class="text-slate-500 text-lg">
-                        Share with friends planning to study abroad
-                    </p>
-                </div>
-
-                <div class="space-y-6">
-
-                    <!-- REFERRAL FORM -->
-                    <form id="referralForm" class="space-y-6">
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Your Name *
-                                </label>
-                                <input id="refYourName" type="text" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Your Email *
-                                </label>
-                                <input id="refYourEmail" type="email" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Your Phone *
-                                </label>
-                                <input id="refYourPhone" type="tel" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Friend's Name *
-                                </label>
-                                <input id="refFriendName" type="text" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Friend's Email *
-                                </label>
-                                <input id="refFriendEmail" type="email" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Friend's Phone *
-                                </label>
-                                <input id="refFriendPhone" type="tel" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Country *
-                                </label>
-                                <select id="refCountry" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                                    <option value="">Select Country</option>
-                                    <option value="US">United States</option>
-                                    <option value="UK">United Kingdom</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="DE">Germany</option>
-                                    <option value="FR">France</option>
-                                    <option value="IE">Ireland</option>
-                                    <option value="NZ">New Zealand</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="text-xs font-bold text-slate-400 uppercase mb-3 block tracking-wider">
-                                    Intake *
-                                </label>
-                                <select id="refIntake" required class="w-full p-4 rounded-2xl bg-slate-50/80 font-semibold border border-slate-200 focus:border-brand-lime focus:outline-none">
-                                    <option value="">Select Intake</option>
-                                    <option value="Spring">Spring</option>
-                                    <option value="Summer">Summer</option>
-                                    <option value="Fall">Fall</option>
-                                    <option value="Winter">Winter</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4 pt-4">
-                            <button type="button" onclick="hideReferralModal()" class="flex-1 py-4 px-6 rounded-2xl bg-slate-100 font-bold hover:bg-slate-200">
-                                Close
-                            </button>
-
-                            <button type="submit" id="referralSubmitBtn" class="flex-1 py-4 px-6 rounded-2xl bg-[#D9FF00] text-black font-bold uppercase tracking-wider btn-glow">
-                                Submit Referral
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- COMMUNITY MODAL (CORRECT PLACEMENT) -->
-        <div id="communityModal" class="modal-overlay" onclick="closeCommunityModal(event)">
-            <div class="modal-content text-center" onclick="event.stopPropagation()">
-
-                <div class="w-20 h-20 bg-[#0F172A] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                    <i class="fas fa-users text-3xl text-white"></i>
-                </div>
-
-                <h2 class="text-3xl font-bold mb-4 text-gray-900">
-                    Community
-                </h2>
-
-                <p class="text-slate-600 text-lg leading-relaxed">
-                    Connect with students who have already studied abroad.
-                    Get honest advice on loans, living costs, universities,
-                    and life overseas.
-                </p>
-
-                <button onclick="closeCommunityModal()" class="mt-8 px-10 py-4 bg-black text-white font-bold rounded-full hover:scale-105 transition-all">
-                    Close
-                </button>
-
-            </div>
-        </div>
-        <section class="inner-container-section">
-            <div class="max-w-7xl mx-auto inner-container">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-gradient-to-br from-slate-50 to-gray-50 p-12 rounded-[3rem] md:col-span-2 flex flex-col justify-between min-h-[420px] float-hover card-1 border border-slate-100/50">
-                        <div>
-                            <div class="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center mb-12 shadow-2xl"><i class="fas fa-graduation-cap text-2xl"></i></div>
-                            <h3 class="text-5xl font-bold text-slate-900 mb-8 leading-tight">Study Abroad <br>without the stress.</h3>
-                        </div>
-                        <div class="flex justify-between items-end mt-auto">
-                            <p class="text-slate-600 max-w-sm text-xl leading-relaxed font-medium">
-                                We handle the banking, forex, and paperwork while you focus on your degree.
-                                <br>100% digital process.
-                            </p>
-
-                            <!-- ARROW BUTTON -->
-                            <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-2xl cursor-pointer hover:scale-110 transition-transform" onclick="showEligibilityModal()" title="Check Eligibility">
-                                <i class="fas fa-arrow-right text-2xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-gradient-to-br from-[#D9FF00] to-[#BFFF00] p-12 rounded-[3rem] flex flex-col justify-between min-h-[420px] float-hover card-2 shadow-2xl">
-
-                        <!-- TITLE -->
-                        <h3 class="text-4xl font-bold text-slate-900 leading-tight mb-4">
-                            Balance <br>Transfer
-                        </h3>
-
-                        <!-- DESCRIPTION (NEW Ã¢â‚¬â€œ THIS IS WHAT YOU ASKED) -->
-                        <p class="text-lg font-medium text-slate-800 max-w-xs mb-auto">
-                            Lower your existing loan EMI by switching to better interest rates.
-                        </p>
-
-                        <!-- FOOTER -->
-                        <div class="flex justify-between items-end mt-10">
-                            <p class="text-base font-bold text-slate-900 leading-tight">
-                                Save up to <br>
-                                <span class="text-3xl">₹5,000/mo</span>
-                            </p>
-
-                            <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white shadow-2xl cursor-pointer hover:scale-110 transition-transform" onclick="openBalanceTransferForm()">
-                                <i class="fas fa-arrow-right text-2xl"></i>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div onclick="openCommunityModal()" class="bg-[#0F172A] text-white p-12 rounded-[3rem] flex flex-col justify-between min-h-[380px] float-hover card-3 shadow-2xl cursor-pointer">
-                        <div>
-                            <h3 class="text-3xl font-bold mb-6">Community Support</h3>
-                            <p class="text-slate-300 text-base leading-relaxed">Talk to students who already took the leap. Get honest advice on loans and living costs.</p>
-                        </div>
-                        <div class="flex -space-x-4 mt-10">
-                            <img src="https://i.pravatar.cc/100?img=12" class="w-14 h-14 rounded-full border-4 border-white shadow-lg">
-                            <img src="https://i.pravatar.cc/100?img=33" class="w-14 h-14 rounded-full border-4 border-white shadow-lg">
-                            <img src="https://i.pravatar.cc/100?img=59" class="w-14 h-14 rounded-full border-4 border-white shadow-lg">
-                        </div>
-                    </div>
-
-                    <!-- REFERRAL CARD REPLACING PARTNER LOGOS -->
-                    <div class="bg-gradient-to-br from-[#D9FF00] to-[#BFFF00] p-12 rounded-[3rem] flex flex-col justify-between min-h-[420px] float-hover card-4 shadow-2xl md:col-span-2">
-                        <div>
-                            <div class="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center mb-12 shadow-2xl">
-                                <i class="fas fa-users text-2xl"></i>
-                            </div>
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 leading-tight">Refer & Earn <br><span class="text-4xl">₹5,000</span></h3>
-                            <p class="text-slate-600 text-xl leading-relaxed font-medium mb-8">Get ₹5,000 cashback for every friend whose loan is successfully disbursed through Aspirafi.</p>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="text-sm">
-                                <p class="text-xs uppercase font-bold text-slate-500 mb-1 tracking-wider">Unlimited Referrals</p>
-                                <p class="font-bold text-lg text-slate-900">No Limit</p>
-                            </div>
-                            <button type="button" onclick="showReferralModal()" class="bg-black text-white px-8 py-4 rounded-2xl font-bold uppercase tracking-wider text-sm hover:scale-105 shadow-xl hover:shadow-brand-lime/40 transition-all duration-200 btn-glow">
-                                Share Referral
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- FINAL PERFECT PARTNER LOGOS CARD (BIGGER + CRYSTAL CLEAR) -->
-                <div class="mt-4 bg-gradient-to-br from-slate-50 to-gray-50 p-12 rounded-[3rem] flex flex-col items-center gap-8 float-hover border border-slate-100/50 text-center">
-                    <!-- CENTERED TITLE -->
-                    <h3 class="text-3xl font-bold text-slate-900 mb-2">
-                        Partnered with the best
-                    </h3>
-
-                    <!-- CRYSTAL CLEAR BIGGER LOGOS (72px) -->
-                    <div class="flex flex-wrap gap-6 lg:gap-8 justify-center max-w-4xl">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner1.png?raw=true" alt="Partner 1" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner2.png?raw=true" alt="Partner 2" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner3.png?raw=true" alt="Partner 3" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner4.png?raw=true" alt="Partner 4" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner5.png?raw=true" alt="Partner 5" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner6.jpeg?raw=true" alt="Partner 6" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner7.png?raw=true" alt="Partner 7" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner8.png?raw=true" alt="Partner 8" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner9.png?raw=true" alt="Partner 9" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner10.png?raw=true" alt="Partner 10" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner11.png?raw=true" alt="Partner 11" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner12.png?raw=true" alt="Partner 12" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner13.png?raw=true" alt="Partner 13" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                        <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner14.png?raw=true" alt="Partner 14" class="h-18 max-h-18 max-w-28 shadow-md hover:shadow-xl bg-white rounded-xl p-3 border-2 border-slate-200 hover:border-slate-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 object-contain">
-                    </div>
-                </div>
-
-            </div>
-
     </div>
 
+    <div class="relative max-w-7xl mx-auto px-4 md:px-6 py-16 grid lg:grid-cols-12 gap-10 xl:gap-16 items-center w-full">
 
-    </section>
+        <!-- LEFT -->
+        <div class="lg:col-span-6 fade-in-up">
+            <!-- trust pill -->
+            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 mb-6">
+                <span class="w-2 h-2 bg-[#D9FF00] rounded-full animate-pulse"></span>
+                <span class="text-white/80 text-xs font-semibold tracking-wide uppercase">Trusted by 1,200+ students across India</span>
+            </div>
 
-    <footer class="py-16 px-6 bg-gradient-to-r from-slate-50 to-gray-50 max-w-7xl mx-auto border-t-2 border-slate-100">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-            <p class="text-slate-500 text-lg font-semibold">© 2026 Aspirafi Education Finance. Built for global ambitions.</p>
-            <div class="flex gap-6 items-center">
-                <i class="fab fa-twitter text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
-                <a href="https://www.linkedin.com/company/109628456/" target="_blank" aria-label="Aspirafi on LinkedIn" class="fab fa-linkedin text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></a>
-                <i class="fab fa-instagram text-2xl text-slate-400 hover:text-brand-lime transition-colors cursor-pointer"></i>
+            <h1 class="hero-title text-4xl md:text-5xl xl:text-6xl font-black text-white mb-5">
+                Smarter Loans<br>
+                for <span style="background:linear-gradient(90deg,#D9FF00,#86efac);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Global Education.</span>
+            </h1>
+            <p class="text-white/65 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+                Compare rates from 15+ top lenders in 3 minutes. Get sanctioned in 72 hours. Zero hidden charges. Just complete transparency.
+            </p>
 
-                <!-- WhatsApp -->
-                <a href="https://wa.me/917676148787" target="_blank" aria-label="Chat on WhatsApp" class="fab fa-whatsapp text-2xl text-slate-400 hover:text-brand-green transition-colors cursor-pointer"></a>
-
-                <!-- Call -->
-                <a href="tel:+917676148787" class="flex items-center gap-2 text-slate-400 hover:text-brand-lime transition-colors font-semibold">
-                    <i class="fas fa-phone text-xl"></i>
-                    <span class="text-base">7676148787</span>
+            <div class="flex flex-wrap gap-3 mb-10">
+                <button class="btn-primary px-7 py-3.5 rounded-full text-sm font-bold uppercase tracking-wide"
+                        onclick="showEligibilityModal()">
+                    Check Eligibility Free
+                </button>
+                <a href="#how-it-works" class="flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/20 text-white/80 text-sm font-semibold hover:bg-white/10 transition-all">
+                    <i class="fas fa-play text-xs"></i> How It Works
                 </a>
             </div>
+
+            <!-- STAT PILLS -->
+            <div class="flex flex-wrap gap-3">
+                <div class="flex items-center gap-2.5 bg-white/10 border border-white/10 rounded-2xl px-4 py-2.5">
+                    <i class="fas fa-bolt text-[#D9FF00]"></i>
+                    <div>
+                        <p class="text-white font-bold text-sm">72-Hour</p>
+                        <p class="text-white/50 text-[10px] uppercase tracking-wider">Approval</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2.5 bg-white/10 border border-white/10 rounded-2xl px-4 py-2.5">
+                    <i class="fas fa-percent text-[#D9FF00]"></i>
+                    <div>
+                        <p class="text-white font-bold text-sm">From 8.9%</p>
+                        <p class="text-white/50 text-[10px] uppercase tracking-wider">Interest Rate</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2.5 bg-white/10 border border-white/10 rounded-2xl px-4 py-2.5">
+                    <i class="fas fa-coins text-[#D9FF00]"></i>
+                    <div>
+                        <p class="text-white font-bold text-sm">₹380+ Cr</p>
+                        <p class="text-white/50 text-[10px] uppercase tracking-wider">Disbursed</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2.5 bg-white/10 border border-white/10 rounded-2xl px-4 py-2.5">
+                    <i class="fas fa-building-columns text-[#D9FF00]"></i>
+                    <div>
+                        <p class="text-white font-bold text-sm">15+ Banks</p>
+                        <p class="text-white/50 text-[10px] uppercase tracking-wider">Partners</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </footer>
 
-    <script>
-        const amountSlider = document.getElementById('amountSlider');
-        const displayAmount = document.getElementById('displayAmount');
-        const displayEMI = document.getElementById('displayEMI');
-        const tenure = document.getElementById('tenure');
-        const roiInput = document.getElementById('roiInput');
-        const oldRoi = document.getElementById('oldRoi');
-        const newRoi = document.getElementById('newRoi');
-        const elBtn = document.getElementById('elBtn');
-        const btBtn = document.getElementById('btBtn');
-        const elRoiBlock = document.getElementById('elRoiBlock');
-        const btRoiBlock = document.getElementById('btRoiBlock');
-        const savingsBox = document.getElementById('savingsBox');
-        const savingsAmount = document.getElementById('savingsAmount');
-        const eligibilityModal = document.getElementById('eligibilityModal');
-        const eligibilityForm = document.getElementById('eligibilityForm');
-        const btFields = document.getElementById('btFields');
-        const modalIcon = document.getElementById('modalIcon');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalSubtitle = document.getElementById('modalSubtitle');
-        const formError = document.getElementById('formError');
-        const modalSubmitBtn = document.getElementById('modalSubmitBtn');
-        const referralModal = document.getElementById('referralModal');
+        <!-- CALCULATOR -->
+        <div class="lg:col-span-6 fade-in-up delay-2" id="calculator">
+            <div class="calc-card p-5 md:p-6">
 
-        function openCommunityModal() {
-            const modal = document.getElementById('communityModal');
-            modal.style.display = 'flex';
-            modal.classList.add('show');
-            document.body.style.overflow = 'hidden';
+                <div class="flex bg-slate-100 rounded-full p-1 mb-5 w-max">
+                    <button id="elBtn" class="px-5 py-2 rounded-full bg-[#0F172A] text-white text-xs font-bold transition-all">Education Loan</button>
+                    <button id="btBtn" class="px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-all">Balance Transfer</button>
+                </div>
+
+                <div class="mb-4">
+                    <div class="flex justify-between items-baseline mb-1">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Loan Amount</p>
+                        <p id="displayAmount" class="text-2xl font-black text-slate-900">₹40,00,000</p>
+                    </div>
+                    <input type="range" id="amountSlider" min="100000" max="50000000" step="500000" value="4000000" class="w-full mt-1">
+                    <div class="flex justify-between mt-1">
+                        <span class="text-[10px] text-slate-400">₹1L</span>
+                        <span class="text-[10px] text-slate-400">₹5Cr</span>
+                    </div>
+                </div>
+
+                <div id="elRoiBlock" class="grid grid-cols-2 gap-3 mb-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Tenure</label>
+                        <select id="tenure" class="w-full p-3 rounded-xl bg-slate-50 font-bold text-sm border border-slate-200 focus:outline-none focus:border-[#D9FF00] transition-all">
+                            <option value="5">5 Years</option>
+                            <option value="7">7 Years</option>
+                            <option value="10" selected>10 Years</option>
+                            <option value="12">12 Years</option>
+                            <option value="15">15 Years</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Interest Rate (%)</label>
+                        <input id="roiInput" type="number" step="0.1" value="10.5"
+                               class="w-full p-3 rounded-xl bg-slate-50 font-bold text-sm border border-slate-200 focus:outline-none focus:border-[#D9FF00] transition-all">
+                    </div>
+                </div>
+
+                <div id="btRoiBlock" class="grid grid-cols-2 gap-3 mb-4 hidden">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Current Rate (%)</label>
+                        <input id="oldRoi" type="number" step="0.1" value="12.0"
+                               class="w-full p-3 rounded-xl bg-slate-50 font-bold text-sm border border-slate-200 focus:outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">New Rate (%)</label>
+                        <input id="newRoi" type="number" step="0.1" value="9.25"
+                               class="w-full p-3 rounded-xl bg-slate-50 font-bold text-sm border border-slate-200 focus:outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="emi-display p-4 mb-4 text-white">
+                    <p class="text-[10px] opacity-60 uppercase tracking-widest mb-0.5">Estimated Monthly EMI</p>
+                    <div class="flex items-baseline justify-between">
+                        <p id="displayEMI" class="text-3xl font-black">₹52,860</p>
+                        <span class="text-white/40 text-xs">per month</span>
+                    </div>
+                </div>
+
+                <div id="savingsBox" class="hidden bg-emerald-50 rounded-xl p-4 mb-4 border border-emerald-100">
+                    <p class="text-[10px] uppercase font-bold text-emerald-700 mb-0.5 tracking-widest">You Save Monthly</p>
+                    <p id="savingsAmount" class="text-2xl font-black text-emerald-800">₹0</p>
+                </div>
+
+                <button class="btn-primary w-full py-4 rounded-xl text-sm font-bold uppercase tracking-wide"
+                        onclick="showEligibilityModal()">
+                    Check Eligibility, Free &amp; Instant
+                </button>
+                <p class="text-center text-[10px] text-slate-400 mt-2">No credit score impact · No spam calls</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════════ -->
+<section id="how-it-works" class="py-20 px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-14 fade-in-up">
+            <span class="inline-block bg-[#D9FF00] text-[#0F172A] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">Simple Process</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Get your loan in 3 easy steps</h2>
+            <p class="text-slate-500 text-base max-w-xl mx-auto">From application to disbursal. Faster than you think.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 relative">
+            <div class="step-line fade-in-up delay-1">
+                <div class="bg-white border-2 border-slate-100 rounded-2xl p-7 text-center float-card h-full">
+                    <div class="w-14 h-14 bg-[#D9FF00] rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+                        <i class="fas fa-file-alt text-xl text-slate-900"></i>
+                    </div>
+                    <div class="inline-block bg-slate-900 text-white text-xs font-black px-3 py-1 rounded-full mb-3">Step 1</div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">Fill Your Details</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Tell us your course, country, and loan amount. Takes under 3 minutes with zero paperwork upfront.</p>
+                </div>
+            </div>
+            <div class="step-line fade-in-up delay-2">
+                <div class="bg-white border-2 border-slate-100 rounded-2xl p-7 text-center float-card h-full">
+                    <div class="w-14 h-14 bg-[#0F172A] rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+                        <i class="fas fa-search-dollar text-xl text-[#D9FF00]"></i>
+                    </div>
+                    <div class="inline-block bg-slate-900 text-white text-xs font-black px-3 py-1 rounded-full mb-3">Step 2</div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">We Compare &amp; Match</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Our team compares 15+ lenders and matches you with the best rate and fastest approval for your profile.</p>
+                </div>
+            </div>
+            <div class="step-line fade-in-up delay-3">
+                <div class="bg-white border-2 border-[#D9FF00] rounded-2xl p-7 text-center float-card h-full" style="background:linear-gradient(135deg,#FAFFF0,#F0FFE0);">
+                    <div class="w-14 h-14 bg-[#D9FF00] rounded-2xl flex items-center justify-center mx-auto mb-5 shadow-lg">
+                        <i class="fas fa-check-circle text-xl text-slate-900"></i>
+                    </div>
+                    <div class="inline-block bg-[#D9FF00] text-slate-900 text-xs font-black px-3 py-1 rounded-full mb-3">Step 3</div>
+                    <h3 class="text-lg font-black text-slate-900 mb-2">Sanctioned in 72 Hours</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">Get your sanction letter in 72 hours. We handle all the bank follow-ups, documents, and forex guidance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- WHAT WE COVER -->
+        <div class="mt-12 bg-slate-900 rounded-2xl p-8 md:p-10 fade-in-up">
+            <h3 class="text-xl font-black text-white mb-6 text-center">What does the loan cover?</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4">
+                    <i class="fas fa-university text-[#D9FF00] text-lg"></i>
+                    <span class="text-white/80 text-sm font-semibold">Tuition Fees</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4">
+                    <i class="fas fa-home text-[#D9FF00] text-lg"></i>
+                    <span class="text-white/80 text-sm font-semibold">Living Expenses</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4">
+                    <i class="fas fa-plane text-[#D9FF00] text-lg"></i>
+                    <span class="text-white/80 text-sm font-semibold">Travel &amp; Visa</span>
+                </div>
+                <div class="flex items-center gap-3 bg-white/5 rounded-xl p-4">
+                    <i class="fas fa-laptop text-[#D9FF00] text-lg"></i>
+                    <span class="text-white/80 text-sm font-semibold">Equipment &amp; Books</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     COMPARISON TABLE
+════════════════════════════════════════════════════ -->
+<section id="compare" class="py-20 px-4 inner-section" style="background:#F8FAFC;">
+    <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-12 fade-in-up">
+            <span class="inline-block bg-[#0F172A] text-[#D9FF00] text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">Why Aspirafi</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Aspirafi vs Going Direct to a Bank</h2>
+            <p class="text-slate-500 text-base">See exactly what you gain by using us.</p>
+        </div>
+
+        <div class="inner-wrap bg-white rounded-2xl overflow-hidden shadow-xl border border-slate-100 fade-in-up">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-slate-900 text-white">
+                            <th class="text-left px-6 py-4 text-sm font-bold">Feature</th>
+                            <th class="px-6 py-4 text-sm font-bold text-center" style="background:rgba(217,255,0,0.15);">
+                                <span class="text-[#D9FF00]">✦ Aspirafi</span>
+                            </th>
+                            <th class="px-6 py-4 text-sm font-bold text-center opacity-60">Direct to Bank</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr class="compare-highlight">
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Approval Time</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ 72 Hours</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">15–30 Days</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Lenders Compared</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ 15+ Banks</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">1 Bank Only</td>
+                        </tr>
+                        <tr class="compare-highlight">
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Interest Rate</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ From 8.9%</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">11–13% Typical</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Document Help</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ Full Support</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">✗ Self-Managed</td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Forex Guidance</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ Included</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">✗ Not Provided</td>
+                        </tr>
+                        <tr class="compare-highlight">
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-700">Process</td>
+                            <td class="px-6 py-4 text-center compare-yes text-sm" style="background:rgba(217,255,0,0.05);">✓ 100% Digital</td>
+                            <td class="px-6 py-4 text-center compare-no text-sm">Branch Visits Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-center mt-8">
+            <button class="btn-primary px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-wide"
+                    onclick="showEligibilityModal()">
+                Get My Best Rate Now
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════════ -->
+<section class="py-20 px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 fade-in-up">
+            <span class="inline-block bg-[#D9FF00] text-slate-900 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">Their Words, Not Ours</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Students who trusted Aspirafi</h2>
+            <p class="text-slate-500 text-base">Real stories from students we've helped. Join 1,200+ who got their loan stress-free.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+
+            <!-- 1 -->
+            <div class="testimonial-card p-6 fade-in-up delay-1">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"From the first call to the sanction letter, my advisor was available every step of the way. Whenever I had a doubt, even late at night, I got a reply immediately. Never felt stuck or stressed throughout the entire process."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=47" class="w-10 h-10 rounded-full" alt="Rohith">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Rohith Nair</p>
+                        <p class="text-xs text-slate-400">MS Data Science, UT Dallas · Fall 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2 FEATURED -->
+            <div class="testimonial-card p-6 fade-in-up delay-2" style="border:2px solid #D9FF00;">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"My situation had a lot of hurdles: low CIBIL, no co-applicant initially, tight visa deadline. Aspirafi didn't give up. They gave me multiple options, negotiated the ROI with the bank directly, and got me sanctioned in time. Genuinely life-changing."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=15" class="w-10 h-10 rounded-full" alt="Firoz">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Firoz Shaikh</p>
+                        <p class="text-xs text-slate-400">MBA, University of Birmingham · Fall 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="testimonial-card p-6 fade-in-up delay-3">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"The balance transfer saved me ₹4,100 every month. I was on 12.5% with my old bank. Aspirafi moved me to 9.1% in under a week, fully online. I only wish I had done it sooner."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=25" class="w-10 h-10 rounded-full" alt="Oindrilla">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Oindrilla Banerjee</p>
+                        <p class="text-xs text-slate-400">MEng, Imperial College London · Spring 2024</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="testimonial-card p-6 fade-in-up delay-1">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"My visa interview was in 9 days. I needed the sanction letter urgently and was panicking. Aspirafi understood the situation immediately and delivered it in 67 hours. They literally saved my admission to NYU."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=60" class="w-10 h-10 rounded-full" alt="Akash">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Akash Chauhan</p>
+                        <p class="text-xs text-slate-400">MS Finance, New York University · Spring 2025</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="testimonial-card p-6 fade-in-up delay-2">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"I was planning my Masters in Germany and had no idea where to start with the loan. Aspirafi handled the shortlisting, documentation, and all bank coordination. I just had to sign. The whole thing felt completely stress-free."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=52" class="w-10 h-10 rounded-full" alt="Shrey">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Shrey Ramdurgkar</p>
+                        <p class="text-xs text-slate-400">MS Engineering, TU Munich · Winter 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="testimonial-card p-6 fade-in-up delay-3">
+                <div class="flex items-center gap-1 mb-3">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i><i class="fas fa-star text-yellow-400 text-sm"></i>
+                </div>
+                <p class="text-slate-600 text-sm leading-relaxed mb-5">"I was struggling to get approved anywhere. Two banks had already rejected me. Aspirafi profiled my case properly, explained exactly which lenders would work for me, and I got sanctioned within 4 days. Just a call or message away, always."</p>
+                <div class="flex items-center gap-3">
+                    <img src="https://i.pravatar.cc/100?img=57" class="w-10 h-10 rounded-full" alt="Druvanth">
+                    <div>
+                        <p class="font-bold text-sm text-slate-900">Druvanth Reddy</p>
+                        <p class="text-xs text-slate-400">MS CS, Arizona State University · Fall 2024</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     CARDS BENTO (Balance Transfer + Referral)
+════════════════════════════════════════════════════ -->
+<section class="inner-section py-16 px-4" style="background:#F8FAFC;">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-6">
+
+            <!-- BALANCE TRANSFER -->
+            <div class="bg-[#0F172A] rounded-2xl p-8 flex flex-col justify-between min-h-[280px] float-card">
+                <div>
+                    <div class="w-12 h-12 bg-[#D9FF00] rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-exchange-alt text-lg text-slate-900"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white mb-2">Balance Transfer</h3>
+                    <p class="text-white/60 text-sm leading-relaxed">Already have a loan at a high rate? Switch to a better lender and save thousands every month. Fully online, no branch visits.</p>
+                </div>
+                <div class="flex items-center justify-between mt-6">
+                    <div>
+                        <p class="text-white/40 text-xs uppercase tracking-wider">Save up to</p>
+                        <p class="text-[#D9FF00] text-2xl font-black">₹5,000/mo</p>
+                    </div>
+                    <button onclick="openBalanceTransferForm()" class="btn-primary px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wide">
+                        Transfer Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- REFERRAL -->
+            <div class="rounded-2xl p-8 flex flex-col justify-between min-h-[280px] float-card" style="background:linear-gradient(135deg,#D9FF00,#BFFF00);">
+                <div>
+                    <div class="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center mb-5">
+                        <i class="fas fa-gift text-lg text-[#D9FF00]"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 mb-2">Refer &amp; Earn ₹5,000</h3>
+                    <p class="text-slate-700 text-sm leading-relaxed">Get ₹5,000 cashback for every friend whose loan is disbursed through Aspirafi. No limit. Refer as many as you like.</p>
+                </div>
+                <div class="flex items-center justify-between mt-6">
+                    <div>
+                        <p class="text-slate-600 text-xs uppercase tracking-wider font-bold">Unlimited</p>
+                        <p class="text-slate-900 text-xl font-black">Referrals</p>
+                    </div>
+                    <button onclick="showReferralModal()" class="btn-dark px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wide">
+                        Share &amp; Earn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FAQ
+════════════════════════════════════════════════════ -->
+<section class="py-20 px-4 bg-white">
+    <div class="max-w-3xl mx-auto">
+        <div class="text-center mb-12 fade-in-up">
+            <span class="inline-block bg-[#D9FF00] text-slate-900 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-4">FAQ</span>
+            <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-3">Questions we get all the time</h2>
+            <p class="text-slate-500 text-base">Everything you need to know before applying.</p>
+        </div>
+
+        <div class="space-y-0 border border-slate-100 rounded-2xl overflow-hidden shadow-sm fade-in-up">
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">Is collateral required for education loans?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">Collateral is not mandatory for Masters courses. Our lender partners can provide non-collateral loans ranging from ₹80 lakh to ₹1 crore based on your profile, university, and course.</p>
+                </div>
+            </div>
+
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">Can I apply before receiving my admission letter?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">Yes, you can start the eligibility check and pre-application process before your official admission letter arrives. A conditional sanction letter will be provided, which can strengthen your visa application significantly.</p>
+                </div>
+            </div>
+
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">Does checking eligibility affect my credit score?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">Banks will do a hard credit check at the time of formal application. But before that, we do a detailed profile assessment to shortlist only the lenders most likely to approve you. This way you avoid unnecessary hard checks and protect your credit score.</p>
+                </div>
+            </div>
+
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">Which countries and universities are covered?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">We cover USA, UK, Canada, Australia, Germany, France, Ireland, Netherlands, and New Zealand. Most accredited universities in these countries qualify. If you're unsure about your university, just apply and we'll confirm within 24 hours.</p>
+                </div>
+            </div>
+
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">What is the repayment period and moratorium?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">Most lenders offer a moratorium (no EMI) for the course duration + 6–12 months after you finish. Repayment tenure is 7–15 years depending on the lender and loan amount.</p>
+                </div>
+            </div>
+
+            <div class="faq-item px-6 py-5 cursor-pointer" onclick="toggleFaq(this)">
+                <div class="flex justify-between items-center">
+                    <p class="font-bold text-slate-900 text-sm faq-question">Is Aspirafi's service free? How do you make money?</p>
+                    <i class="fas fa-plus text-slate-400 faq-icon text-sm flex-shrink-0 ml-4"></i>
+                </div>
+                <div class="faq-answer">
+                    <p class="text-slate-500 text-sm leading-relaxed pt-3">Yes, completely free for students. We earn a small referral fee from the lender when your loan is disbursed. This does not affect your interest rate or loan terms in any way.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PARTNER LOGOS
+════════════════════════════════════════════════════ -->
+<section class="py-14 px-4 inner-section" style="background:#F8FAFC;">
+    <div class="max-w-5xl mx-auto text-center">
+        <p class="text-slate-400 text-xs uppercase tracking-widest font-bold mb-8">Partnered with leading lenders</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner1.png?raw=true"  alt="Partner 1"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner2.png?raw=true"  alt="Partner 2"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner3.png?raw=true"  alt="Partner 3"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner4.png?raw=true"  alt="Partner 4"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner5.png?raw=true"  alt="Partner 5"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner6.jpeg?raw=true" alt="Partner 6"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner7.png?raw=true"  alt="Partner 7"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner8.png?raw=true"  alt="Partner 8"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner9.png?raw=true"  alt="Partner 9"  class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner10.png?raw=true" alt="Partner 10" class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner11.png?raw=true" alt="Partner 11" class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner12.png?raw=true" alt="Partner 12" class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner13.png?raw=true" alt="Partner 13" class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+            <img src="https://github.com/aspirafico-lgtm/aspirafi.github.io/blob/9d1e5a48ccd350e2ea2af1b58ca35bb1f77da25f/Partner14.png?raw=true" alt="Partner 14" class="h-11 bg-white rounded-xl px-4 py-2 border border-slate-200 object-contain hover:shadow-md hover:-translate-y-0.5 transition-all duration-300">
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FINAL CTA STRIP
+════════════════════════════════════════════════════ -->
+<section class="py-16 px-4 bg-[#0F172A]">
+    <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-4">Ready to fund your dream degree?</h2>
+        <p class="text-white/55 text-base mb-8">Free eligibility check · No credit impact · 72-hour sanction</p>
+        <button class="btn-primary px-10 py-4 rounded-full text-base font-bold uppercase tracking-wide"
+                onclick="showEligibilityModal()">
+            Check My Eligibility, Free
+        </button>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<footer class="bg-[#080D18] py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-10 mb-10">
+            <div>
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="bg-white/10 p-2 rounded-xl"><img src="https://raw.githubusercontent.com/aspirafico-lgtm/aspirafi.github.io/dd375e1ae717165ea5b56fc4dfe87f1410c11fd0/AspiraFI%20V3%20Logo.png" alt="Aspirafi" class="h-6 w-auto"/></div>
+                    <span class="text-white font-bold text-lg">Aspirafi</span>
+                </div>
+                <p class="text-white/40 text-sm max-w-xs leading-relaxed">Smarter education loans for global ambitions. Compare, apply, and get sanctioned. All in one place.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-10 text-sm">
+                <div>
+                    <p class="text-white/70 font-bold mb-3 uppercase tracking-wider text-xs">Services</p>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showEligibilityModal();return false;" class="text-white/40 hover:text-white transition-colors">Education Loan</a></li>
+                        <li><a href="#" onclick="openBalanceTransferForm();return false;" class="text-white/40 hover:text-white transition-colors">Balance Transfer</a></li>
+                        <li><a href="#" onclick="showReferralModal();return false;" class="text-white/40 hover:text-white transition-colors">Refer &amp; Earn</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="text-white/70 font-bold mb-3 uppercase tracking-wider text-xs">Contact</p>
+                    <ul class="space-y-2">
+                        <li><a href="https://wa.me/917676148787" target="_blank" class="text-white/40 hover:text-white transition-colors flex items-center gap-2"><i class="fab fa-whatsapp text-green-400"></i> WhatsApp Us</a></li>
+                        <li><a href="tel:+917676148787" class="text-white/40 hover:text-white transition-colors flex items-center gap-2"><i class="fas fa-phone text-blue-400"></i> 7676148787</a></li>
+                        <li><a href="https://www.linkedin.com/company/109628456/" target="_blank" class="text-white/40 hover:text-white transition-colors flex items-center gap-2"><i class="fab fa-linkedin text-blue-500"></i> LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <p class="text-white/30 text-sm">© 2026 Aspirafi Education Finance. Built for global ambitions.</p>
+                <p class="text-white/20 text-xs mt-1 max-w-xl leading-relaxed">Aspirafi is a loan facilitation platform. Final loan terms are subject to lender approval. Loan disbursal is at the sole discretion of the lending institution.</p>
+                <div class="flex gap-4 mt-2 justify-center md:justify-start">
+                    <a href="#" onclick="showPrivacyPolicy();return false;" class="text-white/30 hover:text-white text-xs transition-colors underline underline-offset-2">Privacy Policy</a>
+                    <a href="#" onclick="showTerms();return false;" class="text-white/30 hover:text-white text-xs transition-colors underline underline-offset-2">Terms of Use</a>
+                </div>
+            </div>
+            <div class="flex gap-5 items-center">
+                <a href="https://www.linkedin.com/company/109628456/" target="_blank" class="text-white/30 hover:text-white transition-colors"><i class="fab fa-linkedin text-lg"></i></a>
+                <a href="https://wa.me/917676148787" target="_blank" class="text-white/30 hover:text-green-400 transition-colors"><i class="fab fa-whatsapp text-lg"></i></a>
+                <span class="text-white/20 cursor-default"><i class="fab fa-instagram text-lg"></i></span>
+                <span class="text-white/20 cursor-default"><i class="fab fa-twitter text-lg"></i></span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/917676148787" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ═══════════════════════════════════════════════════
+     MODALS
+════════════════════════════════════════════════════ -->
+
+<!-- ELIGIBILITY MODAL -->
+<div id="eligibilityModal" class="modal-overlay" onclick="hideEligibilityModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-[#D9FF00] rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-graduation-cap text-slate-900" id="modalIcon"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-black text-slate-900" id="modalTitle">Check Your Eligibility</h2>
+                <p class="text-slate-400 text-xs" id="modalSubtitle">Free · No credit impact · Takes 2 mins</p>
+            </div>
+        </div>
+
+        <div id="formError" class="error-message mb-3"></div>
+
+        <form id="eligibilityForm" class="space-y-3" onsubmit="handleEligibilitySubmit(event)">
+            <div>
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Full Name *</label>
+                <input id="fieldName" type="text" placeholder="Enter your full name"
+                       class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 hover:border-slate-300 focus:outline-none focus:border-[#D9FF00] transition-all">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Email *</label>
+                    <input id="fieldEmail" type="email" placeholder="you@email.com"
+                           class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 hover:border-slate-300 focus:outline-none focus:border-[#D9FF00] transition-all">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Phone *</label>
+                    <input id="fieldPhone" type="tel" placeholder="+91 98765 43210"
+                           class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 hover:border-slate-300 focus:outline-none focus:border-[#D9FF00] transition-all">
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Country *</label>
+                    <select id="fieldCountry" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none focus:border-[#D9FF00] transition-all">
+                        <option value="">Select</option>
+                        <option value="US">United States</option>
+                        <option value="UK">United Kingdom</option>
+                        <option value="CA">Canada</option>
+                        <option value="AU">Australia</option>
+                        <option value="DE">Germany</option>
+                        <option value="FR">France</option>
+                        <option value="IE">Ireland</option>
+                        <option value="NL">Netherlands</option>
+                        <option value="NZ">New Zealand</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Intake *</label>
+                    <select id="fieldIntake" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none focus:border-[#D9FF00] transition-all">
+                        <option value="">Select Intake</option>
+                        <option value="Spring 2026">Spring 2026</option>
+                        <option value="Summer 2026">Summer 2026</option>
+                        <option value="Fall 2026">Fall 2026</option>
+                        <option value="Winter 2026">Winter 2026</option>
+                        <option value="Spring 2027">Spring 2027</option>
+                        <option value="Summer 2027">Summer 2027</option>
+                        <option value="Fall 2027">Fall 2027</option>
+                        <option value="Winter 2027">Winter 2027</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- BT FIELDS -->
+            <div id="btFields" class="space-y-3 hidden">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Current Bank *</label>
+                        <select id="fieldCurrentBank" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none transition-all">
+                            <option value="">Select</option>
+                            <option value="HDFC">HDFC Bank</option>
+                            <option value="ICICI">ICICI Bank</option>
+                            <option value="SBI">SBI</option>
+                            <option value="AXIS">Axis Bank</option>
+                            <option value="KOTAK">Kotak Mahindra</option>
+                            <option value="PNB">PNB</option>
+                            <option value="BOB">Bank of Baroda</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Loan Amount *</label>
+                        <input id="fieldLoanAmount" type="number" placeholder="e.g. 4000000" step="50000"
+                               class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none transition-all">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Current Interest Rate * (%)</label>
+                    <input id="fieldCurrentROI" type="number" step="0.01" placeholder="e.g. 12.00"
+                           class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none transition-all">
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-1">
+                <button type="button" onclick="hideEligibilityModal()"
+                        class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm hover:bg-slate-200 transition-all">
+                    Cancel
+                </button>
+                <button type="submit" id="modalSubmitBtn"
+                        class="flex-1 py-3 rounded-xl btn-primary text-sm font-bold uppercase tracking-wide">
+                    Get My Options &rarr;
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- SUCCESS POPUP -->
+<div id="successPopup" class="modal-overlay" onclick="hideSuccessPopup()">
+    <div class="modal-content text-center" onclick="event.stopPropagation()">
+        <div class="w-16 h-16 bg-[#D9FF00] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-check text-2xl text-slate-900"></i>
+        </div>
+        <h2 id="successTitle" class="text-2xl font-black mb-2 text-slate-900">Submitted! 🎉</h2>
+        <p id="successMessage" class="text-slate-500 text-sm mb-4">Our team will contact you within <b>24 hours</b>.</p>
+        <p class="text-slate-400 text-xs mb-6">Sit back, we've got this 🚀</p>
+        <button onclick="hideSuccessPopup()" class="btn-dark w-full py-3 rounded-xl text-sm font-bold">Done</button>
+    </div>
+</div>
+
+<!-- REFERRAL MODAL -->
+<div id="referralModal" class="modal-overlay" onclick="hideReferralModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 bg-[#D9FF00] rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-gift text-slate-900"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-black text-slate-900">Refer &amp; Earn ₹5,000</h2>
+                <p class="text-slate-400 text-xs">Per disbursed loan · Unlimited referrals</p>
+            </div>
+        </div>
+        <form id="referralForm" class="space-y-3" onsubmit="handleReferralSubmit(event)">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Your Name *</label>
+                    <input id="refYourName" type="text" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Your Email *</label>
+                    <input id="refYourEmail" type="email" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                </div>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Your Phone *</label>
+                <input id="refYourPhone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+            </div>
+            <div class="border-t border-slate-100 pt-3">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Friend's Details</p>
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Name *</label>
+                        <input id="refFriendName" type="text" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Phone *</label>
+                        <input id="refFriendPhone" type="tel" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Email *</label>
+                        <input id="refFriendEmail" type="email" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Country *</label>
+                        <select id="refCountry" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                            <option value="">Select</option>
+                            <option value="US">USA</option><option value="UK">UK</option><option value="CA">Canada</option>
+                            <option value="AU">Australia</option><option value="DE">Germany</option><option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">Intake *</label>
+                <select id="refIntake" class="w-full p-3 rounded-xl bg-slate-50 font-semibold text-sm border border-slate-200 focus:outline-none">
+                    <option value="">Select Intake</option>
+                    <option value="Spring 2026">Spring 2026</option>
+                    <option value="Summer 2026">Summer 2026</option>
+                    <option value="Fall 2026">Fall 2026</option>
+                    <option value="Winter 2026">Winter 2026</option>
+                    <option value="Spring 2027">Spring 2027</option>
+                    <option value="Summer 2027">Summer 2027</option>
+                    <option value="Fall 2027">Fall 2027</option>
+                    <option value="Winter 2027">Winter 2027</option>
+                </select>
+            </div>
+            <div class="flex gap-3 pt-1">
+                <button type="button" onclick="hideReferralModal()" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm">Cancel</button>
+                <button type="submit" id="referralSubmitBtn" class="flex-1 py-3 rounded-xl btn-primary text-sm font-bold uppercase tracking-wide">Submit →</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- COMMUNITY (UNDER CONSTRUCTION) -->
+<div id="communityModal" class="modal-overlay" onclick="closeCommunityModal(event)">
+    <div class="modal-content text-center" onclick="event.stopPropagation()">
+        <div class="text-5xl mb-4">🚧</div>
+        <div class="inline-block bg-yellow-100 text-yellow-800 text-xs font-black px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">Under Construction</div>
+        <h2 class="text-2xl font-black text-slate-900 mb-3">Community is Coming Soon</h2>
+        <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+            We're building a space where students can connect, share real experiences, and help each other navigate studying abroad. 
+            <br><br>Stay tuned, launching soon!
+        </p>
+        <a href="https://wa.me/917676148787" target="_blank"
+           class="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3 rounded-xl text-sm font-bold mb-3 hover:bg-[#20c05c] transition-colors">
+            <i class="fab fa-whatsapp"></i> Join Our WhatsApp Group
+        </a>
+        <br>
+        <button onclick="closeCommunityModal()" class="text-slate-400 text-sm hover:text-slate-600 transition-colors mt-2">Close</button>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════ -->
+<script>
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxqd_68cNbjb0mnjwANGQmiXFuiZNkvKRlIZIf9nJGnoOm0gsPrrb0P5rvD-XcfPRkV/exec';
+
+let mode = 'EL';
+
+// ─── CALCULATOR ─────────────────────────────────────────────────────────────
+const amountSlider  = document.getElementById('amountSlider');
+const displayAmount = document.getElementById('displayAmount');
+const displayEMI    = document.getElementById('displayEMI');
+const tenure        = document.getElementById('tenure');
+const roiInput      = document.getElementById('roiInput');
+const oldRoi        = document.getElementById('oldRoi');
+const newRoi        = document.getElementById('newRoi');
+const elBtn         = document.getElementById('elBtn');
+const btBtn         = document.getElementById('btBtn');
+const elRoiBlock    = document.getElementById('elRoiBlock');
+const btRoiBlock    = document.getElementById('btRoiBlock');
+const savingsBox    = document.getElementById('savingsBox');
+const savingsAmount = document.getElementById('savingsAmount');
+const btFields      = document.getElementById('btFields');
+const formError     = document.getElementById('formError');
+const modalSubmitBtn= document.getElementById('modalSubmitBtn');
+
+function emiCalc(P, rate, years) {
+    const r = rate / 12 / 100;
+    const n = years * 12;
+    if (r === 0) return P / n;
+    return (P * r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+}
+
+function calculate() {
+    const P     = Number(amountSlider.value);
+    const years = Number(tenure.value);
+    displayAmount.innerText = '₹' + P.toLocaleString('en-IN');
+    if (mode === 'EL') {
+        displayEMI.innerText = '₹' + Math.round(emiCalc(P, Number(roiInput.value), years)).toLocaleString('en-IN');
+    } else {
+        const oldEmi = emiCalc(P, Number(oldRoi.value), years);
+        const newEmi = emiCalc(P, Number(newRoi.value), years);
+        displayEMI.innerText    = '₹' + Math.round(newEmi).toLocaleString('en-IN');
+        savingsAmount.innerText = '₹' + Math.round(Math.max(0, oldEmi - newEmi)).toLocaleString('en-IN');
+    }
+}
+
+amountSlider.oninput = tenure.onchange = roiInput.oninput = oldRoi.oninput = newRoi.oninput = calculate;
+calculate();
+
+elBtn.onclick = () => {
+    mode = 'EL';
+    elRoiBlock.classList.remove('hidden'); btRoiBlock.classList.add('hidden'); savingsBox.classList.add('hidden');
+    elBtn.className = 'px-5 py-2 rounded-full bg-[#0F172A] text-white text-xs font-bold transition-all';
+    btBtn.className = 'px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-all';
+    calculate();
+};
+btBtn.onclick = () => {
+    mode = 'BT';
+    elRoiBlock.classList.add('hidden'); btRoiBlock.classList.remove('hidden'); savingsBox.classList.remove('hidden');
+    btBtn.className = 'px-5 py-2 rounded-full bg-[#0F172A] text-white text-xs font-bold transition-all';
+    elBtn.className = 'px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-all';
+    calculate();
+};
+
+// ─── FORM VALIDATION ────────────────────────────────────────────────────────
+function showFormError(msg) { formError.textContent = msg; formError.style.display = 'block'; formError.scrollIntoView({behavior:'smooth',block:'center'}); }
+function hideFormError()    { formError.style.display = 'none'; }
+
+function validateEligibilityForm() {
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    for (const f of [{id:'fieldName',l:'Full Name'},{id:'fieldEmail',l:'Email'},{id:'fieldPhone',l:'Phone'},{id:'fieldCountry',l:'Country'},{id:'fieldIntake',l:'Intake'}]) {
+        if (!document.getElementById(f.id).value.trim()) { showFormError(f.l+' is required'); return false; }
+    }
+    if (!emailRx.test(document.getElementById('fieldEmail').value)) { showFormError('Enter a valid email address'); return false; }
+    if (mode === 'BT') {
+        for (const f of [{id:'fieldCurrentBank',l:'Current Bank'},{id:'fieldLoanAmount',l:'Loan Amount'},{id:'fieldCurrentROI',l:'Current ROI'}]) {
+            if (!document.getElementById(f.id).value.trim()) { showFormError(f.l+' is required for Balance Transfer'); return false; }
         }
+    }
+    return true;
+}
+
+// ─── ELIGIBILITY SUBMIT ──────────────────────────────────────────────────────
+async function handleEligibilitySubmit(e) {
+    e.preventDefault(); hideFormError();
+    if (!validateEligibilityForm()) return;
+
+    const orig = modalSubmitBtn.innerHTML;
+    modalSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+    modalSubmitBtn.disabled = true;
+
+    const payload = {
+        fullName:  document.getElementById('fieldName').value.trim(),
+        email:     document.getElementById('fieldEmail').value.trim(),
+        phone:     document.getElementById('fieldPhone').value.trim(),
+        country:   document.getElementById('fieldCountry').value,
+        intake:    document.getElementById('fieldIntake').value,
+        loanAmount:displayAmount.innerText,
+        emi:       displayEMI.innerText,
+        mode, roi: mode==='EL' ? roiInput.value+'%' : newRoi.value+'%',
+        tenure:    tenure.value+' years',
+        timestamp: new Date().toISOString(),
+    };
+    if (mode==='BT') {
+        payload.currentBank = document.getElementById('fieldCurrentBank').value;
+        payload.currentROI  = document.getElementById('fieldCurrentROI').value+'%';
+        payload.loanAmount  = document.getElementById('fieldLoanAmount').value;
+    }
+    try {
+        const fd = new FormData();
+        Object.entries(payload).forEach(([k,v])=>fd.append(k,v));
+        await fetch(WEBHOOK_URL,{method:'POST',body:fd});
+    } catch(err){ console.warn('Sheets error:',err); }
+
+    hideEligibilityModal();
+    document.getElementById('eligibilityForm').reset();
+    document.getElementById('successTitle').innerText = 'Application Submitted 🎉';
+    document.getElementById('successMessage').innerHTML = 'Our team will contact you within <b>24 hours</b>.';
+    showSuccessPopup();
+    modalSubmitBtn.innerHTML = orig; modalSubmitBtn.disabled = false;
+}
+
+// ─── MODAL HELPERS ───────────────────────────────────────────────────────────
+function showEligibilityModal() {
+    hideFormError();
+    if (mode==='EL') {
+        document.getElementById('modalIcon').className = 'fas fa-graduation-cap text-slate-900';
+        document.getElementById('modalTitle').textContent = 'Check Your Education Loan Eligibility';
+        document.getElementById('modalSubtitle').textContent = 'Free · No credit impact · Takes 2 mins';
+        btFields.classList.add('hidden');
+    } else {
+        document.getElementById('modalIcon').className = 'fas fa-exchange-alt text-slate-900';
+        document.getElementById('modalTitle').textContent = 'Balance Transfer Eligibility';
+        document.getElementById('modalSubtitle').textContent = 'Switch to better rates · Save up to ₹5,000/month';
+        btFields.classList.remove('hidden');
+        document.getElementById('fieldLoanAmount').value = amountSlider.value;
+        document.getElementById('fieldCurrentROI').value = oldRoi.value;
+    }
+    document.getElementById('eligibilityModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+function hideEligibilityModal(event) {
+    if (event) event.stopPropagation();
+    document.getElementById('eligibilityModal').classList.remove('show');
+    document.body.style.overflow = 'auto'; hideFormError();
+}
+function openBalanceTransferForm() {
+    mode = 'BT';
+    elRoiBlock.classList.add('hidden'); btRoiBlock.classList.remove('hidden'); savingsBox.classList.remove('hidden');
+    btBtn.className = 'px-5 py-2 rounded-full bg-[#0F172A] text-white text-xs font-bold transition-all';
+    elBtn.className = 'px-5 py-2 rounded-full text-xs font-bold text-slate-600 hover:bg-slate-200 transition-all';
+    calculate(); showEligibilityModal();
+}
+function showSuccessPopup() { document.getElementById('successPopup').classList.add('show'); document.body.style.overflow='hidden'; }
+function hideSuccessPopup() {
+    document.getElementById('successPopup').classList.remove('show');
+    document.body.style.overflow='auto';
+    showReferralPopupAfterSuccess();
+}
+
+// ─── REFERRAL ────────────────────────────────────────────────────────────────
+function showReferralModal() { document.getElementById('referralModal').classList.add('show'); document.body.style.overflow='hidden'; }
+function hideReferralModal(event) { if(event)event.stopPropagation(); document.getElementById('referralModal').classList.remove('show'); document.body.style.overflow='auto'; }
+
+async function handleReferralSubmit(e) {
+    e.preventDefault();
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const fields = [{id:'refYourName',l:'Your Name'},{id:'refYourEmail',l:'Your Email'},{id:'refYourPhone',l:'Your Phone'},{id:'refFriendName',l:"Friend's Name"},{id:'refFriendPhone',l:"Friend's Phone"},{id:'refFriendEmail',l:"Friend's Email"},{id:'refCountry',l:'Country'},{id:'refIntake',l:'Intake'}];
+    for (const f of fields) { if (!document.getElementById(f.id).value.trim()) { alert(f.l+' is required'); return; } }
+    if (!emailRx.test(document.getElementById('refYourEmail').value)) { alert('Valid email required for yourself'); return; }
+    if (!emailRx.test(document.getElementById('refFriendEmail').value)) { alert("Valid email required for your friend"); return; }
+
+    const btn = document.getElementById('referralSubmitBtn');
+    const orig = btn.innerHTML; btn.innerHTML='<i class="fas fa-spinner fa-spin mr-1"></i>Submitting...'; btn.disabled=true;
+    const payload = { type:'REFERRAL', yourName:document.getElementById('refYourName').value.trim(), yourEmail:document.getElementById('refYourEmail').value.trim(), yourPhone:document.getElementById('refYourPhone').value.trim(), friendName:document.getElementById('refFriendName').value.trim(), friendEmail:document.getElementById('refFriendEmail').value.trim(), friendPhone:document.getElementById('refFriendPhone').value.trim(), country:document.getElementById('refCountry').value, intake:document.getElementById('refIntake').value, timestamp:new Date().toISOString() };
+    try { const fd=new FormData(); Object.entries(payload).forEach(([k,v])=>fd.append(k,v)); await fetch(WEBHOOK_URL,{method:'POST',body:fd}); } catch(err){}
+    document.getElementById('referralForm').reset(); btn.innerHTML=orig; btn.disabled=false; hideReferralModal();
+    document.getElementById('successTitle').innerText='Referral Submitted 🎉';
+    document.getElementById('successMessage').innerText="Once the loan is disbursed, you'll receive ₹5,000.";
+    showSuccessPopup();
+}
+
+// ─── MOBILE MENU ─────────────────────────────────────────────────────────────
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('hamburgerIcon');
+    const isOpen = !menu.classList.contains('hidden');
+    menu.classList.toggle('hidden');
+    icon.className = isOpen ? 'fas fa-bars text-sm' : 'fas fa-times text-sm';
+}
+function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.add('hidden');
+    document.getElementById('hamburgerIcon').className = 'fas fa-bars text-sm';
+}
+
+// ─── REFERRAL POPUP ──────────────────────────────────────────────────────────
+let referralPopupShown = false;
+
+function showReferralPopup() {
+    if (referralPopupShown) return;
+    referralPopupShown = true;
+    const popup = document.getElementById('referralScrollPopup');
+    popup.style.transform = 'translateY(0) scale(1)';
+    popup.style.opacity = '1';
+    popup.style.pointerEvents = 'auto';
+}
+function closeReferralPopup() {
+    const popup = document.getElementById('referralScrollPopup');
+    popup.style.transform = 'translateY(-120%) scale(0.92)';
+    popup.style.opacity = '0';
+    popup.style.pointerEvents = 'none';
+}
+
+// Trigger 1: 2 sec after success popup closes (called from hideSuccessPopup)
+function showReferralPopupAfterSuccess() {
+    setTimeout(() => showReferralPopup(), 2000);
+}
+
+// Trigger 2: 15 seconds on page (time-on-page fallback)
+setTimeout(() => showReferralPopup(), 5000);
+
+function openCommunityModal()  { document.getElementById('communityModal').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeCommunityModal(e){ if(e)e.stopPropagation(); document.getElementById('communityModal').classList.remove('show'); document.body.style.overflow='auto'; }
+
+// ─── PRIVACY & TERMS ─────────────────────────────────────────────────────────
+function showPrivacyPolicy() { document.getElementById('privacyModal').classList.add('show'); document.body.style.overflow='hidden'; }
+function showTerms()         { document.getElementById('termsModal').classList.add('show');   document.body.style.overflow='hidden'; }
+
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+function toggleFaq(item) {
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-answer').classList.remove('open'); });
+    if (!isOpen) { item.classList.add('open'); answer.classList.add('open'); }
+}
+
+// ─── DARK MODE ───────────────────────────────────────────────────────────────
+function toggleTheme() {
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    const theme  = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    document.getElementById('themeIcon').className = isDark ? 'fas fa-moon text-sm' : 'fas fa-sun text-sm';
+}
+(function(){
+    const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('themeIcon').className = t==='dark' ? 'fas fa-sun text-sm' : 'fas fa-moon text-sm';
+})();
+
+// ─── ESC KEY ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+    if (e.key!=='Escape') return;
+    hideEligibilityModal(e); hideReferralModal(e); closeCommunityModal(e); hideSuccessPopup();
+});
+
+// ─── SCROLL ANIMATIONS ───────────────────────────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.style.animationPlayState = 'running'; });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in-up').forEach(el => { el.style.animationPlayState = 'paused'; io.observe(el); });
+</script>
+
+<!-- PRIVACY POLICY MODAL -->
+<div id="privacyModal" class="modal-overlay" onclick="this.classList.remove('show');document.body.style.overflow='auto'">
+    <div class="modal-content" onclick="event.stopPropagation()" style="max-width:560px;">
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#D9FF00] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-shield-alt text-sm text-slate-900"></i>
+                </div>
+                <h2 class="text-lg font-black text-slate-900">Privacy Policy</h2>
+            </div>
+            <button onclick="document.getElementById('privacyModal').classList.remove('show');document.body.style.overflow='auto'" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="text-slate-600 text-sm leading-relaxed space-y-4">
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Last updated: March 2026</p>
+            <p><strong class="text-slate-800">Information We Collect:</strong> When you submit an eligibility or referral form on Aspirafi, we collect your name, email address, and phone number solely to process your loan inquiry and connect you with suitable lenders.</p>
+            <p><strong class="text-slate-800">How We Use It:</strong> Your information is used to match you with lenders from our partner network, contact you regarding your application, and improve our services. We do not sell your personal data to third parties.</p>
+            <p><strong class="text-slate-800">Data Sharing:</strong> We share your details only with lending institutions relevant to your application. These partners have their own privacy obligations and comply with applicable data protection laws.</p>
+            <p><strong class="text-slate-800">Communications:</strong> By submitting a form, you consent to being contacted by Aspirafi and its lending partners via phone, email, or WhatsApp regarding your loan application.</p>
+            <p><strong class="text-slate-800">Data Security:</strong> We use industry-standard security measures to protect your information. All form submissions are encrypted in transit.</p>
+            <p><strong class="text-slate-800">Your Rights:</strong> You may request deletion of your data at any time by contacting us on WhatsApp at +91 7676148787 or via LinkedIn.</p>
+            <p class="text-slate-400 text-xs">For questions about this policy, reach us at +91 7676148787.</p>
+        </div>
+        <button onclick="document.getElementById('privacyModal').classList.remove('show');document.body.style.overflow='auto'" class="btn-dark w-full py-3 rounded-xl text-sm font-bold mt-5">Close</button>
+    </div>
+</div>
+
+<!-- TERMS OF USE MODAL -->
+<div id="termsModal" class="modal-overlay" onclick="this.classList.remove('show');document.body.style.overflow='auto'">
+    <div class="modal-content" onclick="event.stopPropagation()" style="max-width:560px;">
+        <div class="flex items-center justify-between mb-5">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#0F172A] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-file-contract text-sm text-[#D9FF00]"></i>
+                </div>
+                <h2 class="text-lg font-black text-slate-900">Terms of Use</h2>
+            </div>
+            <button onclick="document.getElementById('termsModal').classList.remove('show');document.body.style.overflow='auto'" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="text-slate-600 text-sm leading-relaxed space-y-4">
+            <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Last updated: March 2026</p>
+            <p><strong class="text-slate-800">Platform Role:</strong> Aspirafi is a loan facilitation platform, not a lender. We connect students with lending institutions from our partner network. Final loan approval, terms, and disbursal are entirely at the discretion of the lending institution.</p>
+            <p><strong class="text-slate-800">No Guarantee of Approval:</strong> Submitting an eligibility form on Aspirafi does not guarantee loan approval. Lenders conduct their own credit and eligibility assessment independently.</p>
+            <p><strong class="text-slate-800">Interest Rates:</strong> Rates displayed on this website (starting 8.9%) are indicative and subject to change. Your actual rate will be determined by the lender based on your profile, collateral, and prevailing market conditions.</p>
+            <p><strong class="text-slate-800">Referral Programme:</strong> The ₹5,000 referral reward is paid only after the referred individual's loan is fully disbursed by a lending partner. Aspirafi reserves the right to modify or discontinue the referral programme at any time.</p>
+            <p><strong class="text-slate-800">Accuracy of Information:</strong> Users are responsible for providing accurate information. Aspirafi is not liable for outcomes resulting from incorrect or incomplete information submitted through our forms.</p>
+            <p><strong class="text-slate-800">Governing Law:</strong> These terms are governed by the laws of India. Any disputes shall be subject to the jurisdiction of courts in Bangalore, Karnataka.</p>
+            <p class="text-slate-400 text-xs">By using this website, you agree to these terms.</p>
+        </div>
+        <button onclick="document.getElementById('termsModal').classList.remove('show');document.body.style.overflow='auto'" class="btn-dark w-full py-3 rounded-xl text-sm font-bold mt-5">Close</button>
+    </div>
+</div>
+
+
+<div id="referralScrollPopup" style="
+    position:fixed; top:5.5rem; right:1.5rem;
+    max-width:300px; width:calc(100vw - 3rem);
+    border-radius:1.25rem;
+    z-index:998;
+    transform:translateY(-120%) scale(0.92);
+    opacity:0;
+    transition:all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events:none;
+    overflow:hidden;
+    background:#fff;
+    border:2px solid #D9FF00;
+    box-shadow:0 12px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(217,255,0,0.2);
+">
+    <!-- lime accent top bar -->
+    <div style="height:4px;background:linear-gradient(90deg,#D9FF00,#86efac,#D9FF00);background-size:200% 100%;animation:shimmer 2s linear infinite;"></div>
+
+    <div style="padding:1.1rem 1.1rem 1rem;position:relative;">
+
+        <!-- close -->
+        <button onclick="closeReferralPopup()" style="
+            position:absolute;top:0.75rem;right:0.75rem;
+            width:22px;height:22px;border-radius:50%;
+            background:#F1F5F9;color:#94A3B8;
+            border:none;cursor:pointer;font-size:0.6rem;
+            display:flex;align-items:center;justify-content:center;
+            transition:all 0.2s;
+        " onmouseover="this.style.background='#E2E8F0';this.style.color='#475569'"
+           onmouseout="this.style.background='#F1F5F9';this.style.color='#94A3B8'">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- emoji + headline -->
+        <div style="margin-bottom:0.8rem;padding-right:1.5rem;">
+            <div style="font-size:1.75rem;margin-bottom:0.35rem;">🎁</div>
+            <p style="color:#0F172A;font-weight:900;font-size:1rem;margin:0 0 0.25rem;line-height:1.2;">
+                Earn <span style="color:#0F172A;background:#D9FF00;padding:1px 6px;border-radius:6px;font-size:1rem;">₹5,000</span> cash
+            </p>
+            <p style="color:#64748B;font-size:0.71rem;margin:0;line-height:1.5;">
+                Refer a friend planning to study abroad. Get paid when their loan is disbursed.
+            </p>
+        </div>
+
+        <!-- divider -->
+        <div style="height:1px;background:#F1F5F9;margin:0.7rem 0;"></div>
+
+        <!-- trust line -->
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.8rem;">
+            <i class="fas fa-check-circle" style="color:#16A34A;font-size:0.75rem;flex-shrink:0;"></i>
+            <p style="color:#64748B;font-size:0.7rem;margin:0;">Unlimited referrals · Paid on disbursal</p>
+        </div>
+
+        <!-- CTA -->
+        <button onclick="closeReferralPopup();showReferralModal();" style="
+            width:100%;padding:0.7rem;border-radius:0.8rem;
+            background:#0F172A;color:#D9FF00;
+            font-weight:900;font-size:0.76rem;
+            text-transform:uppercase;letter-spacing:0.07em;
+            border:none;cursor:pointer;
+            display:flex;align-items:center;justify-content:center;gap:0.4rem;
+            transition:all 0.2s;
+        " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(15,23,42,0.25)'"
+           onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+            <i class="fas fa-gift" style="font-size:0.72rem;"></i>
+            Refer &amp; Earn ₹5,000
+        </button>
+    </div>
+</div>
 
-        function closeCommunityModal(event) {
-            if (event) event.stopPropagation();
-            const modal = document.getElementById('communityModal');
-            modal.classList.remove('show');
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        modalSubmitBtn.onclick = function() {
-            console.log('Ã°Å¸Å¸Â¢ SUBMIT BUTTON CLICKED');
-
-            if (!validateForm()) {
-                console.log('Ã¢ÂÅ’ Validation failed');
-                return;
-            }
-
-            const originalText = modalSubmitBtn.innerHTML;
-            modalSubmitBtn.innerHTML =
-                '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-            modalSubmitBtn.disabled = true;
-
-            setTimeout(() => {
-                hideEligibilityModal();
-                showSuccessPopup();
-                eligibilityForm.reset();
-
-                modalSubmitBtn.innerHTML = originalText;
-                modalSubmitBtn.disabled = false;
-            }, 1200);
-        };
-
-        let mode = 'EL';
-
-        function emiCalc(P, rate, years) {
-            const r = rate / 12 / 100;
-            const n = years * 12;
-            return (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
-        }
-
-        function calculate() {
-            const P = Number(amountSlider.value);
-            const years = Number(tenure.value);
-            displayAmount.innerText = '₹' + P.toLocaleString('en-IN');
-
-            if (mode === 'EL') {
-                const emi = emiCalc(P, Number(roiInput.value), years);
-                displayEMI.innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
-            } else {
-                const oldEmi = emiCalc(P, Number(oldRoi.value), years);
-                const newEmi = emiCalc(P, Number(newRoi.value), years);
-                displayEMI.innerText = '₹' + Math.round(newEmi).toLocaleString('en-IN');
-                savingsAmount.innerText = '₹' + Math.round(oldEmi - newEmi).toLocaleString('en-IN');
-            }
-        }
-
-        function validateForm() {
-            const requiredCommon = [{
-                    id: 'modalUserName',
-                    name: 'Full Name'
-                },
-                {
-                    id: 'modalUserEmail',
-                    name: 'Email'
-                },
-                {
-                    id: 'modalUserPhone',
-                    name: 'Phone'
-                },
-                {
-                    id: 'modalUserCountry',
-                    name: 'Country'
-                },
-                {
-                    id: 'modalUserIntake',
-                    name: 'Intake'
-                }
-            ];
-
-            for (let field of requiredCommon) {
-                const value = document.getElementById(field.id).value.trim();
-                if (!value) {
-                    showFormError(`${field.name} is required`);
-                    return false;
-                }
-            }
-
-            const email = document.getElementById('modalUserEmail').value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                showFormError('Please enter a valid email address');
-                return false;
-            }
-
-            if (mode === 'BT' && !btFields.classList.contains('hidden')) {
-                const btRequired = [{
-                        id: 'modalCurrentBank',
-                        name: 'Current Bank'
-                    },
-                    {
-                        id: 'modalLoanAmount',
-                        name: 'Loan Amount'
-                    },
-                    {
-                        id: 'modalCurrentROI',
-                        name: 'Current ROI'
-                    }
-                ];
-
-                for (let field of btRequired) {
-                    const value = document.getElementById(field.id).value.trim();
-                    if (!value) {
-                        showFormError(`${field.name} is required for Balance Transfer`);
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        function showFormError(message) {
-            formError.textContent = message;
-            formError.style.display = 'block';
-            formError.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-
-        function hideFormError() {
-            formError.style.display = 'none';
-        }
-
-        function showEligibilityModal() {
-            hideFormError();
-
-            if (mode === 'EL') {
-                modalIcon.innerHTML = '<i class="fas fa-graduation-cap text-2xl"></i>';
-                modalTitle.textContent = 'Check Your Education Loan Eligibility';
-                modalSubtitle.textContent = 'Fill in your details to get personalized loan options';
-                btFields.classList.add('hidden');
-            } else {
-                modalIcon.innerHTML = '<i class="fas fa-exchange-alt text-3xl text-black"></i>';
-                modalTitle.textContent = 'Balance Transfer Eligibility';
-                modalSubtitle.textContent = 'Switch to better rates and save up to ₹5,000/month';
-                btFields.classList.remove('hidden');
-                document.getElementById('modalLoanAmount').value = amountSlider.value;
-                document.getElementById('modalCurrentROI').value = oldRoi.value;
-            }
-
-            eligibilityModal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function openBalanceTransferForm() {
-            mode = 'BT';
-            elRoiBlock.classList.add('hidden');
-            btRoiBlock.classList.remove('hidden');
-            savingsBox.classList.remove('hidden');
-            btBtn.classList.add('bg-black', 'text-white');
-            elBtn.classList.remove('bg-black', 'text-white');
-            calculate();
-            showEligibilityModal();
-        }
-
-        function hideEligibilityModal(event) {
-            if (event) event.stopPropagation();
-            eligibilityModal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-            hideFormError();
-        }
-
-        function showSuccessPopup() {
-            // Ã°Å¸â€â€™ Fully hide other modals
-            eligibilityModal.classList.remove('show');
-            referralModal.classList.remove('show');
-
-            // Ã°Å¸â€Â¥ IMPORTANT: reset pointer blocking
-            eligibilityModal.style.display = 'none';
-            referralModal.style.display = 'none';
-
-            // Ã¢Å“â€¦ Show success popup
-            const popup = document.getElementById('successPopup');
-            popup.style.display = 'flex';
-            popup.classList.add('show');
-
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideSuccessPopup() {
-            const popup = document.getElementById('successPopup');
-            popup.classList.remove('show');
-            popup.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        eligibilityForm.onsubmit = function(e) {
-            e.preventDefault();
-            console.log('Ã°Å¸â€Â¥ FORM CLICKED - Mode:', mode);
-
-            if (!validateForm()) {
-                console.log('Ã¢ÂÅ’ Validation failed');
-                return false;
-            }
-
-            const originalText = modalSubmitBtn.innerHTML;
-            modalSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-            modalSubmitBtn.disabled = true;
-
-            const commonData = {
-                name: document.getElementById('modalUserName').value.trim(),
-                email: document.getElementById('modalUserEmail').value.trim(),
-                phone: document.getElementById('modalUserPhone').value.trim(),
-                country: document.getElementById('modalUserCountry').value,
-                intake: document.getElementById('modalUserIntake').value,
-                loanAmount: amountSlider.value,
-                tenure: tenure.value,
-                mode: mode,
-                emi: displayEMI.innerText,
-                timestamp: new Date().toISOString()
-            };
-
-            let leadData = {
-                ...commonData
-            };
-            if (mode === 'BT') {
-                leadData.currentBank = document.getElementById('modalCurrentBank').value;
-                leadData.currentROI = document.getElementById('modalCurrentROI').value;
-                leadData.loanAmount = document.getElementById('modalLoanAmount').value;
-            } else {
-                leadData.roi = roiInput.value;
-            }
-
-            console.log('🎉¦ LEAD CAPTURED:', leadData);
-            setTimeout(() => {
-                hideEligibilityModal();
-                eligibilityForm.reset();
-
-                // Ã¢Å“â€¦ RESET SUCCESS POPUP FOR ELIGIBILITY
-                document.getElementById('successTitle').innerText =
-                    'Application Submitted 🎉';
-
-                document.getElementById('successMessage').innerHTML =
-                    'Our team will contact you within <b>24 hours</b>.';
-
-                showSuccessPopup();
-                modalSubmitBtn.innerHTML = originalText;
-                modalSubmitBtn.disabled = false;
-            }, 1500);
-
-            return false;
-        };
-
-        elBtn.onclick = () => {
-            mode = 'EL';
-            elRoiBlock.classList.remove('hidden');
-            btRoiBlock.classList.add('hidden');
-            savingsBox.classList.add('hidden');
-            elBtn.classList.add('bg-black', 'text-white');
-            btBtn.classList.remove('bg-black', 'text-white');
-            roiInput.value = '10.50';
-            calculate();
-        };
-        btBtn.onclick = () => {
-            mode = 'BT';
-            elRoiBlock.classList.add('hidden');
-            btRoiBlock.classList.remove('hidden');
-            savingsBox.classList.remove('hidden');
-            // 👇 PREVENT CROPPING
-            setTimeout(() => {
-                document.querySelector('.calculator-container').style.height = 'auto';
-            }, 100);
-            btBtn.classList.add('bg-black', 'text-white');
-            elBtn.classList.remove('bg-black', 'text-white');
-            calculate();
-        };
-        amountSlider.oninput = calculate;
-        tenure.onchange = calculate;
-        roiInput.oninput = calculate;
-        oldRoi.oninput = calculate;
-        newRoi.oninput = calculate;
-        calculate();
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                hideEligibilityModal(e);
-                hideReferralModal(e);
-            }
-        });
-
-        function toggleTheme() {
-            const html = document.documentElement;
-            const isDark = html.getAttribute('data-theme') === 'dark';
-            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
-        }
-
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        }
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.style.animationPlayState = 'running';
-            });
-        });
-        document.querySelectorAll('.fade-in-up, .float-hover').forEach(el => observer.observe(el));
-
-        /* REFERRAL FORM JS */
-        const referralForm = document.getElementById('referralForm');
-        const referralSubmitBtn = document.getElementById('referralSubmitBtn');
-
-        function showReferralModal() {
-            referralModal.style.display = 'flex'; // Ã°Å¸â€Â¥ RESET display
-            referralModal.classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideReferralModal(event) {
-            if (event) event.stopPropagation();
-            referralModal.classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        function validateReferralForm() {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const fields = [{
-                    id: 'refYourName',
-                    name: 'Your Name'
-                },
-                {
-                    id: 'refYourEmail',
-                    name: 'Your Email'
-                },
-                {
-                    id: 'refYourPhone',
-                    name: 'Your Phone'
-                },
-                {
-                    id: 'refFriendName',
-                    name: "Friend's Name"
-                },
-                {
-                    id: 'refFriendEmail',
-                    name: "Friend's Email"
-                },
-                {
-                    id: 'refFriendPhone',
-                    name: "Friend's Phone"
-                },
-                {
-                    id: 'refCountry',
-                    name: 'Country'
-                },
-                {
-                    id: 'refIntake',
-                    name: 'Intake'
-                }
-            ];
-
-            for (let field of fields) {
-                const el = document.getElementById(field.id);
-                if (!el || !el.value.trim()) {
-                    alert(field.name + ' is required');
-                    return false;
-                }
-            }
-
-            const yourEmail = document.getElementById('refYourEmail').value.trim();
-            const friendEmail = document.getElementById('refFriendEmail').value.trim();
-
-            if (!emailRegex.test(yourEmail)) {
-                alert('Please enter a valid email for yourself');
-                return false;
-            }
-
-            if (!emailRegex.test(friendEmail)) {
-                alert('Please enter a valid email for your friend');
-                return false;
-            }
-
-            return true;
-        }
-
-        referralForm.onsubmit = function(e) {
-            e.preventDefault();
-
-            if (!validateReferralForm()) return;
-
-            const originalText = referralSubmitBtn.innerHTML;
-            referralSubmitBtn.innerHTML =
-                '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-            referralSubmitBtn.disabled = true;
-
-            const referralData = {
-                yourName: refYourName.value.trim(),
-                yourEmail: refYourEmail.value.trim(),
-                yourPhone: refYourPhone.value.trim(),
-                friendName: refFriendName.value.trim(),
-                friendEmail: refFriendEmail.value.trim(),
-                friendPhone: refFriendPhone.value.trim(),
-                country: refCountry.value,
-                intake: refIntake.value,
-                timestamp: new Date().toISOString()
-            };
-
-            console.log('🎉¦ REFERRAL SUBMITTED:', referralData);
-
-            setTimeout(() => {
-                referralForm.reset();
-                referralSubmitBtn.innerHTML = originalText;
-                referralSubmitBtn.disabled = false;
-                hideReferralModal();
-
-                // Ã°Å¸â€Â¥ REFERRAL SUCCESS MESSAGE
-                document.getElementById('successTitle').innerText =
-                    'Referral Submitted Successfully 🎉';
-
-                document.getElementById('successMessage').innerText =
-                    'Once the loan is successfully disbursed, you will receive an INR 5,000 referral bonus.';
-                showSuccessPopup();
-            }, 1200);
-        };
-        // Ã°Å¸â€˜â€¡ REPLACE WITH YOUR GOOGLE APPS SCRIPT WEB APP URL Ã°Å¸â€˜â€¡
-        const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbxqd_68cNbjb0mnjwANGQmiXFuiZNkvKRlIZIf9nJGnoOm0gsPrrb0P5rvD-XcfPRkV/exec';
-
-        document.getElementById('eligibilityForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // Capture form values
-            document.querySelector('#sheetLoanAmount').value = displayAmount.textContent;
-            document.querySelector('#sheetROI').value = mode === 'EL' ? roiInput.value + '%' : newRoi.value + '%';
-            document.querySelector('#sheetMode').value = mode;
-
-            // Map form fields to hidden inputs
-            document.querySelector('#modalUserName').value = document.querySelector('#modalUserName').value;
-            document.querySelector('#modalUserEmail').value = document.querySelector('#modalUserEmail').value;
-            document.querySelector('#modalUserPhone').value = document.querySelector('#modalUserPhone').value;
-            document.querySelector('#modalUserCountry').value = document.querySelector('#modalUserCountry').value;
-            document.querySelector('#modalUserIntake').value = document.querySelector('#modalUserIntake').value;
-
-            const formData = new FormData(e.target);
-
-            try {
-                const response = await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    alert('🎉 Lead saved to Aspirafi Website Leads!');
-                    hideEligibilityModal();
-                    e.target.reset();
-                }
-            } catch (error) {
-                alert( Please try again.');
-            }
-        });
-        // MAKE ALL BUTTONS WORK
-setInterval(function() {
-  document.querySelectorAll('button, [onclick]').forEach(function(btn) {
-    btn.disabled = false;
-    btn.style.pointerEvents = 'auto';
-  });
-}, 200);
-setInterval(()=>{document.querySelectorAll('button, [onclick]').forEach(b=>b.disabled=false,b.style.pointerEvents='auto')},100);
-
-        
-    </script>
-    
 </body>
-
 </html>
